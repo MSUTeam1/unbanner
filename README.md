@@ -12,9 +12,11 @@
 ## How to run
 
 Install Gradle
+
 Install MongoDB
 
 $ mongod
+
 $ ./gradlew bootRun 
 
 open in browser:
@@ -22,6 +24,3 @@ http://localhost:8080/
 
 to see list of students:
 http://localhost:8080/students
-
-from https://spring.io/guides/gs/serving-web-content/#scratch
-
