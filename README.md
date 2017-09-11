@@ -12,8 +12,10 @@
 ## How to run
 
 Install Gradle
+Install MongoDB
 
-$./gradlew bootRun 
+$ mongod
+$ ./gradlew bootRun 
 
 open in browser:
 http://localhost:8080/
