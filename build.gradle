@@ -19,6 +19,9 @@ jar {
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://repo.spring.io/libs-release'
+    }
 }
 
 sourceCompatibility = 1.8
@@ -27,5 +30,7 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile 'org.springframework.data:spring-data-mongodb:1.10.6.RELEASE'
     testCompile("junit:junit")
 }
