@@ -1,4 +1,4 @@
-package hello;
+package unbanner;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -15,4 +15,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'Spring-Boot-MVC'
+//rootProject.name = 'Spring-Boot-MVC'
