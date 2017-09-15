@@ -21,9 +21,16 @@ public class StudentController {
     }
 
     @RequestMapping("/student/{id}")
-    public String developer(@PathVariable String id, Model model) {
+    public String student(@PathVariable String id, Model model) {
         model.addAttribute("student", repository.findOne(id));
         return "student";
     }
+
+    @RequestMapping(value = "/student/{id}", method = RequestMethod.DELETE)
+    public String student(@PathVariable String id) {
+        repository.delete(id);
+        return "redirect:/students";
+    }
+
 
 }
