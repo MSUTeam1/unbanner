@@ -10,7 +10,7 @@ Name: <b th:text="${student.firstName}" /> <b th:text="${student.lastName}" /><b
 
     <form action="#" th:action="@{'/student/{id}'(id=${student.id})}" th:method="delete" >
         <input type="hidden" name="_method" value="delete" />
-        <button type="submit" id="submitButton"> </button>
+        <button type="submit" id="submitButton">Delete</button>
     </form>
 </body>
 </html>
