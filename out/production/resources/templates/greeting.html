@@ -1,11 +1,10 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Student</title>
+    <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1>Student</h1>
-Name: <b th:text="${student.firstName}" /> <b th:text="${student.lastName}" /> <b th:text="${student.studentNum}" /><br/>
+    <p th:text="'Hello, ' + ${name} + '!'" />
 </body>
 </html>
