@@ -10,14 +10,12 @@ public class Student {
 
     public String firstName;
     public String lastName;
-    public int studentNum;
 
     public Student() {}
 
-    public Student(String firstName, String lastName, int studentNum) {
+    public Student(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.studentNum = studentNum;
     }
 
     @Override

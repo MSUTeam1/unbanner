@@ -21,8 +21,8 @@ public class Application implements CommandLineRunner {
 		repository.deleteAll();
 
 		// save a couple of Students
-		repository.save(new Student("Alice", "Smith", 900123456));
-		repository.save(new Student("Bob", "Smith", 900123456));
+		repository.save(new Student("Alice", "Smith"));
+		repository.save(new Student("Bob", "Smith"));
 
 		// fetch all Students
 		System.out.println("Students found with findAll():");
