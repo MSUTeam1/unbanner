@@ -3,10 +3,7 @@ package unbanner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class StudentController {
@@ -29,6 +26,12 @@ public class StudentController {
     @RequestMapping(value = "/student/{id}", method = RequestMethod.DELETE)
     public String student(@PathVariable String id) {
         repository.delete(id);
+        return "redirect:/students";
+    }
+
+    @RequestMapping(value = "/student/{id}", method = RequestMethod.PUT)
+    public String student(@ModelAttribute("student") Student student, Model model) {
+        repository.save(student); //FIX ME I MAKE EVERYTHING NULL
         return "redirect:/students";
     }
 
