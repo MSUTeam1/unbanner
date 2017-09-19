@@ -15,11 +15,11 @@ Name: <b th:text="${student.firstName}" /> <b th:text="${student.lastName}" /><b
 
 <br/>
 
-<form action="#" th:action="@{'/student/{id}'(id=${student.id})}" th:object="${student}" th:method="put" >
-    <label th:field="*{id}" />
+<form action="#" th:action="@{'/student/{id}'(id=${student.id})}" th:object="${student}" th:method="post" >
+    <input type="hidden" th:field="*{id}" />
     <input type="text" th:field="*{firstName}" />
     <input type="text" th:field="*{lastName}" />
-    <button type="submit" id="submitButton">Update</button>
+    <button type="submit" id="updateButton">Update</button>
 </form>
 
 

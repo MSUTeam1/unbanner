@@ -29,8 +29,8 @@ public class StudentController {
         return "redirect:/students";
     }
 
-    @RequestMapping(value = "/student/{id}", method = RequestMethod.PUT)
-    public String student(@ModelAttribute("student") Student student, Model model) {
+    @RequestMapping(value = "/student/{id}", method = RequestMethod.POST)
+    public String student(@ModelAttribute("student") Student student) {
         repository.save(student); //FIX ME I MAKE EVERYTHING NULL
         return "redirect:/students";
     }
