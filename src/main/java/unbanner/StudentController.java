@@ -36,7 +36,7 @@ public class StudentController {
     //update one student
     @RequestMapping(value = "/student/{id}", method = RequestMethod.POST)
     public String student(@ModelAttribute("student") Student student) {
-        repository.save(student); //FIX ME I MAKE EVERYTHING NULL
+        repository.save(student);
         return "redirect:/students";
     }
 
