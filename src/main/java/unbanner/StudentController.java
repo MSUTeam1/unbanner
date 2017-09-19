@@ -18,10 +18,12 @@ public class StudentController {
     }
 
     @RequestMapping("/student/{id}")
+
     public String student(@PathVariable String id, Model model) {
         model.addAttribute("student", repository.findOne(id));
         return "student";
     }
+
 
     @RequestMapping(value = "/student/{id}", method = RequestMethod.DELETE)
     public String student(@PathVariable String id) {
