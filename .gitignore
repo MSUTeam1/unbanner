@@ -2,4 +2,6 @@ tags
 
 build
 .gradle
-gradle
+.idea
+out
+

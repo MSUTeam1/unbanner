@@ -1,4 +1,4 @@
-package hello;
+package unbanner;
 
 import org.springframework.data.annotation.Id;
 
@@ -10,12 +10,14 @@ public class Student {
 
     public String firstName;
     public String lastName;
+    public int studentNum;
 
     public Student() {}
 
-    public Student(String firstName, String lastName) {
+    public Student(String firstName, String lastName, int studentNum) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.studentNum = studentNum;
     }
 
     @Override

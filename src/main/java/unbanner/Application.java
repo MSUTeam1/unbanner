@@ -1,4 +1,4 @@
-package hello;
+package unbanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,8 +21,8 @@ public class Application implements CommandLineRunner {
 		repository.deleteAll();
 
 		// save a couple of Students
-		repository.save(new Student("Alice", "Smith"));
-		repository.save(new Student("Bob", "Smith"));
+		repository.save(new Student("Alice", "Smith", 900123456));
+		repository.save(new Student("Bob", "Smith", 900123456));
 
 		// fetch all Students
 		System.out.println("Students found with findAll():");
