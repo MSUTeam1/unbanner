@@ -6,6 +6,23 @@
 </head>
 <body>
 <h1>Student</h1>
+
 Name: <b th:text="${student.firstName}" /> <b th:text="${student.lastName}" /> <b th:text="${student.studentNum}" /><br/>
+
+<form action="#" th:action="@{'/student/{id}'(id=${student.id})}" th:method="delete" >
+    <input type="hidden" name="_method" value="delete" />
+    <button type="submit" id="submitButton">Delete</button>
+</form>
+
+<br/>
+
+<form action="#" th:action="@{'/student/{id}'(id=${student.id})}" th:object="${student}" th:method="put" >
+    <label th:field="*{id}" />
+    <input type="text" th:field="*{firstName}" />
+    <input type="text" th:field="*{lastName}" />
+    <button type="submit" id="submitButton">Update</button>
+</form>
+
+
 </body>
 </html>
