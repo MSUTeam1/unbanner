@@ -1,5 +1,6 @@
 package unbanner;
 
+import unbanner.Student;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,37 @@ public class StudentController {
   *  all students from the repository
   */
   @RequestMapping(value = "/students", method = RequestMethod.GET)
-  public String   studentsList(Model model) {
+  public String studentsList(Model model) {
     model.addAttribute("students", repository.findAll());
     return "students";
   }
 
+  /*
+  *  Routing for create_student.html template
+  *  Specifically for HTTP GET requests
+  *  Provides ability for the template to create
+  *  a new student
+  */
+  @RequestMapping(value = "/students/new", method = RequestMethod.GET)
+  public String provideStudent(@ModelAttribute("student") Student student) {
+    return "create_student";
+  }
+
+  /*
+  *  Routing for create_student.html template
+  *  Specifically for HTTP POST requests
+  *  Provides ability to save a new
+  *  students to the repository
+  */
+  @RequestMapping(value = "/students/new", method = RequestMethod.POST)
+  public String newStudent(@ModelAttribute("student") Student student) {
+    Student newStudent = new Student();
+    newStudent.studentNum = student.studentNum;
+    newStudent.firstName = student.firstName;
+    newStudent.lastName = student.lastName;
+    repository.save(newStudent);
+    return "redirect:/students";
+  }
 
   /*
   *  Routing for student.html template

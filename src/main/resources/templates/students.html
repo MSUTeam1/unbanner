@@ -9,17 +9,16 @@
 <table>
     <tr>
         <th>Name</th>
+        <th>900 Number</th>
         <th>ID</th>
-        <th></th>
     </tr>
     <tr th:each="student : ${students}">
-        <td th:text="${student.firstName + ' ' + student.lastName + ' ' + student.studentNum}"></td>
-
-        <td>
-        </td>
-        <td>
-            <a th:href="@{/student/{id}(id=${student.id})}">view</a>
-        </td>
+        <td th:text="${student.firstName + ' ' + student.lastName}"></td>
+        <td th:text="${student.studentNum}"></td>
+        <td><a th:href="@{/student/{id}(id=${student.id})}">view</a></td>
+    </tr>
+    <tr>
+        <a href="/students/new">Create New Student</a>
     </tr>
 </table>
 <hr/>
