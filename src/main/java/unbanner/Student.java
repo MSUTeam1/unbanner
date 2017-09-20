@@ -4,51 +4,59 @@ import org.springframework.data.annotation.Id;
 
 
 public class Student {
+  @Id
+  public String id;
 
-    @Id
-    public String id;
+  public String firstName;
+  public String lastName;
+  public int studentNum;
 
-    public String firstName;
-    public String lastName;
-    public int studentNum;
+  public Student() {
+  }
 
-    public Student() {}
+  public Student(String firstName, String lastName, int studentNum) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.studentNum = studentNum;
+  }
 
-    public Student(String firstName, String lastName, int studentNum) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.studentNum = studentNum;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public String getFirstName() {
+    return firstName;
+  }
 
-    public String getFirstName() {
-        return firstName;
-    }
+  public String getLastName() {
+    return lastName;
+  }
 
-    public String getLastName(){
-        return lastName;
-    }
+  public int getStudentNum() {
+    return studentNum;
+  }
 
-    public void setLastName(String lastName){
-        this.lastName = lastName;
-    }
+  public void setStudentNum(int studentNum) {
+    this.studentNum = studentNum;
+  }
 
-    public void setFirstName(String firstName){
-        this.firstName = firstName;
-    }
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
 
-    @Override
-    public String toString() {
-        return String.format(
-                "Student[id=%s, firstName='%s', lastName='%s']",
-                id, firstName, lastName);
-    }
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  @Override
+  public String toString() {
+    return String.format(
+        "Student[id=%s, firstName='%s', lastName='%s']",
+        id, firstName, lastName);
+  }
 
 }
