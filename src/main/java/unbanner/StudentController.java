@@ -18,7 +18,7 @@ public class StudentController {
   *  all students from the repository
   */
   @RequestMapping(value = "/students", method = RequestMethod.GET)
-  public String StudentsList(Model model) {
+  public String   studentsList(Model model) {
     model.addAttribute("students", repository.findAll());
     return "students";
   }
