@@ -12,7 +12,9 @@ public class Student {
   public String lastName;
   public int studentNum;
 
-  public Student() {}
+
+  public Student() {
+  }
 
   public Student(String firstName, String lastName, int studentNum) {
     this.firstName = firstName;
@@ -34,6 +36,14 @@ public class Student {
 
   public String getLastName() {
     return lastName;
+  }
+
+  public int getStudentNum() {
+    return studentNum;
+  }
+
+  public void setStudentNum(int studentNum) {
+    this.studentNum = studentNum;
   }
 
   public void setLastName(String lastName) {
