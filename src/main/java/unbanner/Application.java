@@ -27,7 +27,7 @@ public class Application implements CommandLineRunner {
     // fetch all Students
     System.out.println("Students found with findAll():");
     System.out.println("-------------------------------");
-    for (Student Student : repository.findAll()) {
+    for (Student student : repository.findAll()) {
       System.out.println(Student);
     }
     System.out.println();
@@ -39,7 +39,7 @@ public class Application implements CommandLineRunner {
 
     System.out.println("Students found with findByLastName('Smith'):");
     System.out.println("--------------------------------");
-    for (Student Student : repository.findByLastName("Smith")) {
+    for (Student student : repository.findByLastName("Smith")) {
       System.out.println(Student);
     }
 
