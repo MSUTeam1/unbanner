@@ -2,7 +2,7 @@ package unbanner;
 
 import org.springframework.data.annotation.Id;
 
-public class Student implements User {
+public class Student implements Storable {
 
   @Id
   public String id;

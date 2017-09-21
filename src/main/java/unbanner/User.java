@@ -1,7 +1,7 @@
 package unbanner;
 
 
-public interface User {
+public interface Storable {
 
   public String getId();
 
