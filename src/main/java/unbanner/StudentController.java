@@ -1,9 +1,10 @@
 package unbanner;
 
+
 import unbanner.Student;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -11,6 +12,7 @@ public class StudentController {
 
   @Autowired
   StudentRepository repository;
+
 
   /*
   *  Routing for students.html template
@@ -62,6 +64,7 @@ public class StudentController {
     model.addAttribute("student", repository.findOne(id));
     return "student";
   }
+
 
   /*
   *  Routing for student.html template

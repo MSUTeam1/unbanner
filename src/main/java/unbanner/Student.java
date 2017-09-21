@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 
 
 public class Student {
+
   @Id
   public String id;
 
@@ -11,8 +12,8 @@ public class Student {
   public String lastName;
   public int studentNum;
 
-  public Student() {
-  }
+
+  public Student() {}
 
   public Student(String firstName, String lastName, int studentNum) {
     this.firstName = firstName;
