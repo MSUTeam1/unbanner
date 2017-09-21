@@ -11,8 +11,8 @@
 <form action="#" th:action="@{'/students/new'}" th:object="${student}" th:method="post">
     <input type="hidden" th:field="*{id}"/>
     <input type="number" th:field="*{studentNum}"/>
-    <input type="text" th:field="*{firstName}"/>
-    <input type="text" th:field="*{lastName}"/>
+    <input placeholder="First Name" type="text" th:field="*{firstName}"/>
+    <input placeholder="Last Name" type="text" th:field="*{lastName}"/>
     <button type="submit" id="updateButton">Create</button>
 </form>
 
