@@ -2,6 +2,7 @@ package unbanner;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,21 +23,24 @@ public class HttpRequestTest {
   @Test
   public void indexShouldRespond() throws Exception {
     this.mockMvc.perform(get("/"))
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andDo(print());
   }
 
   @Test
   public void studentsShouldRespond() throws Exception {
     this.mockMvc.perform(get("/students"))
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andDo(print());
   }
 
   @Test
   public void studentsNewShouldRespond() throws Exception {
     this.mockMvc.perform(get("/students/new"))
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andDo(print());
   }
 
-  //TODO figure out how to test student/id route
+  //TODO figure out how to test student/id route and also post requests
 
 }
