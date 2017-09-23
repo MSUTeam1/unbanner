@@ -1,0 +1,6 @@
+language: java
+services: mongodb
+branches:
+    only:
+        - master
+        - development
