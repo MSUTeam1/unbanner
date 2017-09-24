@@ -40,8 +40,8 @@ public class HttpRequestTest {
 
   /*
    *This test requires the mongo database to be running
-   * would be cool (and I am trying) to figure out how to embed one
-   * or perhaps even some other way... but for now it runs off
+   * would be cool to figure out how to embed one
+   * or implement the interface in a stub class but for now it runs off
    * the Application.java file and the two students that it creates.
    */
   @Test
