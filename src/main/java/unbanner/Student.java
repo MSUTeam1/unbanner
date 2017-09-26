@@ -12,7 +12,6 @@ public class Student {
   public String lastName;
   public int studentNum;
 
-
   public Student() {
   }
 
