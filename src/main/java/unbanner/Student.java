@@ -2,8 +2,7 @@ package unbanner;
 
 import org.springframework.data.annotation.Id;
 
-
-public class Student {
+public class Student implements Storable {
 
   @Id
   public String id;
@@ -21,10 +20,12 @@ public class Student {
     this.studentNum = studentNum;
   }
 
+  @Override
   public String getId() {
-    return id;
+    return this.id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
