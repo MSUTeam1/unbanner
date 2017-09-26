@@ -6,12 +6,15 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.mockito.Mockito.*;
 import org.mockito.Mock;
-
+import static org.hamcrest.Matchers.is;
 
 import org.junit.Test;
-import org.junit.Assert.*;
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,7 @@ public class StudentControllerTest {
   @Autowired
   private StudentController controller;
 
+  /*
   @Mock
   private Student mockStudent1;
 
@@ -34,6 +38,7 @@ public class StudentControllerTest {
 
   @Mock
   private StudentRepository mockRepo;
+  */
 
   @Mock
   private Model mockModel;
@@ -42,6 +47,7 @@ public class StudentControllerTest {
 
   @Before
   public void setupMocks() throws Exception {
+    /*
     MockitoAnnotations.initMocks(this);
     mockStudent1.firstName = "Jimmie";
     mockStudent1.lastName = "Johnson";
@@ -55,6 +61,7 @@ public class StudentControllerTest {
 
     mockStudentList.add(mockStudent1);
     mockStudentList.add(mockStudent2);
+    */
   }
 
   @Test
@@ -63,8 +70,9 @@ public class StudentControllerTest {
   }
 
   @Test
-  public void test_students_list(mockModel) throws Exception {
-
+  public void test_students_list() throws Exception {
+      String ret = controller.studentsList(mockModel);
+      assertThat("students".equals(ret));
   }
 
 
