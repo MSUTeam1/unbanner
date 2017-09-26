@@ -56,11 +56,9 @@ public class Student implements Storable {
 
   @Override
   public String toString() {
-    return "Student{"
-            + "id='" + id + '\''
-            + ", firstName='" + firstName + '\''
-            + ", lastName='" + lastName + '\''
-            + ", studentNum=" + studentNum
-            + '}';
+    return String.format(
+        "Student[id=%s, firstName='%s', lastName='%s']",
+        id, firstName, lastName);
   }
+
 }
