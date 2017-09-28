@@ -23,8 +23,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import unbanner.Student;
@@ -115,7 +115,8 @@ public class HttpRequestTest {
         .andExpect(model().attribute("students", hasItem(
             allOf(
                 hasProperty("firstName", is("Tom")),
-                hasProperty("lastName", is("Cruz"))))))
+                hasProperty("lastName", is("Cruz")),
+                hasProperty("studentNum", is(1234567))))))
         .andDo(print());
   }
 
@@ -147,7 +148,7 @@ public class HttpRequestTest {
   /*
    * Checks the routing for a DELETE request to '/students/{id}'
    * Checks that the correct view has been called by the controller
-   * Checks that the student has been successfully delted
+   * Checks that the student has been successfully deleted
    */
   @Test
   public void studentShouldDelete() throws Exception {
