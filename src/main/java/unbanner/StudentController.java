@@ -68,7 +68,6 @@ public class StudentController {
     return "student";
   }
 
-
   /*
   *  Routing for student.html template
   *  specifically for HTTP DELETE requests
