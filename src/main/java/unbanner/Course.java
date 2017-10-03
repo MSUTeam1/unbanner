@@ -1,80 +1,68 @@
 package unbanner;
 
+import javassist.runtime.Desc;
 import org.springframework.data.annotation.Id;
 
-public class Course implements Storable{
+import java.util.List;
 
+public class Course implements Storable {
 
-    String department;
-    int crn; //course number
-    int credits;
-    String description;
-    String learningObjectives;
-    int prerequisiteCreditLevel; //senior, graduate, etc.. ENUM these in global
-    //what are corequesites.
 
     @Id
-    private String id;
+    public String id;
+    public String name;
+    public String department;
+    public int number;
+    public int credits;
+    public String objectives;
+    public String description;
+    public List<Course> prereqs;
+    public List<Course> coreqs;
 
-
-    public void setPrerequisiteCreditLevel(int prerequisiteCreditLevel) {
-        this.prerequisiteCreditLevel = prerequisiteCreditLevel;
+    /**
+     * Returns a course with null values
+     */
+    public Course() {
+        this.number = 0;
+        this.credits = 0;
+        this.department = "";
+        this.description = "";
     }
 
-    public Course(String department, int crn, int credits, String description,
-                  String learningObjectives, int prerequisiteCreditLevel) {
-        this.department = department;
-        this.crn = crn;
+    /**
+     * Returns a course with number, credits, department, and description
+     * @param number the number this course has
+     * @param credits the credits this course gives
+     * @param department the department this course is in
+     * @param description the description of the course
+     */
+    public Course(int number, int credits, String department, String description) {
+        this.number = number;
         this.credits = credits;
-        this.description = description;
-        this.learningObjectives = learningObjectives;
-        this.prerequisiteCreditLevel = prerequisiteCreditLevel;
-    }
-
-    public void setCrn(int crn) {
-        this.crn = crn;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setDepartment(String department) {
         this.department = department;
+        this.description = description;
     }
 
-    public void setLearningObjectives(String learningObjectives) {
-        this.learningObjectives = learningObjectives;
+    public Course(String name, int number, int credits, String department, String description, String objectives) {
+        this(number,credits,department,description);
+        this.objectives = objectives;
+        this.name = name;
     }
 
-    public void setCredits(int credits) {
-        this.credits = credits;
-
+    public Course(int number, int credits, String department, String description, List<Course> prereqs) {
+        this(number, credits, department, description);
+        this.prereqs = prereqs;
     }
 
-    public int getPrerequisiteCreditLevel() {
-        return prerequisiteCreditLevel;
+    public Course(String name, int number, int credits, String department, String description, List<Course> prereqs) {
+        this(name, number, credits, department, description, "");
+        this.prereqs = prereqs;
     }
 
-    public String getLearningObjectives() {
-        return learningObjectives;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getCrn() {
-        return crn;
-    }
-
-    public int getCredits() {
-
-        return credits;
+    public Course(int number, int credits, String department, String description, List<Course> prereqs, List<Course> coreqs) {
+        this(number, credits, department, description);
+        this.prereqs = prereqs;
+        this.coreqs = coreqs;
     }
 
     @Override
@@ -87,15 +75,70 @@ public class Course implements Storable{
         this.id = id;
     }
 
+    public String getDepartment() {
+        return department;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+    public void setNumber(int number) {
+        this.number = number;
+    }
+    public int getCredits() {
+        return credits;
+    }
+    public void setCredits(int credits) {
+        this.credits = credits;
+    }
+
+    public void setObjectives(String objectives) {
+        this.objectives = objectives;
+    }
+    public String getObjectives() {
+        return objectives;
+    }
+    public void setPrereqs(List<Course> prereqs) {
+        this.prereqs = prereqs;
+    }
+
+    public List<Course> getPrereqs() {
+        return prereqs;
+    }
+
+    public List<Course> getCoreqs() {
+        return coreqs;
+    }
+
+    public void setCoreqs(List<Course> coreqs) {
+        this.coreqs = coreqs;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String toString() {
-        return "Course{" +
-                "department='" + department + '\'' +
-                ", crn=" + crn +
-                ", credits=" + credits +
-                ", description='" + description + '\'' +
-                ", learningObjectives='" + learningObjectives + '\'' +
-                ", prerequisiteCreditLevel=" + prerequisiteCreditLevel +
-                '}';
+        return String.format(
+                "Course[id=%s, department='%s', description='%s']",
+                id, department, description);
     }
+
 }
+
