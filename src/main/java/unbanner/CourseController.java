@@ -24,6 +24,21 @@ public class CourseController {
         model.addAttribute("course",repository.findOne(id));
         return "course";
     }
+    @RequestMapping(value = "/courses/new", method = RequestMethod.GET)
+    public String provideCourse(@ModelAttribute("course") Course course ){return "create_course";}
+
+    @RequestMapping(value = "/courses/new", method = RequestMethod.POST)
+    public String newCourse(@ModelAttribute("course") Course course) {
+        Course newCourse = new Course();
+        newCourse.number = course.number;
+        newCourse.department = course.department;
+        newCourse.description = course.description;
+        repository.save(newCourse);
+        return "redirect:/courses";
+    }
+
+
+
 
     @RequestMapping(value = "/course/{id}", method = RequestMethod.DELETE)
     public String course(@PathVariable String id) {
