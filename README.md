@@ -61,6 +61,7 @@ click "delete" to do that
 fill in the fields and click "update" to do that
 if you delete or update you will be taken back to:
 http://localhost:8080/courses/
+come to think of it i think update is broken too
 
 to CREATE A NEW COURSE:
 while on the course list page...
