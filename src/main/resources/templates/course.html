@@ -1,0 +1,46 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Course</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Course</h1>
+
+Course: <b th:text="${course.description}" /> <b th:text="${course.department}" /> <b th:text="${course.number}" /><br/>
+
+<form action="#" th:action="@{'/course/{id}'(id=${course.id})}" th:method="delete" >
+    <input type="hidden" name="_method" value="delete" />
+    <button type="submit" id="submitButton">Delete</button>
+</form>
+
+<br/>
+
+<form action="#" th:action="@{'/course/{id}'(id=${course.id})}" th:object="${course}" th:method="post" >
+    <input type="hidden" th:field="*{id}" />
+
+    <label th:for="*{name}">Name</label>
+    <input type="text" th:field="*{name}" />
+
+    <label th:for="*{department}">Department</label>
+    <input type="text" th:field="*{department}" />
+
+    <label th:for="*{number}">Number</label>
+    <input type="number" th:field="*{number}" />
+
+    <label th:for="*{credits}">Credits</label>
+    <input type="number" th:field="*{credits}" />
+
+    <label th:for="*{description}">Description</label>
+    <input type="text" th:field="*{description}" />
+
+    <label th:for="*{objectives}">Objectives</label>
+    <input type="text" th:field="*{objectives}" />
+
+    <button type="submit" id="updateButton">Update</button>
+</form>
+
+
+</body>
+</html>
