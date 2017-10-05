@@ -16,6 +16,8 @@ public class Course implements Storable {
     public int credits;
     public String objectives;
     public String description;
+    public String professor;
+    public String section;
     public List<Course> prereqs;
     public List<Course> coreqs;
 
@@ -43,6 +45,10 @@ public class Course implements Storable {
         this.description = description;
     }
 
+    public Course(int number, int credits, String department, String description, String section) {
+        this(number, credits, department, description);
+        this.section = section;
+    }
     public Course(String name, int number, int credits, String department, String description, String objectives) {
         this(number,credits,department,description);
         this.objectives = objectives;
@@ -75,6 +81,14 @@ public class Course implements Storable {
         this.id = id;
     }
 
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    public String getSection() {
+        return section;
+    }
     public String getDepartment() {
         return department;
     }
@@ -87,6 +101,12 @@ public class Course implements Storable {
         this.name = name;
     }
 
+    public void setProfessor(String professor_id) {
+        this.professor = professor_id;
+    }
+    public String getProfessor() {
+        return professor;
+    }
     public int getNumber() {
         return number;
     }

@@ -27,16 +27,20 @@ Course: <b th:text="${course.description}" /> <b th:text="${course.department}" 
     <input type="text" th:field="*{department}" />
 
     <label th:for="*{number}">Number</label>
-    <input type="number" th:field="*{number}" />
+    <input type="number" min="1000" max="9000" th:field="*{number}" />
 
     <label th:for="*{credits}">Credits</label>
-    <input type="number" th:field="*{credits}" />
+    <input type="number" min="1" max="6" th:field="*{credits}" />
 
     <label th:for="*{description}">Description</label>
     <input type="text" th:field="*{description}" />
 
     <label th:for="*{objectives}">Objectives</label>
     <input type="text" th:field="*{objectives}" />
+
+    <select th:field="*{section}">
+        <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.number}"></option>
+    </select>
 
     <button type="submit" id="updateButton">Update</button>
 </form>

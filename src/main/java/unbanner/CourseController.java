@@ -13,6 +13,24 @@ public class CourseController {
     @Autowired
     CourseRepository repository;
 
+    @Autowired
+    SectionRepository sectionsRepository;
+
+    @Autowired
+    ProfessorRepository professorRepository;
+
+
+    @RequestMapping(value = "/newsection/{id}")
+    public String newSection(@PathVariable String id, Model model) {
+        Course course = repository.findById(id);
+        Course newSection = new Course(course.name,course.number,course.credits,course.department,course.description,course.objectives);
+        repository.save(newSection);
+        Section section = new Section(sectionsRepository.findByCourseId(id).size(),id,course.professor);
+        sectionsRepository.save(section);
+        newSection.setSection(section.id);
+        repository.save(newSection);
+        return "redirect:/courses";
+    }
     @RequestMapping(value = "/courses", method = RequestMethod.GET)
     public String coursesList(Model model) {
         model.addAttribute("courses",repository.findAll());
@@ -22,10 +40,15 @@ public class CourseController {
     @RequestMapping("/course/{id}")
     public String course(@PathVariable String id, Model model) {
         model.addAttribute("course",repository.findOne(id));
+        model.addAttribute("sections",sectionsRepository.findByCourseId(id));
+        System.out.println(sectionsRepository.findByCourseId(id));
         return "course";
     }
     @RequestMapping(value = "/courses/new", method = RequestMethod.GET)
-    public String provideCourse(@ModelAttribute("course") Course course ){return "create_course";}
+    public String provideCourse(@ModelAttribute("course") Course course, Model model) {
+        model.addAttribute("professors",professorRepository.findAll());
+        return "create_course";
+    }
 
     @RequestMapping(value = "/courses/new", method = RequestMethod.POST)
     public String newCourse(@ModelAttribute("course") Course course) {
@@ -33,6 +56,13 @@ public class CourseController {
         newCourse.number = course.number;
         newCourse.department = course.department;
         newCourse.description = course.description;
+        newCourse.name = course.name;
+        newCourse.objectives = course.objectives;
+        newCourse.credits = course.credits;
+        repository.save(newCourse);
+        Section newSection = new Section(1,newCourse.id,course.professor);
+        sectionsRepository.save(newSection);
+        newCourse.setSection(newSection.id);
         repository.save(newCourse);
         return "redirect:/courses";
     }
