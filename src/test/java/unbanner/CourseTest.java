@@ -4,6 +4,7 @@ import static junit.framework.Assert.assertNotSame;
 import static junit.framework.TestCase.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -11,6 +12,7 @@ import org.junit.Test;
 
 
 public class CourseTest {
+
   private Course dummyCourse;
   private List<Course> fakeReqs;
 
@@ -132,4 +134,5 @@ public class CourseTest {
   public void getPrereqs() {
     assertEquals(dummyCourse.getPrereqs(), fakeReqs);
   }
+
 }
