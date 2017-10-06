@@ -1,9 +1,10 @@
 package unbanner;
 
 import java.util.List;
+
 import javassist.runtime.Desc;
 import org.springframework.data.annotation.Id;
-
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 
 public class Course implements Storable {
@@ -19,6 +20,8 @@ public class Course implements Storable {
   public String description;
   public List<Course> prereqs;
   public List<Course> coreqs;
+  @DBRef
+  public List<Student> students;
 
   /**
    * Returns a course with null values.
@@ -79,6 +82,14 @@ public class Course implements Storable {
   @Override
   public void setId(String id) {
     this.id = id;
+  }
+
+  public List<Student> getStudents() {
+    return students;
+  }
+
+  public void setStudents(List<Student> students) {
+    this.students = students;
   }
 
   public String getDepartment() {

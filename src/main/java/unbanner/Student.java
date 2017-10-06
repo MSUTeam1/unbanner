@@ -1,6 +1,9 @@
 package unbanner;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 public class Student implements Storable {
 
@@ -10,6 +13,8 @@ public class Student implements Storable {
   public String firstName;
   public String lastName;
   public int studentNum;
+  @DBRef
+  public List<Course> courses;
 
   public Student() {
   }
@@ -28,6 +33,14 @@ public class Student implements Storable {
   @Override
   public void setId(String id) {
     this.id = id;
+  }
+
+  public List<Course> getCourses() {
+    return this.courses;
+  }
+
+  public void setCourses(List<Course> courses) {
+    this.courses = courses;
   }
 
   public String getFirstName() {

@@ -7,7 +7,17 @@
 <body>
 <h1>Student</h1>
 
-Name: <b th:text="${student.firstName}" /> <b th:text="${student.lastName}" /> <b th:text="${student.studentNum}" /><br/>
+Name: <b th:text="${student.firstName}" /> <b th:text="${student.lastName}" />
+Number: <b th:text="${student.studentNum}" /><br/>
+
+Courses:
+<table>
+    <tr th:each="course : ${student.courses}">
+        <td th:text="${course.department + ' ' + course.number}"></td>
+        <td th:text="${course.name}"></td>
+        <td><a th:href="@{/course/{id}(id=${course.id})}">view</a></td>
+    </tr>
+</table>
 
 <form action="#" th:action="@{'/student/{id}'(id=${student.id})}" th:method="delete" >
     <input type="hidden" name="_method" value="delete" />
