@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import sun.misc.Request;
 
 @Controller
 public class CourseController {
@@ -20,17 +21,7 @@ public class CourseController {
     ProfessorRepository professorRepository;
 
 
-    @RequestMapping(value = "/newsection/{id}")
-    public String newSection(@PathVariable String id, Model model) {
-        Course course = repository.findById(id);
-        Course newSection = new Course(course.name,course.number,course.credits,course.department,course.description,course.objectives);
-        repository.save(newSection);
-        Section section = new Section(sectionsRepository.findByCourseId(id).size(),id,course.professor);
-        sectionsRepository.save(section);
-        newSection.setSection(section.id);
-        repository.save(newSection);
-        return "redirect:/courses";
-    }
+
     @RequestMapping(value = "/courses", method = RequestMethod.GET)
     public String coursesList(Model model) {
         model.addAttribute("courses",repository.findAll());
@@ -81,5 +72,4 @@ public class CourseController {
         repository.save(course);
         return "redirect:/courses";
     }
-
 }

@@ -12,11 +12,10 @@ Course: <b th:text="${course.description}" /> <b th:text="${course.department}" 
 
 <form action="#" th:action="@{'/course/{id}'(id=${course.id})}" th:method="delete" >
     <input type="hidden" name="_method" value="delete" />
-    <button type="submit" id="submitButton">Delete</button>
+    <button type="submit" id="submitButton">Delete Course</button>
 </form>
 
 <br/>
-
 <form action="#" th:action="@{'/course/{id}'(id=${course.id})}" th:object="${course}" th:method="post" >
     <input type="hidden" th:field="*{id}" />
 
@@ -38,13 +37,24 @@ Course: <b th:text="${course.description}" /> <b th:text="${course.department}" 
     <label th:for="*{objectives}">Objectives</label>
     <input type="text" th:field="*{objectives}" />
 
-    <select th:field="*{section}">
-        <option th:each="section : ${sections}" th:value="${section.id}" th:text="${section.number}"></option>
-    </select>
 
     <button type="submit" id="updateButton">Update</button>
 </form>
-
-
+<div th:each="section : ${sections}">
+    <p th:text="${'Section ' + section.number}"></p><form action="#" th:action="@{'/section/{section}'(section=${section.id})}" th:method="delete">
+    <button type="submit" id="deleteSection">Delete Section</button>
+</form>
+    <form action="#" th:action="@{'/section/{id}'(id=${section.id})}" th:object="${section}" th:method="post">
+        <input type="hidden" field="id" th:value="${section.id}" />
+        <label for="days" field="days">Days</label>
+        <input id="days" type="text" th:value="${section.days}"/>
+        <label for="time">Time</label>
+        <input id="time" type="time" th:value   ="${section.time}" />
+        <button type="submit" id="updateSection">Update Section</button>
+    </form>
+</div>
+<form action="#" th:action="@{'/course/{section}/section'(section=${course.id})}" th:method="post" >
+    <button type="submit" id="createSection">New Section</button>
+</form>
 </body>
 </html>

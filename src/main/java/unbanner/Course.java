@@ -3,8 +3,10 @@ package unbanner;
 import javassist.runtime.Desc;
 import org.springframework.data.annotation.Id;
 
+import javax.persistence.Entity;
 import java.util.List;
 
+@Entity
 public class Course implements Storable {
 
 
