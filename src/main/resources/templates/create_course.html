@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create New Course</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Create New Course</h1>
+
+
+<form action="#" th:action="@{'/courses/new'}" th:object="${course}" th:method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <input placeholder="Department" type="text" th:field="*{department}"/>
+    <input placeholder="Course Name" type="text" th:field="*{name}"/>
+    <input placeholder="Course Number" type="number" min="1000" max="9000" th:field="*{number}"/>
+    <input placeholder="Credits" type="number" min="1" max="6" th:field="*{credits}"/>
+    <input placeholder="Description" type="text" th:field="*{description}"/>
+    <input placeholder="Objectives" type="text" th:field="*{objectives}"/>
+    <select th:field="*{professor}">
+        <option th:each="professor : ${professors}" th:value="${professor.id}" th:text="${professor.name}"></option>
+    </select>
+    <button type="submit" id="updateButton">Create</button>
+</form>
+
+
+</body>
+</html>
