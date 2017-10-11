@@ -1,11 +1,14 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+<div th:include="header :: menu"></div>
+
     <p>See List of Students <a href="/students">here</a></p>
     <p>See List of Courses <a href="/courses">here</a></p>
 </body>
+
 </html>

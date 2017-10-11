@@ -37,39 +37,39 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class CourseControllerTest {
 
-    @Autowired
-    private CourseController controller;
+  @Autowired
+  private CourseController controller;
 
-    @Autowired
-    private CourseRepository repo;
+  @Autowired
+  private CourseRepository repo;
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @Mock
-    private Model mockModel;
+  @Mock
+  private Model mockModel;
 
-    @Test
-    public void contextLoads() throws Exception {
-        assertThat(controller).isNotNull();
-    }
+  @Test
+  public void contextLoads() throws Exception {
+    assertThat(controller).isNotNull();
+  }
 
 
-    @Test
-    public void test_students_list() throws Exception {
-        String ret = controller.coursesList(mockModel);
-        assertThat("courses".equals(ret));
-    }
+  @Test
+  public void test_students_list() throws Exception {
+    String ret = controller.coursesList(mockModel);
+    assertThat("courses".equals(ret));
+  }
 
-    @Test
-    public void coursesNewShouldRespond() throws Exception {
-        this.mockMvc.perform(get("/courses/new"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("create_course"))
-                .andDo(print());
-    }
+  @Test
+  public void coursesNewShouldRespond() throws Exception {
+    this.mockMvc.perform(get("/courses/new"))
+        .andExpect(status().isOk())
+        .andExpect(view().name("create_course"))
+        .andDo(print());
+  }
 
-    //TODO add more tests specific to the controller
+  //TODO add more tests specific to the controller
 
 
 }
