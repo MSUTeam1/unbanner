@@ -10,9 +10,18 @@
 
 Course: <b th:text="${course.description}" /> <b th:text="${course.department}" /> <b th:text="${course.number}" /><br/>
 
-Students:
-<table>
-    <tr th:each="student : ${course.students}">
+Sections:
+<table th:each="section : ${course.sections}">
+    <tr>
+        <td th:text="${section.number}"></td>
+        <td th:text="${section.schedule}"></td>
+        <td th:text="${section.getTimeLength()}"></td>
+        <td><a th:href="@{/section/{id}(id=${section.id})}">view</a></td>
+    </tr>
+    <tr>
+        <td>Students:</td>
+    </tr>
+    <tr th:each="student : ${section.students}">
         <td th:text="${student.firstName + ' ' + student.lastName}"></td>
         <td th:text="${student.studentNum}"></td>
         <td><a th:href="@{/student/{id}(id=${student.id})}">view</a></td>
