@@ -1,10 +1,13 @@
 package unbanner;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -27,17 +30,27 @@ public class Application implements CommandLineRunner {
     courseRepository.deleteAll();
 
     // save a couple of Courses and Students
-    courseRepository.save(new Course("Computer Science I", 1050,4,"CS", "Intro to Computer Science","Learning basics of programming in computer science"));
-    courseRepository.save(new Course("Computer Science II", 2050,4,"CS","Computer Science 2","Learning Object Oriented Programming in Computer Science"));
+    courseRepository.save(new Course("Computer Science I", 1050, 4, "CS", "Intro to Computer Science", "Learning basics of programming in computer science"));
+    courseRepository.save(new Course("Computer Science II", 2050, 4, "CS", "Computer Science 2", "Learning Object Oriented Programming in Computer Science"));
     studentRepository.save(new Student("Alice", "Smith", 900123456));
     studentRepository.save(new Student("Bob", "Smith", 900123456));
 
     Student alice = studentRepository.findByFirstName("Alice");
     Student bob = studentRepository.findByFirstName("Bob");
-    alice.setCourses(courseRepository.findAll());
-    bob.setCourses(courseRepository.findAll());
+    Course c1 = courseRepository.findByName("Computer Science I");
+    Course c2 = courseRepository.findByName("Computer Science II");
+
+    alice.setCourses((List<Course>) new ArrayList<Course>(Arrays.asList(c1)));
+    bob.setCourses((List<Course>) new ArrayList<Course>(Arrays.asList(c2)));
+
+    c1.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(alice)));
+    c2.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(bob)));
+
     studentRepository.save(alice);
     studentRepository.save(bob);
+
+    courseRepository.save(c1);
+    courseRepository.save(c2);
 
     // fetch all Students
     System.out.println("Students found with findAll():");

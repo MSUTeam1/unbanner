@@ -10,6 +10,15 @@
 
 Course: <b th:text="${course.description}" /> <b th:text="${course.department}" /> <b th:text="${course.number}" /><br/>
 
+Students:
+<table>
+    <tr th:each="student : ${course.students}">
+        <td th:text="${student.firstName + ' ' + student.lastName}"></td>
+        <td th:text="${student.studentNum}"></td>
+        <td><a th:href="@{/student/{id}(id=${student.id})}">view</a></td>
+    </tr>
+</table>
+
 <form action="#" th:action="@{'/course/{id}'(id=${course.id})}" th:method="delete" >
     <input type="hidden" name="_method" value="delete" />
     <button type="submit" id="submitButton">Delete</button>

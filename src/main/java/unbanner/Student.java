@@ -1,6 +1,7 @@
 package unbanner;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -13,10 +14,14 @@ public class Student implements Storable {
   public String firstName;
   public String lastName;
   public int studentNum;
-  @DBRef
+  @DBRef(lazy = true)
   public List<Course> courses;
 
   public Student() {
+  }
+
+  public Student(List<Course> courses) {
+    this.courses = Objects.requireNonNull(courses);
   }
 
   public Student(String firstName, String lastName, int studentNum) {
