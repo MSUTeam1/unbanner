@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class CourseController {
+<<<<<<< HEAD
   @Autowired
   CourseRepository repository;
 
@@ -54,5 +55,48 @@ public class CourseController {
     repository.save(course);
     return "redirect:/courses";
   }
+=======
+    @Autowired
+    CourseRepository repository;
+
+    @RequestMapping(value = "/courses", method = RequestMethod.GET)
+    public String coursesList(Model model) {
+        model.addAttribute("courses",repository.findAll());
+        return "courses";
+    }
+
+    @RequestMapping("/course/{id}")
+    public String course(@PathVariable String id, Model model) {
+        model.addAttribute("course",repository.findOne(id));
+        return "course";
+    }
+    @RequestMapping(value = "/courses/new", method = RequestMethod.GET)
+    public String provideCourse(@ModelAttribute("course") Course course ){return "create_course";}
+
+    @RequestMapping(value = "/courses/new", method = RequestMethod.POST)
+    public String newCourse(@ModelAttribute("course") Course course) {
+        Course newCourse = new Course();
+        newCourse.number = course.number;
+        newCourse.department = course.department;
+        newCourse.description = course.description;
+        repository.save(newCourse);
+        return "redirect:/courses";
+    }
+
+
+
+
+    @RequestMapping(value = "/course/{id}", method = RequestMethod.DELETE)
+    public String course(@PathVariable String id) {
+        repository.delete(id);
+        return "redirect:/courses";
+    }
+
+    @RequestMapping(value = "/course/{id}", method = RequestMethod.POST)
+    public String course(@ModelAttribute("course") Course course) {
+        repository.save(course);
+        return "redirect:/courses";
+    }
+>>>>>>> 898402be6a3aff67826ea699b857cbdeebf20059
 
 }

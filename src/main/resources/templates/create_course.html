@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Course</title>
@@ -31,5 +32,25 @@
     <button type="submit" id="submitButton">Create</button>
 </form>
 
+=======
+html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create New Student</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Create New Student</h1>
+
+
+<form action="#" th:action="@{'/students/new'}" th:object="${student}" th:method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <input type="number" th:field="*{studentNum}"/>
+    <input placeholder="First Name" type="text" th:field="*{firstName}"/>
+    <input placeholder="Last Name" type="text" th:field="*{lastName}"/>
+    <button type="submit" id="updateButton">Create</button>
+</form>
+
+
+>>>>>>> 898402be6a3aff67826ea699b857cbdeebf20059
 </body>
 </html>
