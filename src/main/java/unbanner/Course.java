@@ -1,5 +1,6 @@
 package unbanner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -21,7 +22,7 @@ public class Course implements Storable {
   public List<Course> prereqs;
   public List<Course> coreqs;
   @DBRef(lazy = true)
-  public List<Student> students;
+  public List<Section> sections;
 
   /**
    * Returns a course with null values.
@@ -84,14 +85,6 @@ public class Course implements Storable {
     this.id = id;
   }
 
-  public List<Student> getStudents() {
-    return students;
-  }
-
-  public void setStudents(List<Student> students) {
-    this.students = students;
-  }
-
   public String getDepartment() {
     return department;
   }
@@ -128,6 +121,16 @@ public class Course implements Storable {
     return objectives;
   }
 
+  public List<Section> getSections() {
+    return sections;
+  }
+  public void setSections(List<Section> sections) {
+    this.sections = sections;
+  }
+  public void addSection(Section section) {
+    if (sections == null) sections = new ArrayList<Section>();
+    this.sections.add(section);
+  }
   public void setPrereqs(List<Course> prereqs) {
     this.prereqs = prereqs;
   }
