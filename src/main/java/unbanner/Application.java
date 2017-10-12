@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,6 +30,21 @@ public class Application implements CommandLineRunner {
   @Autowired
   private SectionRepository sectionRepository;
 
+  @Autowired
+  private Globals globals;
+
+  @Bean
+  public Globals getGlobals(@Value("${global.school}") String globals) {
+
+    return new Globals() {
+
+      @Override
+      public String getName() {
+        return globals;
+      }
+    };
+  }
+
   @Bean
   public TemplateResolver templateResolver() {
     TemplateResolver templateResolver = new ClassLoaderTemplateResolver();
@@ -46,6 +62,7 @@ public class Application implements CommandLineRunner {
     templateEngine.addDialect(new LayoutDialect());
     return templateEngine;
   }
+
 
 
   public static void main(String[] args) {
@@ -129,7 +146,7 @@ public class Application implements CommandLineRunner {
     for (Student student : studentRepository.findByLastName("Smith")) {
       System.out.println(student);
     }
-
+    System.out.println(globals.getName());
   }
 
 }
