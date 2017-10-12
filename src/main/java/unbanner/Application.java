@@ -34,13 +34,25 @@ public class Application implements CommandLineRunner {
   private Globals globals;
 
   @Bean
-  public Globals getGlobals(@Value("${global.school}") String globals) {
+  public Globals getGlobals(@Value("${global.school}") String school, @Value("${global.freshman}") String freshman, @Value("${global.sophomore}") String sophomore, @Value("${global.junior}") String junior, @Value("${global.senior}") String senior) {
 
     return new Globals() {
 
       @Override
-      public String getName() {
-        return globals;
+      public String getSchool() {
+        return school;
+      }
+      public String getFreshman() {
+        return freshman;
+      }
+      public String getSophomore() {
+        return sophomore;
+      }
+      public String getJunior() {
+        return junior;
+      }
+      public String getSenior() {
+        return senior;
       }
     };
   }
@@ -146,7 +158,13 @@ public class Application implements CommandLineRunner {
     for (Student student : studentRepository.findByLastName("Smith")) {
       System.out.println(student);
     }
-    System.out.println(globals.getName());
+    System.out.println();
+    System.out.println("Global Variables:");
+    System.out.println(globals.getSchool());
+    System.out.println(globals.getFreshman());
+    System.out.println(globals.getSophomore());
+    System.out.println(globals.getJunior());
+    System.out.println(globals.getSenior());
   }
 
 }
