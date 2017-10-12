@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
 
 <body>
 
-<div th:fragment="menu">
+<div layout:fragment="menu">
     <a href="/students">Students</a>
     <a href="/courses">Courses</a>
 </div>
