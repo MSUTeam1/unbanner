@@ -34,23 +34,30 @@ public class Application implements CommandLineRunner {
   private Globals globals;
 
   @Bean
-  public Globals getGlobals(@Value("${global.school}") String school, @Value("${global.freshman}") String freshman, @Value("${global.sophomore}") String sophomore, @Value("${global.junior}") String junior, @Value("${global.senior}") String senior) {
-
+  public Globals getGlobals(@Value("${global.school}") String school,
+                            @Value("${global.freshman}") String freshman,
+                            @Value("${global.sophomore}") String sophomore,
+                            @Value("${global.junior}") String junior,
+                            @Value("${global.senior}") String senior) {
     return new Globals() {
 
       @Override
       public String getSchool() {
         return school;
       }
+
       public String getFreshman() {
         return freshman;
       }
+
       public String getSophomore() {
         return sophomore;
       }
+
       public String getJunior() {
         return junior;
       }
+
       public String getSenior() {
         return senior;
       }
@@ -76,7 +83,6 @@ public class Application implements CommandLineRunner {
   }
 
 
-
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
   }
@@ -86,15 +92,16 @@ public class Application implements CommandLineRunner {
 
     studentRepository.deleteAll();
     courseRepository.deleteAll();
+    sectionRepository.deleteAll();
 
     // save a couple of Courses and Students
     courseRepository.save(new Course("Computer Science I", 1050, 4, "CS", "Intro to Computer Science", "Learning basics of programming in computer science"));
     courseRepository.save(new Course("Computer Science II", 2050, 4, "CS", "Computer Science 2", "Learning Object Oriented Programming in Computer Science"));
     studentRepository.save(new Student("Alice", "Smith", 900123456));
     studentRepository.save(new Student("Bob", "Smith", 900123456));
-    sectionRepository.save(new Section(1,courseRepository.findByName("Computer Science I")));
-    sectionRepository.save(new Section(1,courseRepository.findByName("Computer Science II")));
-    sectionRepository.save(new Section(2,courseRepository.findByName("Computer Science I")));
+    sectionRepository.save(new Section(1, courseRepository.findByName("Computer Science I")));
+    sectionRepository.save(new Section(1, courseRepository.findByName("Computer Science II")));
+    sectionRepository.save(new Section(2, courseRepository.findByName("Computer Science I")));
 
     Student alice = studentRepository.findByFirstName("Alice");
     Student bob = studentRepository.findByFirstName("Bob");
@@ -111,12 +118,12 @@ public class Application implements CommandLineRunner {
     s2.addToSchedule(Weekday.W);
 
 
-    alice.setCourses((List<Course>) new ArrayList<Course>(Arrays.asList(c1)));
-    bob.setCourses((List<Course>) new ArrayList<Course>(Arrays.asList(c2,c1)));
+    alice.setSections((List<Section>) new ArrayList<Section>(Arrays.asList(s1, s2, s3)));
+    bob.setSections((List<Section>) new ArrayList<Section>(Arrays.asList(s1, s2, s3)));
 
-    s1.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(alice)));
-    s2.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(bob)));
-    s3.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(bob)));
+    s1.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(alice, bob)));
+    s2.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(bob, alice)));
+    s3.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(bob, alice)));
 
     c1.addSection(s1);
     c1.addSection(s3);
@@ -136,7 +143,9 @@ public class Application implements CommandLineRunner {
     System.out.println("-------------------------------");
     for (Student student : studentRepository.findAll()) {
       System.out.println(student);
-      System.out.println(student.courses);
+      for (Section section : student.sections) {
+        System.out.println(section.course);
+      }
     }
     System.out.println();
 

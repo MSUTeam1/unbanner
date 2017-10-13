@@ -19,6 +19,17 @@
         </tr>
     </table>
 
+    Students:
+    <table>
+        <tr>
+        <tr th:each="student : ${section.students}">
+            <td th:text="${student.firstName + ' ' + student.lastName}"></td>
+            <td th:text="${student.studentNum}"></td>
+            <td><a class="badge badge-info" th:href="@{/student/{id}(id=${student.id})}">view</a></td>
+        </tr>
+        </tr>
+    </table>
+
     <form action="#" th:action="@{'/section/{id}'(id=${section.id})}" th:method="delete" >
         <input type="hidden" name="_method" value="delete" />
         <button type="submit" id="submitButton">Delete</button>
