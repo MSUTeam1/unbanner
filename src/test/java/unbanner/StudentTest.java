@@ -1,6 +1,6 @@
 package unbanner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +11,7 @@ public class StudentTest {
   // Make sure we have the same object to test against for all tests
   @Before
   public void initObjects() {
-    bob = new Student("Bob", "Jones", 0); 
+    bob = new Student("Bob", "Jones", 0);
     bob.setId("Dummy String Test");
   }
 
@@ -25,7 +25,7 @@ public class StudentTest {
     bob.setId("New Test String");
     assertEquals("New Test String", bob.getId());
   }
-  
+
   @Test
   public void getStudentNum() throws Exception {
     assertEquals(0, bob.getStudentNum());
@@ -58,10 +58,10 @@ public class StudentTest {
     bob.setFirstName("Alice");
     assertEquals("Alice", bob.getFirstName());
   }
-  
+
   @Test
   public void toStringTest() throws Exception {
     assertEquals("Student[id=Dummy String Test, firstName='Bob', lastName='Jones']",
-            bob.toString());
+        bob.toString());
   }
 }

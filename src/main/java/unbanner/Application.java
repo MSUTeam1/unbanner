@@ -1,6 +1,8 @@
 package unbanner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,6 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -95,8 +94,12 @@ public class Application implements CommandLineRunner {
     sectionRepository.deleteAll();
 
     // save a couple of Courses and Students
-    courseRepository.save(new Course("Computer Science I", 1050, 4, "CS", "Intro to Computer Science", "Learning basics of programming in computer science"));
-    courseRepository.save(new Course("Computer Science II", 2050, 4, "CS", "Computer Science 2", "Learning Object Oriented Programming in Computer Science"));
+    courseRepository.save(new Course("Computer Science I", 1050,
+        4, "CS", "Intro to Computer Science",
+        "Learning basics of programming in computer science"));
+    courseRepository.save(new Course("Computer Science II", 2050,
+        4, "CS", "Computer Science 2",
+        "Learning Object Oriented Programming in Computer Science"));
     studentRepository.save(new Student("Alice", "Smith", 900123456));
     studentRepository.save(new Student("Bob", "Smith", 900123456));
     sectionRepository.save(new Section(1, courseRepository.findByName("Computer Science I")));

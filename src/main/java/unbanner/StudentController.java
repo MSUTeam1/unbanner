@@ -1,6 +1,7 @@
 package unbanner;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,8 +87,8 @@ public class StudentController {
   public String student(@PathVariable String id) {
     Student temp = repository.findOne(id);
     List<Section> tempSections = sectionRepository.findAll();
-    for(Section section : tempSections){
-      if(section.students.contains(temp)) {
+    for (Section section : tempSections) {
+      if (section.students.contains(temp)) {
         section.students.remove(temp);
         sectionRepository.save(section);
       }
