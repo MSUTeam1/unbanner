@@ -8,58 +8,79 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<div layout:fragment="content">
-    <h1>Course</h1>
-    <div class="container">
-        Course: <b th:text="${course.description}" /> <b th:text="${course.department}" /> <b th:text="${course.number}" /><br/>
+    <div layout:fragment="content">
+        <h1>Course</h1>
+        <div class="container">
+            <div class="container">
+                <div class="row">
+                    <div class="col">Description: <b th:text="${course.description}" /></div>
+                    <div class="col">Department: <b th:text="${course.department}" /></div>
+                    <div class="col">Number: <b th:text="${course.number}" /></div>
+                </div>
+                <div class="row">
+                    <form action="#" th:action="@{'/course/{id}'(id=${course.id})}" th:method="delete" >
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" class="btn btn-danger" id="submitButton">Delete</button>
+                    </form>
+                </div>
+            </div>
 
-        Sections:
-        <table th:each="section : ${course.sections}">
-            <tr>
-                <td th:text="${section.number}"></td>
-                <td th:text="${section.schedule}"></td>
-                <td th:text="${section.getTimeLength()}"></td>
-                <td><a th:href="@{/section/{id}(id=${section.id})}">view</a></td>
-            </tr>
-            <tr>
-                <td>Students:</td>
-            </tr>
-            <tr th:each="student : ${section.students}">
-                <td th:text="${student.firstName + ' ' + student.lastName}"></td>
-                <td th:text="${student.studentNum}"></td>
-                <td><a th:href="@{/student/{id}(id=${student.id})}">view</a></td>
-            </tr>
-        </table>
-
-        <form action="#" th:action="@{'/course/{id}'(id=${course.id})}" th:method="delete" >
-            <input type="hidden" name="_method" value="delete" />
-            <button type="submit" id="submitButton">Delete</button>
-        </form>
+            <div class="container">
+            <h5>Sections</h5>
+                <div class="container">
+                    <div class="container" th:each="section : ${course.sections}">
+                        <div class="row">
+                            <div class="col">Section #: <b th:text="${section.number}" /></div>
+                            <div clas="col">Schedule: <b th:text="${section.schedule}"/></div>
+                            <div class="col">Time: <b th:text="${section.getTimeLength()}"/></div>
+                            <td><a class="badge badge-info" th:href="@{/section/{id}(id=${section.id})}">view</a></td>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="container">
+                                    <h6>Students:</h6>
+                                    <div class="container">
+                                        <table>
+                                            <tr th:each="student : ${section.students}">
+                                                <td th:text="${student.firstName + ' ' + student.lastName}"></td>
+                                                <td th:text="${student.studentNum}"></td>
+                                                <td><a class="badge badge-info" th:href="@{/student/{id}(id=${student.id})}">view</a></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <br/>
-        <form action="#" th:action="@{'/course/{id}'(id=${course.id})}" th:object="${course}" th:method="post" >
-            <input type="hidden" th:field="*{id}" />
+        <div class="container">
+            <form action="#" th:action="@{'/course/{id}'(id=${course.id})}" th:object="${course}" th:method="post" >
+                <input type="hidden" th:field="*{id}" />
 
-            <label th:for="*{name}">Name</label>
-            <input type="text" th:field="*{name}" />
+                <label th:for="*{name}">Name</label>
+                <input type="text" class="form-control" th:field="*{name}" />
 
-            <label th:for="*{department}">Department</label>
-            <input type="text" th:field="*{department}" />
+                <label th:for="*{department}">Department</label>
+                <input type="text" class="form-control" th:field="*{department}" />
 
-            <label th:for="*{number}">Number</label>
-            <input type="number" th:field="*{number}" />
+                <label th:for="*{number}">Number</label>
+                <input type="number" class="form-control" th:field="*{number}" />
 
-            <label th:for="*{credits}">Credits</label>
-            <input type="number" th:field="*{credits}" />
+                <label th:for="*{credits}">Credits</label>
+                <input type="number" class="form-control" th:field="*{credits}" />
 
-            <label th:for="*{description}">Description</label>
-            <input type="text" th:field="*{description}" />
+                <label th:for="*{description}">Description</label>
+                <input type="text" class="form-control" th:field="*{description}" />
 
-            <label th:for="*{objectives}">Objectives</label>
-            <input type="text" th:field="*{objectives}" />
+                <label th:for="*{objectives}">Objectives</label>
+                <input type="text" class="form-control" th:field="*{objectives}" />
 
-            <button type="submit" id="updateButton">Update</button>
-        </form>
+                <button type="submit" class="btn btn-primary" id="updateButton">Update</button>
+            </form>
+        </div>
     </div>
-</div>
 </body>
 </html>

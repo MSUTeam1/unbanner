@@ -132,10 +132,6 @@ public class Section implements Storable {
     );
   }
 
-  public void removeStudent(Student student){
-    this.students.remove(student);
-  }
-
   @Override
   public String getId() {
     return id;

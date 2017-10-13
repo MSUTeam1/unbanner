@@ -124,13 +124,18 @@ public class Course implements Storable {
   public List<Section> getSections() {
     return sections;
   }
+
   public void setSections(List<Section> sections) {
     this.sections = sections;
   }
+
   public void addSection(Section section) {
-    if (sections == null) sections = new ArrayList<Section>();
+    if (sections == null) {
+      sections = new ArrayList<Section>();
+    }
     this.sections.add(section);
   }
+
   public void setPrereqs(List<Course> prereqs) {
     this.prereqs = prereqs;
   }

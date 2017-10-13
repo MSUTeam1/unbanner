@@ -79,6 +79,8 @@ public class StudentController {
   *  from the repository
   *  searches section repository for any sections that contain this student
   *  and then removes this student from that section.
+  *
+  *  TODO Find a more efficient way to do this other than linear search
   */
   @RequestMapping(value = "/student/{id}", method = RequestMethod.DELETE)
   public String student(@PathVariable String id) {
