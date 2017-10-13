@@ -9,21 +9,23 @@
 <body>
 <div layout:fragment="content">
     <h1>Students</h1>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>900 Number</th>
-            <th>ID</th>
-        </tr>
-        <tr th:each="student : ${students}">
-            <td th:text="${student.firstName + ' ' + student.lastName}"></td>
-            <td th:text="${student.studentNum}"></td>
-            <td><a th:href="@{/student/{id}(id=${student.id})}">view</a></td>
-        </tr>
-        <tr>
-            <a href="/students/new">Create New Student</a>
-        </tr>
-    </table>
+    <div class="container">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>900 Number</th>
+                <th>ID</th>
+            </tr>
+            <tr th:each="student : ${students}">
+                <td th:text="${student.firstName + ' ' + student.lastName}"></td>
+                <td th:text="${student.studentNum}"></td>
+                <td><a class="badge badge-info" th:href="@{/student/{id}(id=${student.id})}">view</a></td>
+            </tr>
+            <tr>
+                <a class="badge badge-primary" href="/students/new">Create New Student</a>
+            </tr>
+        </table>
+    </div>
 </div>
 </body>
 </html>
