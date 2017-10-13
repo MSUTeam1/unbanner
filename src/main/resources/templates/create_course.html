@@ -10,27 +10,37 @@
 <body>
 <div layout:fragment="content">
     <h1>Create New Course</h1>
-    <form action="#" th:action="@{'/courses/new'}" th:object="${course}" th:method="post">
-        <label th:for="*{name}">Name</label>
-        <input type="text" th:field="*{name}" />
-
-        <label th:for="*{department}">Department</label>
-        <input type="text" th:field="*{department}" />
-
-        <label th:for="*{number}">Number</label>
-        <input type="number" th:field="*{number}" />
-
-        <label th:for="*{credits}">Credits</label>
-        <input type="number" th:field="*{credits}" />
-
-        <label th:for="*{description}">Description</label>
-        <input placeholder="Description" type="text" th:field="*{description}" />
-
-        <label th:for="*{objectives}">Objectives</label>
-        <input placeholder="Objective" type="text" th:field="*{objectives}" />
-
-        <button type="submit" id="submitButton">Create</button>
-    </form>
+    <div class="container">
+        <form th:action="@{'/courses/new'}" th:object="${course}" th:method="post">
+            <div class="form-group">
+                <label for="inputName">Name</label>
+                <input type="text" class="form-control" id="inputName" th:field="*{name}" />
+            </div>
+            <div class="form-group">
+                <label for="inputDept">Department</label>
+                <input type="text" class="form-control" id="inputDept" th:field="*{department}" />
+            </div>
+            <div class="form-group">
+                <label for="inputNum">Number</label>
+                <input type="number" class="form-control" id="inputNum" th:field="*{number}" />
+            </div>
+            <div class="form-group">
+                <label for="inputCredits">Credits</label>
+                <input type="number" class="form-control" id="inputCredits" th:field="*{credits}" />
+            </div>
+            <div class="form-group">
+                <label for="inputDesc">Description</label>
+                <textarea placeholder="Description" class="form-control" id="inputDesc" th:field="*{description}" />
+            </div>
+            <div class="form-group">
+                <label for="inputObj">Objectives</label>
+                <input placeholder="Objective" id="inputObj" class="form-control" type="text" th:field="*{objectives}" />
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary" id="submitButton">Create</button>
+            </div>
+        </form>
+    </div>
 </div>
 </body>
 

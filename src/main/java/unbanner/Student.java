@@ -3,25 +3,25 @@ package unbanner;
 import java.util.List;
 import java.util.Objects;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+@EqualsAndHashCode
 public class Student implements Storable {
 
   @Id
   public String id;
 
-  public String firstName;
-  public String lastName;
-  public int studentNum;
+  @Getter @Setter public String firstName;
+  @Getter @Setter public String lastName;
+  @Getter @Setter public int studentNum;
   @DBRef(lazy = true)
-  public List<Course> courses;
+  @Getter @Setter public List<Section> sections;
 
   public Student() {
-  }
-
-  public Student(List<Course> courses) {
-    this.courses = Objects.requireNonNull(courses);
   }
 
   public Student(String firstName, String lastName, int studentNum) {
@@ -38,38 +38,6 @@ public class Student implements Storable {
   @Override
   public void setId(String id) {
     this.id = id;
-  }
-
-  public List<Course> getCourses() {
-    return this.courses;
-  }
-
-  public void setCourses(List<Course> courses) {
-    this.courses = courses;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public int getStudentNum() {
-    return studentNum;
-  }
-
-  public void setStudentNum(int studentNum) {
-    this.studentNum = studentNum;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
   }
 
   @Override

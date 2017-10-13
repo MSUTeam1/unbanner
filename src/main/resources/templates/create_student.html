@@ -7,15 +7,29 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<div layout:fragment="menu">
+<div layout:fragment="content">
     <h1>Create New Student</h1>
-    <form action="#" th:action="@{'/students/new'}" th:object="${student}" th:method="post">
-        <input type="hidden" th:field="*{id}"/>
-        <input type="number" th:field="*{studentNum}"/>
-        <input placeholder="First Name" type="text" th:field="*{firstName}"/>
-        <input placeholder="Last Name" type="text" th:field="*{lastName}"/>
-        <button type="submit" id="updateButton">Create</button>
-    </form>
+    <div class="container">
+        <form action="#" th:action="@{'/students/new'}" th:object="${student}" th:method="post" >
+            <input type="hidden" th:field="*{id}" />
+            <div class="row">
+                <div class="col">
+                    <input placeholder="900xxx" type="number" class="form-control" th:field="*{studentNum}" />
+                </div>
+                <div class="col">
+                    <input placeholder="First Name" type="text" class="form-control" th:field="*{firstName}" />
+                </div>
+                <div class="col">
+                    <input placeholder="Last Name" type="text" class="form-control" th:field="*{lastName}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary" id="updateButton">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 </body>
 </html>
