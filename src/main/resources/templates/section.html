@@ -9,42 +9,52 @@
 <body>
 <div layout:fragment="content">
     <h1>Section</h1>
-
-    Course:
-    <table>
-        <tr >
-            <td th:text="${section.course.department + ' ' + section.course.number}"></td>
-            <td th:text="${section.course.name}"></td>
-            <td><a class="badge badge-info" th:href="@{/course/{id}(id=${section.course.id})}">view</a></td>
-        </tr>
-    </table>
-
-    Students:
-    <table>
-        <tr>
-        <tr th:each="student : ${section.students}">
-            <td th:text="${student.firstName + ' ' + student.lastName}"></td>
-            <td th:text="${student.studentNum}"></td>
-            <td><a class="badge badge-info" th:href="@{/student/{id}(id=${student.id})}">view</a></td>
-        </tr>
-        </tr>
-    </table>
-
-    <form action="#" th:action="@{'/section/{id}'(id=${section.id})}" th:method="delete" >
-        <input type="hidden" name="_method" value="delete" />
-        <button type="submit" id="submitButton">Delete</button>
-    </form>
+    <div class="container">
+        <h6>Course:</h6>
+        <div class="container">
+            <table>
+                <tr >
+                    <td th:text="${section.course.department + ' ' + section.course.number}"></td>
+                    <td th:text="${section.course.name}"></td>
+                    <td><a class="badge badge-info" th:href="@{/course/{id}(id=${section.course.id})}">view</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="container">
+        <h6>Students:</h6>
+        <div class="container">
+            <table>
+                <tr>
+                <tr th:each="student : ${section.students}">
+                    <td th:text="${student.firstName + ' ' + student.lastName}"></td>
+                    <td th:text="${student.studentNum}"></td>
+                    <td><a class="badge badge-info" th:href="@{/student/{id}(id=${student.id})}">view</a></td>
+                </tr>
+                </tr>
+            </table>
+        </div>
+    </div>
 
     <br/>
-
-    <form action="#" th:action="@{'/section/{id}'(id=${section.id})}" th:object="${section}" th:method="post" >
-        <input type="hidden" th:field="*{id}" />
-        <input type="hidden" th:field="*{course}" />
-        <input type="number" th:field="*{number}" />
-        <input type="text" th:field="*{schedule}" />
-        <input type="time" id="time" name="time" th:value="${section.getTimeStamp()}"/>
-        <button type="submit" id="updateButton">Update</button>
-    </form>
+    <div class="container">
+        <div class="row">
+        <form action="#" th:action="@{'/section/{id}'(id=${section.id})}" th:object="${section}" th:method="post" >
+            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:field="*{course}" />
+            <input type="number" class="form-control" th:field="*{number}" />
+            <input type="text" class="form-control" th:field="*{schedule}" />
+            <input type="time" class="form-control" id="time" name="time" th:value="${section.getTimeStamp()}"/>
+            <button type="submit" class="btn btn-primary" id="updateButton">Update</button>
+        </form>
+        </div>
+        <div class="row">
+            <form action="#" th:action="@{'/section/{id}'(id=${section.id})}" th:method="delete" >
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit" class="btn btn-danger" id="submitButton">Delete</button>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>

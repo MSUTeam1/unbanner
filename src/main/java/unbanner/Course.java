@@ -1,12 +1,15 @@
 package unbanner;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-
+@EqualsAndHashCode
 public class Course implements Storable {
 
 
