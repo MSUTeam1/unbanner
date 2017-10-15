@@ -4,6 +4,9 @@
 # But not these files...
 !.gitignore
 !build.gradle
-!*/src/test/*
-!*/src/main/java/java/*
-!*/src/main/java/resources/*
+!src/
+!src/test/
+!src/test/java/
+!src/test/java/unbanner/*
+!src/main/resources/*
+!src/main/java/unbanner/Globals.java
