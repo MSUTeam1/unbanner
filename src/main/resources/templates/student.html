@@ -1,29 +1,70 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
 <head>
     <title>Student</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1>Student</h1>
+<div layout:fragment="content">
+    <h1>Student</h1>
+    <div class="container">
 
-Name: <b th:text="${student.firstName}" /> <b th:text="${student.lastName}" /> <b th:text="${student.studentNum}" /><br/>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    Name: <b th:text="${student.firstName}" /> <b th:text="${student.lastName}" />
+                </div>
+                <div class="col">
+                    Number: <b th:text="${student.studentNum}" />
+                </div>
+                <div class="col">
+                    <form action="#" th:action="@{'/student/{id}'(id=${student.id})}" th:method="delete" >
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" class="btn btn-danger" id="submitButton">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br/>
 
-<form action="#" th:action="@{'/student/{id}'(id=${student.id})}" th:method="delete" >
-    <input type="hidden" name="_method" value="delete" />
-    <button type="submit" id="submitButton">Delete</button>
-</form>
+        <div class="container">
+            <h5>Courses:</h5>
+            <div class="container">
+                <table>
+                    <tr th:each="section : ${student.sections}">
+                        <td th:text="${section.course.department + ' ' + section.course.number}"></td>
+                        <td th:text="${section.course.name}"></td>
+                        <td><a class="badge badge-info" th:href="@{/course/{id}(id=${section.course.id})}">view</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br/>
 
-<br/>
-
-<form action="#" th:action="@{'/student/{id}'(id=${student.id})}" th:object="${student}" th:method="post" >
-    <input type="hidden" th:field="*{id}" />
-    <input type="number" th:field="*{studentNum}" />
-    <input type="text" th:field="*{firstName}" />
-    <input type="text" th:field="*{lastName}" />
-    <button type="submit" id="updateButton">Update</button>
-</form>
-
-
+        <div class="container">
+            <form action="#" th:action="@{'/student/{id}'(id=${student.id})}" th:object="${student}" th:method="post" >
+                <input type="hidden" th:field="*{id}" />
+                <div class="row">
+                    <div class="col">
+                        <input type="number" class="form-control" th:field="*{studentNum}" />
+                    </div>
+                    <div class="col">
+                            <input type="text" class="form-control" th:field="*{firstName}" />
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" th:field="*{lastName}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary" id="updateButton">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

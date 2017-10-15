@@ -1,95 +1,37 @@
 package unbanner;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.ui.Model;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.MediaType;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-/**
- * Created by Admiral Fresh on 10/4/2017.
- */
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
 public class CourseControllerTest {
 
-    @Autowired
-    private CourseController controller;
+  @Autowired
+  private CourseController controller;
 
-    @Autowired
-    private CourseRepository repo;
+  @Mock
+  private Model mockModel;
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Test
+  public void contextLoads() throws Exception {
+    assertThat(controller).isNotNull();
+  }
 
-    @Mock
-    private Model mockModel;
+  @Test
+  public void test_students_list() throws Exception {
+    String ret = controller.coursesList(mockModel);
+    assertThat("courses".equals(ret));
+  }
 
-    @Test
-    public void contextLoads() throws Exception {
-        assertThat(controller).isNotNull();
-    }
+  //TODO add more tests specific to the controller
 
-
-    @Test
-    public void test_students_list() throws Exception {
-        String ret = controller.coursesList(mockModel);
-        assertThat("courses".equals(ret));
-    }
-
-    @Test
-    public void coursesNewShouldRespond() throws Exception {
-        this.mockMvc.perform(get("/courses/new"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("create_course"))
-                .andDo(print());
-    }
-
-    //TODO add more tests specific to the controller
-
-/*
-    @Test
-    public void coursesShouldRespond() throws Exception {
-
-        repo.deleteAll();
-        Course constuctCourse = new Course(101, 4, "this Dep", "this description");
-        Course constuctCourse2 = new Course(202, 2, "2nd dep", "another description");
-        repo.save(constuctCourse);
-        repo.save(constuctCourse2);
-        this.mockMvc.perform(get("/courses"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("courses"))
-                .andExpect(model().attribute("courses", hasSize(2)))
-                .andExpect(model().attribute("courses", hasItem(
-                        allOf(
-                                hasProperty("number", is(101)),
-                                hasProperty("credits", is(4))))))
-                .andDo(print());
-    }
-*/
 
 }

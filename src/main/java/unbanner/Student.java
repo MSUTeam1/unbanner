@@ -1,17 +1,25 @@
 package unbanner;
 
+import java.util.List;
+import java.util.Objects;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
-
-public class Student {
+@EqualsAndHashCode
+public class Student implements Storable {
 
   @Id
   public String id;
 
-  public String firstName;
-  public String lastName;
-  public int studentNum;
-
+  @Getter @Setter public String firstName;
+  @Getter @Setter public String lastName;
+  @Getter @Setter public int studentNum;
+  @DBRef(lazy = true)
+  @Getter @Setter public List<Section> sections;
 
   public Student() {
   }
@@ -22,36 +30,14 @@ public class Student {
     this.studentNum = studentNum;
   }
 
+  @Override
   public String getId() {
-    return id;
+    return this.id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public int getStudentNum() {
-    return studentNum;
-  }
-
-  public void setStudentNum(int studentNum) {
-    this.studentNum = studentNum;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
   }
 
   @Override

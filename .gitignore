@@ -1,10 +1,9 @@
-tags
+# Ignore everything
+*
 
-build
-.gradle
-.idea
-out
-
-
-**/.DS_Store
-
+# But not these files...
+!.gitignore
+!build.gradle
+!*/src/test/*
+!*/src/main/java/java/*
+!*/src/main/java/resources/*

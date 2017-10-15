@@ -12,6 +12,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'checkstyle'
+apply plugin: "jacoco"
 
 jar {
     baseName = 'gs-serving-web-content'
@@ -33,6 +34,19 @@ dependencies {
     compile('org.springframework.boot:spring-boot-devtools')
     compile('org.springframework.boot:spring-boot-starter-data-rest')
     compile ('org.springframework.boot:spring-boot-starter-data-mongodb')
+    compileOnly 'org.projectlombok:lombok:1.16.18'
     testCompile("junit:junit")
     testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled = true
+        html.destination file("${buildDir}/jacocoHtml")
+    }
 }
