@@ -5,8 +5,11 @@
 !.gitignore
 !build.gradle
 !src/
-!src/test/
-!src/test/java/
-!src/test/java/unbanner/*
+!src/*/
+!src/*/main/
+!src/*/main/java/
+!src/*/main/java/unbanner/
+!src/*/main/java/unbanner/*
+!src/*/java/unbanner/*
 !src/main/resources/*
 !src/main/java/unbanner/Globals.java
