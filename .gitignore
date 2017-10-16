@@ -1,21 +1,9 @@
-# Ignore everything
-*
+tags
 
-# But not these files...
-!.gitignore
-!build.gradle
-!src/
-!src/*/
-!src/main/
+build
+.gradle
+.idea
+out
 
-!src/main/java/
-!src/main/java/unbanner/
-!src/main/java/unbanner/*
-!src/main/resources/
-!src/main/resources/templates/
-!src/main/resources/templates/*
 
-!src/test/
-!src/test/java/
-!src/main/java/banner/
-!src/main/java/banner/*
+**/.DS_Store
