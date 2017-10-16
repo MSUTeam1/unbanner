@@ -36,19 +36,19 @@ public class BuildingController {
     }
 
     @RequestMapping("/building/{id}")
-    public String course(@PathVariable String id, Model model) {
+    public String room0(@PathVariable String id, Model model) {
         model.addAttribute("building", repository.findOne(id));
         return "building";
     }
 
     @RequestMapping(value = "/building/{id}", method = RequestMethod.DELETE)
-    public String course(@PathVariable String id) {
+    public String room0(@PathVariable String id) {
         repository.delete(id);
         return "redirect:/buildings";
     }
 
     @RequestMapping(value = "/building/{id}", method = RequestMethod.POST)
-    public String course(@ModelAttribute("building") Building building) {
+    public String room0(@ModelAttribute("building") Building building) {
         repository.save(building);
         return "redirect:/buildings";
     }
