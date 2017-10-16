@@ -1,9 +1,11 @@
 package unbanner;
 
 
+import org.bson.types.ObjectId;
+
 public interface Storable {
 
-  public String getId();
+  public ObjectId getId();
 
-  public void setId(String id);
+  public void setId(ObjectId id);
 }

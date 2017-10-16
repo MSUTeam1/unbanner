@@ -1,5 +1,7 @@
 package unbanner;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
 
 @Controller
 public class CourseController {
@@ -54,23 +55,29 @@ public class CourseController {
   @RequestMapping(value = "/course/{id}", method = RequestMethod.DELETE)
   public String course(@PathVariable String id) {
     Course temp = repository.findOne(id);
-    List<Section> tempSections = sectionRepository.findAll();
+    List<Section> tempSections = sectionRepository.findByCourse(temp);
     for (Section section : tempSections) {
-      if (section.course.equals(temp)) {
-        for(Student student : section.students){
-          student.sections.remove(section);
-          studentRepository.save(student);
-        }
-        sectionRepository.delete(section);
+      for (Student student : section.students) {
+        student.sections.remove(section);
+        studentRepository.save(student);
       }
+      sectionRepository.delete(section);
     }
     repository.delete(id);
     return "redirect:/courses";
   }
 
   @RequestMapping(value = "/course/{id}", method = RequestMethod.POST)
-  public String course(@ModelAttribute("course") Course course) {
-    repository.save(course);
+  public String course(@ModelAttribute("course") Course course,
+                       @PathVariable String id) {
+    Course tempCourse = repository.findOne(id);
+    tempCourse.name = course.name;
+    tempCourse.department = course.department;
+    tempCourse.number = course.number;
+    tempCourse.credits = course.credits;
+    tempCourse.description = course.description;
+    tempCourse.objectives = course.objectives;
+    repository.save(tempCourse);
     return "redirect:/courses";
   }
 

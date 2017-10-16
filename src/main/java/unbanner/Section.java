@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,7 +14,7 @@ public class Section implements Storable {
 
 
   @Id
-  public String id;
+  public ObjectId id;
 
   public List<Weekday> schedule;
 
@@ -21,7 +22,7 @@ public class Section implements Storable {
   public LocalTime time;
   public int number;
   @DBRef(lazy = true)
-  public List<Student> students;
+  public List<Student> students = new ArrayList<Student>();
   @DBRef(lazy = true)
   public Course course;
 
@@ -106,6 +107,10 @@ public class Section implements Storable {
     return students;
   }
 
+  public void addToStudents(Student student) {
+    this.students.add(student);
+  }
+
   public void setCourse(Course course) {
     this.course = course;
   }
@@ -129,12 +134,12 @@ public class Section implements Storable {
   }
 
   @Override
-  public String getId() {
+  public ObjectId getId() {
     return id;
   }
 
   @Override
-  public void setId(String id) {
+  public void setId(ObjectId id) {
     this.id = id;
   }
 }

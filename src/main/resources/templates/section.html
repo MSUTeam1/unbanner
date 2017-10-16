@@ -40,7 +40,6 @@
     <div class="container">
         <div class="row">
         <form action="#" th:action="@{'/section/{id}'(id=${section.id})}" th:object="${section}" th:method="post" >
-            <input type="hidden" th:field="*{id}" />
             <input type="hidden" th:field="*{course}" />
             <input type="number" class="form-control" th:field="*{number}" />
             <input type="text" class="form-control" th:field="*{schedule}" />

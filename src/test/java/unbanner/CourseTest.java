@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class CourseTest {
   public void init() {
     dummyCourse = new Course();
     dummyCourse.setName("dummy name");
-    dummyCourse.setId("dummy ID");
+    dummyCourse.setId(new ObjectId("507f191e810c19729de860ea"));
     dummyCourse.setDepartment("dummy Department");
     dummyCourse.setNumber(7777);
     dummyCourse.setCredits(4);
@@ -37,13 +38,13 @@ public class CourseTest {
 
   @Test
   public void getIdTest() {
-    assertEquals(dummyCourse.getId(), "dummy ID");
+    assertEquals(dummyCourse.getId().toHexString(), "507f191e810c19729de860ea");
   }
 
   @Test
   public void setIdTest() {
-    dummyCourse.setId("different ID");
-    assertEquals(dummyCourse.getId(), "different ID");
+    dummyCourse.setId(new ObjectId("507f191e810c1972911860ea"));
+    assertEquals(dummyCourse.getId().toHexString(), "507f191e810c1972911860ea");
   }
 
   @Test
