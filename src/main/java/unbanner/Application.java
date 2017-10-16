@@ -30,12 +30,15 @@ public class Application implements CommandLineRunner {
   private SectionRepository sectionRepository;
 
   @Autowired
+<<<<<<< HEAD
   private RoomRepository roomRepository;
 
   @Autowired
   private BuildingRepository buildingRepository;
 
   @Autowired
+=======
+>>>>>>> upstream/development
   private Globals globals;
 
   @Bean
@@ -98,9 +101,12 @@ public class Application implements CommandLineRunner {
     studentRepository.deleteAll();
     courseRepository.deleteAll();
     sectionRepository.deleteAll();
+<<<<<<< HEAD
     buildingRepository.deleteAll();
     roomRepository.deleteAll();
 
+=======
+>>>>>>> upstream/development
 
     // save a couple of Courses and Students
     courseRepository.save(new Course("Computer Science I", 1050,
@@ -111,9 +117,15 @@ public class Application implements CommandLineRunner {
         "Learning Object Oriented Programming in Computer Science"));
     studentRepository.save(new Student("Alice", "Smith", 900123456));
     studentRepository.save(new Student("Bob", "Smith", 900123456));
+<<<<<<< HEAD
     sectionRepository.save(new Section(101, courseRepository.findByName("Computer Science I")));
     sectionRepository.save(new Section(201, courseRepository.findByName("Computer Science II")));
     sectionRepository.save(new Section(102, courseRepository.findByName("Computer Science I")));
+=======
+    sectionRepository.save(new Section(1, courseRepository.findByName("Computer Science I")));
+    sectionRepository.save(new Section(1, courseRepository.findByName("Computer Science II")));
+    sectionRepository.save(new Section(2, courseRepository.findByName("Computer Science I")));
+>>>>>>> upstream/development
 
     Student alice = studentRepository.findByFirstName("Alice");
     Student bob = studentRepository.findByFirstName("Bob");
@@ -130,6 +142,7 @@ public class Application implements CommandLineRunner {
     s2.addToSchedule(Weekday.W);
 
 
+<<<<<<< HEAD
 
     Building bld1 = new Building("Building One","This is 1st building");
     Building bld2 = new Building("Building Two","This is a 2nd building");
@@ -152,12 +165,15 @@ public class Application implements CommandLineRunner {
     rm1.building = bld1;
 
 
+=======
+>>>>>>> upstream/development
     alice.setSections((List<Section>) new ArrayList<Section>(Arrays.asList(s1, s2, s3)));
     bob.setSections((List<Section>) new ArrayList<Section>(Arrays.asList(s1, s2, s3)));
 
     s1.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(alice, bob)));
     s2.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(bob, alice)));
     s3.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(bob, alice)));
+<<<<<<< HEAD
 
     c1.addSection(s1);
     c1.addSection(s3);
@@ -179,7 +195,22 @@ public class Application implements CommandLineRunner {
     roomRepository.save(rm1);
     roomRepository.save(rm2);
 
+=======
 
+    c1.addSection(s1);
+    c1.addSection(s3);
+    c2.addSection(s2);
+>>>>>>> upstream/development
+
+    studentRepository.save(alice);
+    studentRepository.save(bob);
+
+    courseRepository.save(c1);
+    courseRepository.save(c2);
+
+    sectionRepository.save(s1);
+    sectionRepository.save(s2);
+    sectionRepository.save(s3);
     // fetch all Students
     System.out.println("Students found with findAll():");
     System.out.println("-------------------------------");

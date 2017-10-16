@@ -24,6 +24,7 @@ public class Section implements Storable {
   public List<Student> students;
   @DBRef(lazy = true)
   public Course course;
+<<<<<<< HEAD
   @DBRef(lazy = true)
   public Room room;
 
@@ -31,6 +32,9 @@ public class Section implements Storable {
   public void addSectionToRoomList(Room assignedRoom){  //This method should  follow this assignment: mySection.room = myRoom.
     assignedRoom.sectionList.add(this);
   }
+=======
+
+>>>>>>> upstream/development
 
   public Section() {
     this.number = 0;
@@ -134,9 +138,12 @@ public class Section implements Storable {
     );
   }
 
+<<<<<<< HEAD
   public Room getRoom() { return room;}
   public void setRoom(Room room) {this.room = room; }
 
+=======
+>>>>>>> upstream/development
   @Override
   public String getId() {
     return id;

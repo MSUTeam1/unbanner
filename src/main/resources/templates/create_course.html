@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -44,4 +45,52 @@
 </div>
 </body>
 
+=======
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Course</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <h1>Create New Course</h1>
+    <div class="container">
+        <form th:action="@{'/courses/new'}" th:object="${course}" th:method="post">
+            <div class="form-group">
+                <label for="inputName">Name</label>
+                <input type="text" class="form-control" id="inputName" th:field="*{name}" />
+            </div>
+            <div class="form-group">
+                <label for="inputDept">Department</label>
+                <input type="text" class="form-control" id="inputDept" th:field="*{department}" />
+            </div>
+            <div class="form-group">
+                <label for="inputNum">Number</label>
+                <input type="number" class="form-control" id="inputNum" th:field="*{number}" />
+            </div>
+            <div class="form-group">
+                <label for="inputCredits">Credits</label>
+                <input type="number" class="form-control" id="inputCredits" th:field="*{credits}" />
+            </div>
+            <div class="form-group">
+                <label for="inputDesc">Description</label>
+                <textarea placeholder="Description" class="form-control" id="inputDesc" th:field="*{description}" />
+            </div>
+            <div class="form-group">
+                <label for="inputObj">Objectives</label>
+                <input placeholder="Objective" id="inputObj" class="form-control" type="text" th:field="*{objectives}" />
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary" id="submitButton">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+
+>>>>>>> upstream/development
 </html>
