@@ -1,5 +1,6 @@
 package unbanner;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,14 +22,19 @@ public class SectionController {
 
   @RequestMapping(value = "/section/{id}", method = RequestMethod.DELETE)
   public String student(@PathVariable String id) {
-    String courseId = repository.findById(id).getCourse().id;
+    ObjectId courseId = repository.findById(id).getCourse().id;
     repository.delete(id);
     return "redirect:/course/" + courseId;
   }
 
   @RequestMapping(value = "/section/{id}", method = RequestMethod.POST)
-  public String student(@ModelAttribute("section") Section section) {
-    repository.save(section);
+  public String student(@ModelAttribute("section") Section section,
+                        @PathVariable String id) {
+    Section tempSec = repository.findOne(id);
+    tempSec.number = section.number;
+    tempSec.schedule = section.schedule;
+    tempSec.time = section.time;
+    repository.save(tempSec);
     return "redirect:/section/" + section.getId();
   }
 

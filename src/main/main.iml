@@ -19,5 +19,6 @@
     <orderEntry type="library" name="Gradle: org.thymeleaf:thymeleaf-spring4:2.1.5.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:1.4.0" level="project" />
     <orderEntry type="library" name="Gradle: org.projectlombok:lombok:1.16.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.mongodb:bson:3.5.0" level="project" />
   </component>
 </module>

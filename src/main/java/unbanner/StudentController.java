@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import unbanner.Student;
 
 @Controller
@@ -20,6 +22,11 @@ public class StudentController {
 
   @Autowired
   SectionRepository sectionRepository;
+
+  @ModelAttribute("allSections")
+  public List<Section> getSections() {
+    return sectionRepository.findAll();
+  }
 
 
   /*
@@ -41,7 +48,8 @@ public class StudentController {
   *  a new student
   */
   @RequestMapping(value = "/students/new", method = RequestMethod.GET)
-  public String provideStudent(@ModelAttribute("student") Student student) {
+  public String provideStudent(Model model) {
+    model.addAttribute("student", new Student());
     return "create_student";
   }
 
@@ -57,7 +65,15 @@ public class StudentController {
     newStudent.studentNum = student.studentNum;
     newStudent.firstName = student.firstName;
     newStudent.lastName = student.lastName;
+    newStudent.sections = student.sections;
     repository.save(newStudent);
+    Student tempStu = repository.findByFirstNameAndLastName(newStudent.firstName,
+        newStudent.lastName);
+    for (Section section : tempStu.sections) {
+      section.addToStudents(tempStu);
+      sectionRepository.save(section);
+    }
+
     return "redirect:/students";
   }
 
@@ -80,21 +96,16 @@ public class StudentController {
   *  from the repository
   *  searches section repository for any sections that contain this student
   *  and then removes this student from that section.
-  *
-  *  TODO Find a more efficient way to do this other than linear search
   */
   @RequestMapping(value = "/student/{id}", method = RequestMethod.DELETE)
   public String student(@PathVariable String id) {
     Student temp = repository.findOne(id);
-    List<Section> tempSections = sectionRepository.findAll();
+    List<Section> tempSections = sectionRepository.findByStudentsIn(temp);
     for (Section section : tempSections) {
-      if (section.students.contains(temp)) {
-        section.students.remove(temp);
-        sectionRepository.save(section);
-      }
+      section.students.remove(temp);
+      sectionRepository.save(section);
     }
     repository.delete(id);
-
     return "redirect:/students";
   }
 
@@ -105,8 +116,13 @@ public class StudentController {
   *  a single student from the repository
   */
   @RequestMapping(value = "/student/{id}", method = RequestMethod.POST)
-  public String student(@ModelAttribute("student") Student student) {
-    repository.save(student);
+  public String student(@ModelAttribute("student") Student student,
+                        @PathVariable String id) {
+    Student tempStu = repository.findOne(id);
+    tempStu.studentNum = student.studentNum;
+    tempStu.firstName = student.firstName;
+    tempStu.lastName = student.lastName;
+    repository.save(tempStu);
     return "redirect:/students";
   }
 

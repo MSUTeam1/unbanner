@@ -2,6 +2,7 @@ package unbanner;
 
 import static org.junit.Assert.assertEquals;
 
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,18 +13,18 @@ public class StudentTest {
   @Before
   public void initObjects() {
     bob = new Student("Bob", "Jones", 0);
-    bob.setId("Dummy String Test");
+    bob.setId(new ObjectId("f240af3fe8bf240af3fe8ea1"));
   }
 
   @Test
   public void getId() throws Exception {
-    assertEquals("Dummy String Test", bob.getId());
+    assertEquals("f240af3fe8bf240af3fe8ea1", bob.getId().toHexString());
   }
 
   @Test
   public void setId() throws Exception {
-    bob.setId("New Test String");
-    assertEquals("New Test String", bob.getId());
+    bob.setId(new ObjectId("f240af3fe8bf240af3fe8e33"));
+    assertEquals("f240af3fe8bf240af3fe8e33", bob.getId().toHexString());
   }
 
   @Test
@@ -61,7 +62,7 @@ public class StudentTest {
 
   @Test
   public void toStringTest() throws Exception {
-    assertEquals("Student[id=Dummy String Test, firstName='Bob', lastName='Jones']",
+    assertEquals("Student[id=f240af3fe8bf240af3fe8ea1, firstName='Bob', lastName='Jones']",
         bob.toString());
   }
 }

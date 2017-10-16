@@ -3,15 +3,19 @@ package unbanner;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-
+@EqualsAndHashCode
 public class Course implements Storable {
 
 
   @Id
-  public String id;
+  public ObjectId id;
 
   public String name;
   public String department;
@@ -76,12 +80,12 @@ public class Course implements Storable {
   }
 
   @Override
-  public String getId() {
+  public ObjectId getId() {
     return this.id;
   }
 
   @Override
-  public void setId(String id) {
+  public void setId(ObjectId id) {
     this.id = id;
   }
 

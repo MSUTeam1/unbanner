@@ -1,11 +1,13 @@
 package unbanner;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
@@ -13,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 public class Student implements Storable {
 
   @Id
-  public String id;
+  public ObjectId id;
 
   @Getter @Setter public String firstName;
   @Getter @Setter public String lastName;
@@ -22,6 +24,7 @@ public class Student implements Storable {
   @Getter @Setter public List<Section> sections;
 
   public Student() {
+    this.sections = new ArrayList<Section>();
   }
 
   public Student(String firstName, String lastName, int studentNum) {
@@ -31,12 +34,12 @@ public class Student implements Storable {
   }
 
   @Override
-  public String getId() {
+  public ObjectId getId() {
     return this.id;
   }
 
   @Override
-  public void setId(String id) {
+  public void setId(ObjectId id) {
     this.id = id;
   }
 

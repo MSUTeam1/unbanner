@@ -30,6 +30,8 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    // https://mvnrepository.com/artifact/org.mongodb/bson
+    compile group: 'org.mongodb', name: 'bson', version: '3.5.0'
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-devtools')
     compile('org.springframework.boot:spring-boot-starter-data-rest')
