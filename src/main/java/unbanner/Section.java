@@ -24,7 +24,13 @@ public class Section implements Storable {
   public List<Student> students;
   @DBRef(lazy = true)
   public Course course;
+  @DBRef(lazy = true)
+  public Room room;
 
+
+  public void addSectionToRoomList(Room assignedRoom){  //This method should  follow this assignment: mySection.room = myRoom.
+    assignedRoom.sectionList.add(this);
+  }
 
   public Section() {
     this.number = 0;
@@ -127,6 +133,9 @@ public class Section implements Storable {
         time.getMinute()
     );
   }
+
+  public Room getRoom() { return room;}
+  public void setRoom(Room room) {this.room = room; }
 
   @Override
   public String getId() {

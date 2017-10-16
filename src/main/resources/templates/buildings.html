@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Buildings</title>
+</head>
+<body>
+<div layout:fragment="content">
+<h1>Buildings</h1>
+<table>
+    <tr>
+        <th>Name</th>
+    </tr>
+    <tr th:each="building : ${buildings}">
+        <td th:text="${building.name}"></td>
+        <td><a th:href="@{/building/{id}(id=${building.id})}">view</a></td>
+    </tr>
+    <tr>
+        <a href="/buildings/new">Create New Building</a>
+    </tr>
+</table>
+</div>
+</body>
+</html>
