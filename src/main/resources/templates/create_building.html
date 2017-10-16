@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Building</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div layout:fragment="content">
+<h1>Create New Building</h1>
+
+
+<form action="#" th:action="@{'/buildings/new'}" th:object="${building}" th:method="post">
+    <label th:for="*{name}">Name</label>
+    <input type="text" th:field="*{name}" />
+    <label th:for="*{description}">Description</label>
+    <input placeholder="Description" type="text" th:field="*{description}" />
+
+    <button type="submit" id="submitButton">Create</button>
+</form>
+</div>
+</body>
+</html>

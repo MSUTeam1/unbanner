@@ -30,6 +30,12 @@ public class Application implements CommandLineRunner {
   private SectionRepository sectionRepository;
 
   @Autowired
+  private RoomRepository roomRepository;
+
+  @Autowired
+  private BuildingRepository buildingRepository;
+
+  @Autowired
   private Globals globals;
 
   @Bean
@@ -92,6 +98,8 @@ public class Application implements CommandLineRunner {
     studentRepository.deleteAll();
     courseRepository.deleteAll();
     sectionRepository.deleteAll();
+    buildingRepository.deleteAll();
+    roomRepository.deleteAll();
 
     // save a couple of Courses and Students
     courseRepository.save(new Course("Computer Science I", 1050,
@@ -102,9 +110,9 @@ public class Application implements CommandLineRunner {
         "Learning Object Oriented Programming in Computer Science"));
     studentRepository.save(new Student("Alice", "Smith", 900123456));
     studentRepository.save(new Student("Bob", "Smith", 900123456));
-    sectionRepository.save(new Section(1, courseRepository.findByName("Computer Science I")));
-    sectionRepository.save(new Section(1, courseRepository.findByName("Computer Science II")));
-    sectionRepository.save(new Section(2, courseRepository.findByName("Computer Science I")));
+    sectionRepository.save(new Section(101, courseRepository.findByName("Computer Science I")));
+    sectionRepository.save(new Section(201, courseRepository.findByName("Computer Science II")));
+    sectionRepository.save(new Section(102, courseRepository.findByName("Computer Science I")));
 
     Student alice = studentRepository.findByFirstName("Alice");
     Student bob = studentRepository.findByFirstName("Bob");
@@ -119,6 +127,27 @@ public class Application implements CommandLineRunner {
     s3.addToSchedule(Weekday.TH);
     s2.addToSchedule(Weekday.M);
     s2.addToSchedule(Weekday.W);
+
+
+    Building bld1 = new Building("Building One","This is 1st building");
+    Building bld2 = new Building("Building Two","This is a 2nd building");
+    Building bld3 = new Building("Building Three","This is a 3rd building");
+    Room rm1 = new Room("room1001", 35);
+    Room rm2 = new Room("room2000", 20);
+    buildingRepository.save(bld1);
+    buildingRepository.save(bld2);
+    buildingRepository.save(bld3);
+    roomRepository.save(rm1);
+    roomRepository.save(rm2);
+    s1.room = rm1;
+    s2.room = rm2;
+    s3.room = rm2;
+    s1.addSectionToRoomList(rm1);
+    s2.addSectionToRoomList(rm2);
+    s3.addSectionToRoomList(rm2);
+    bld1.rooms.add(rm1);
+    bld1.rooms.add(rm2);
+    rm1.building = bld1;
 
 
     alice.setSections((List<Section>) new ArrayList<Section>(Arrays.asList(s1, s2, s3)));
@@ -141,6 +170,13 @@ public class Application implements CommandLineRunner {
     sectionRepository.save(s1);
     sectionRepository.save(s2);
     sectionRepository.save(s3);
+
+
+    buildingRepository.save(bld1);
+
+    roomRepository.save(rm1);
+    roomRepository.save(rm2);
+
     // fetch all Students
     System.out.println("Students found with findAll():");
     System.out.println("-------------------------------");
