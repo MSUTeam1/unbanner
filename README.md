@@ -55,19 +55,18 @@ http://localhost:8080/courses
 to VIEW AND THEN DELETE OR EDIT A COURSE
 click on "view" next to that course
 you will be taken to:
-http://localhost:8080/courses/<gibberish>
-There is presently no way back to the course list without deleting or editing
+http://localhost:8080/courses/{Object Id}
 click "delete" to do that
 fill in the fields and click "update" to do that
 if you delete or update you will be taken back to:
 http://localhost:8080/courses/
-come to think of it i think update is broken too
 
 to CREATE A NEW COURSE:
 while on the course list page...
 click the "create new course button"
 fill in the fields
-click "create". you will be sent back to... nevermind this whole thing is broken
-
+click "create"
+you will be redirected to 
+http://localhost:8080/courses/
 
 

@@ -28,8 +28,8 @@ public class Section implements Storable {
   @DBRef(lazy = true)
   public Room room;
 
-
-  public void addSectionToRoomList(Room assignedRoom){  //This method should  follow this assignment: mySection.room = myRoom.
+  //This method should  follow this assignment: mySection.room = myRoom.
+  public void addSectionToRoomList(Room assignedRoom) {
     assignedRoom.sectionList.add(this);
   }
 
@@ -139,8 +139,13 @@ public class Section implements Storable {
     );
   }
 
-  public Room getRoom() { return room;}
-  public void setRoom(Room room) {this.room = room; }
+  public Room getRoom() {
+    return room;
+  }
+
+  public void setRoom(Room room) {
+    this.room = room;
+  }
 
   @Override
   public ObjectId getId() {

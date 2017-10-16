@@ -14,42 +14,41 @@ import org.springframework.ui.Model;
 @SpringBootTest
 public class BuildingControllerTest {
 
-    @Autowired
-    private BuildingController controller;
+  @Autowired
+  private BuildingController controller;
 
-    @Mock
-    private Model mockModel;
+  @Mock
+  private Model mockModel;
 
-    @Test
-    public void contextLoads() throws Exception {
-        assertThat(controller).isNotNull();
-    }
+  @Test
+  public void contextLoads() throws Exception {
+    assertThat(controller).isNotNull();
+  }
 
-    @Test
-    public void test_buildings_list() throws Exception {
-        String ret = controller.buildingList(mockModel);
-        assertThat("buildings".equals(ret));
-    }
+  @Test
+  public void test_buildings_list() throws Exception {
+    String ret = controller.buildingList(mockModel);
+    assertThat("buildings".equals(ret));
+  }
 
 
-    @Test
-    public void test_room() throws Exception {
-        String ret = controller.room("emp id",mockModel );
-        assertThat("room".equals(ret));
-    }
+  @Test
+  public void test_room() throws Exception {
+    String ret = controller.room("emp id", mockModel);
+    assertThat("room".equals(ret));
+  }
 
-    @Test
-    public void test_room2() throws Exception {
-        String ret = controller.room("emp id" );
-        assertThat("redirect:/buildings".equals(ret));
-    }
+  @Test
+  public void test_room2() throws Exception {
+    String ret = controller.room("emp id");
+    assertThat("redirect:/buildings".equals(ret));
+  }
 
-    @Test
-    public void test_room3() throws Exception {
-        String ret = controller.room(new Room("name", 10) );
-        assertThat("redirect:/buildings".equals(ret));
-    }
-
+  @Test
+  public void test_room3() throws Exception {
+    String ret = controller.room(new Room("name", 10));
+    assertThat("redirect:/buildings".equals(ret));
+  }
 
 
 }
