@@ -1,8 +1,11 @@
 language: java
-after_success:
-- ./gradlew jacocoTestReport coveralls
 services: mongodb
+env:
+  global:
+    - COVERALLS_REPO_TOKEN=hoeYAVnEM07Y2R3VYLyqXWjSy5D77D8Zu
 branches:
     only:
         - master
         - development
+after_success:
+- ./gradlew jacocoTestReport coveralls

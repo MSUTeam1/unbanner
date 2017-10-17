@@ -43,6 +43,10 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
+tasks.coveralls {
+    dependsOn 'check'
+}
+
 jacoco {
     toolVersion = "0.7.6.201602180812"
     reportsDir = file("$buildDir/customJacocoReportDir")
