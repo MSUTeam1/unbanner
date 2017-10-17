@@ -17,7 +17,11 @@ Install MongoDB
 
 $ mongod
 
-$ ./gradlew bootRun 
+$ ./gradlew bootRun
+
+## Coveralls
+
+[![Coverage Status](https://coveralls.io/repos/github/MSUTeam1/unbanner/badge.svg?branch=master)](https://coveralls.io/github/MSUTeam1/unbanner?branch=master)
 
 open in browser:
 http://localhost:8080/

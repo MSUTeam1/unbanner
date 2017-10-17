@@ -1,4 +1,6 @@
 language: java
+after_success:
+- ./gradlew jacocoTestReport coveralls
 services: mongodb
 branches:
     only:

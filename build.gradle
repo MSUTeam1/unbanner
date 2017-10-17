@@ -7,6 +7,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'com.github.kt3k.coveralls' version '2.6.3'
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
@@ -21,9 +25,7 @@ jar {
 
 repositories {
     mavenCentral()
-    maven {
-        url 'https://repo.spring.io/libs-release'
-    }
+    maven { url 'https://repo.spring.io/libs-release' }
 }
 
 sourceCompatibility = 1.8
@@ -48,6 +50,7 @@ jacoco {
 
 jacocoTestReport {
     reports {
+        xml.enabled = true  // coveralls plugin depends on xml format report
         html.enabled = true
         html.destination file("${buildDir}/jacocoHtml")
     }
