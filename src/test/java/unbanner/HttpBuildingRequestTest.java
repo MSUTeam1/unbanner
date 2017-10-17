@@ -176,4 +176,8 @@ public class HttpBuildingRequestTest {
         .andDo(print());
   }
 
+  @Test
+  public void newRoomCreate() throws Exception{
+    //TODO
+  }
 }

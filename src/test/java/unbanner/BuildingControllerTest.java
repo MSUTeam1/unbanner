@@ -44,11 +44,4 @@ public class BuildingControllerTest {
     assertThat("redirect:/buildings".equals(ret));
   }
 
-  @Test
-  public void test_room3() throws Exception {
-    String ret = controller.room(new Room("name", 10));
-    assertThat("redirect:/buildings".equals(ret));
-  }
-
-
 }

@@ -87,13 +87,8 @@ public class BuildingController {
     return "redirect:/buildings";
   }
 
-//  //send to create_room?
-//  @RequestMapping(value = "/buildings/{id}/new", method = RequestMethod.GET)
-//  public String provideRoom(@ModelAttribute("room") Room room) {
-//    return "create_room";
-//  }
 
-  //Get building
+  //Get building for create_room
   @RequestMapping("/building/newRoom/{id}")
   public String newroom0(@PathVariable String id, Model model) {
     model.addAttribute("building", repository.findOne(id));
@@ -112,9 +107,7 @@ public class BuildingController {
     newRoom.building = thisBuilding;
     thisBuilding.rooms.add(newRoom);
     repository.save(thisBuilding);
-    //return "redirect:/building/"+ bld.id;
     return  "redirect:/building/room/"+ newRoom.id;
-    //return "redirect:/buildings";
   }
 
 }
