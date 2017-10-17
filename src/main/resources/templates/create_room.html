@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Room</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Create New Room</h1>
+
+    Name:        <b th:text="${building.name}" /> <br/>
+    Description: <b th:text="${building.description}" /> <br/>
+    <form action ="#" th:action="@{'/buildings/newRoom/{bldId}'(bldId=${building.id})}" th:object="${building}" th:method="post">
+
+        <input type="text" th:field="*{name}"/>
+
+
+        <input type="number"/>
+
+        <button type="submit" id="submitButton">Create</button>
+    </form>
+
+<!--
+    <form action="#" th:action="@{'/buildings/newRoom/{bldId}'(bldId=${building.id})}" th:object="${room}"  th:method="post">
+        <input type="hidden" th:field="*{bldId}" />
+
+        <label th:for="*{name}">Name</label>
+        <input placeholder="Name" type="text" th:field="*{name}" />
+        <label th:for="*{size}">Size</label>
+        <input placeholder="Size" type="number" th:field="*{size}"/>
+
+        <button type="submit" id="submitButton">Create</button>
+    </form>
+
+    -->
+</div>
+</body>
+</html>
