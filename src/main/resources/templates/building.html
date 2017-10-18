@@ -13,6 +13,7 @@
 <h1>Edit Building</h1>
 Name:        <b th:text="${building.name}" /> <br/>
 Description: <b th:text="${building.description}" /> <br/>
+    <a th:href ="@{/building/newRoom/{bldId} (bldId=${building.id} ) }">Create New Room</a> <br/>
 
     Rooms in this building:
     <table th:each="room : ${building.rooms}">
@@ -24,7 +25,7 @@ Description: <b th:text="${building.description}" /> <br/>
         <tr>
             <td th:text ="${room.name}"></td>
             <td th:text="${room.size}"></td>
-                        <td><a th:href ="@{/building/room/{roomId} (roomId=${room.id} ) }"> view  </a></td>
+            <td><a th:href ="@{/building/room/{roomId} (roomId=${room.id} ) }"> view  </a></td>
         </tr>
 
         <tr>
@@ -44,8 +45,8 @@ Description: <b th:text="${building.description}" /> <br/>
 
             <td><a th:href="@{/section/{id}(id=${section.id})}">view</a></td>
         </tr>
-
     </table>
+
 
     <br/>
 Delete this buildings?
