@@ -105,7 +105,6 @@ public class HttpBuildingRequestTest {
     Building myBuilding = new Building();
     myBuilding.description = "building desc";
     myBuilding.name = "building name";
-//        myBuilding.id ="build Id";
     bldRepo.save(myBuilding);
 
     List<Building> bldList = bldRepo.findAll();

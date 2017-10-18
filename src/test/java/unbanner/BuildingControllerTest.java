@@ -31,7 +31,6 @@ public class BuildingControllerTest {
     assertThat("buildings".equals(ret));
   }
 
-
   @Test
   public void test_room() throws Exception {
     String ret = controller.room("emp id", mockModel);

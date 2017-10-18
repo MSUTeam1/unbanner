@@ -76,17 +76,17 @@ public class BuildingController {
     roomRepository.delete(id);
     return "redirect:/buildings";
   }
+
   //Update room
   @RequestMapping(value = "/building/room/{id}", method = RequestMethod.POST)
   public String room(@ModelAttribute("room") Room room,
-                     @PathVariable String id){
+                     @PathVariable String id) {
     Room tempRoom = roomRepository.findById(id);
     tempRoom.name = room.name;
     tempRoom.size = room.size;
     roomRepository.save(tempRoom);
     return "redirect:/buildings";
   }
-
 
   //Get building for create_room
   @RequestMapping("/building/newRoom/{id}")
@@ -101,13 +101,13 @@ public class BuildingController {
                         @PathVariable String id) {
     Building thisBuilding = repository.findById(id);
     Room newRoom = new Room();
-    newRoom.name ="New Room";
+    newRoom.name = "New Room";
     newRoom.size = 0;
     roomRepository.save(newRoom);
     newRoom.building = thisBuilding;
     thisBuilding.rooms.add(newRoom);
     repository.save(thisBuilding);
-    return  "redirect:/building/room/"+ newRoom.id;
+    return  "redirect:/building/room/" + newRoom.id;
   }
 
 }
