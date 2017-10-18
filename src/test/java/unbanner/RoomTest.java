@@ -6,9 +6,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Admiral Fresh on 10/16/2017.
- */
 public class RoomTest {
 
   Room room;

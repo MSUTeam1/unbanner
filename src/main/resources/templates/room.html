@@ -4,13 +4,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout">
 <head>
-    <title>Building</title>
+    <title>Room</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <div layout:fragment="content">
 
-    <h1>Edit Building</h1>
+    <h1>Edit Room</h1>
     Room:        <b th:text="${room.name}" /> <br/>
     Size: <b th:text="${room.size}" /> <br/>
     <table>
@@ -33,7 +33,7 @@
     </tr>
     </table>
 
-    Delete this buildings?
+    Delete this room?
     <form action="#" th:action="@{'/building/room/{id}'(id=${room.id})}" th:method="delete" >
         <input type="hidden" name="_method" value="delete" />
         <button type="submit" id="submitButton">Delete</button>
@@ -47,7 +47,7 @@
         <input type="text" th:field="*{name}" />
 
         <label th:for="*{size}">Size</label>
-        <input type="text" th:field="*{size}" />
+        <input type="number" th:field="*{size}" />
 
         <button type="submit" id="updateButton">Update</button>
     </form>
