@@ -21,21 +21,33 @@ public class SectionController {
   }
 
   @RequestMapping(value = "/section/{id}", method = RequestMethod.DELETE)
-  public String student(@PathVariable String id) {
-    ObjectId courseId = repository.findById(id).getCourse().id;
-    repository.delete(id);
-    return "redirect:/course/" + courseId;
+  public String section(@PathVariable String id) {
+    Section section = repository.findById(id);
+    if (section != null) {
+      Course course = section.getCourse();
+      if (course == null) {
+        return "redirect:/";
+      } else {
+        ObjectId courseId = course.id;
+        repository.delete(id);
+        return "redirect:/course/" + courseId;
+      }
+    }
+    return "redirect:/";
   }
 
   @RequestMapping(value = "/section/{id}", method = RequestMethod.POST)
-  public String student(@ModelAttribute("section") Section section,
+  public String section(@ModelAttribute("section") Section section,
                         @PathVariable String id) {
     Section tempSec = repository.findOne(id);
-    tempSec.number = section.number;
-    tempSec.schedule = section.schedule;
-    tempSec.time = section.time;
-    repository.save(tempSec);
-    return "redirect:/section/" + section.getId();
+    if (tempSec != null) {
+      tempSec.number = section.number;
+      tempSec.schedule = section.schedule;
+      tempSec.time = section.time;
+      repository.save(tempSec);
+      return "redirect:/section/" + section.getId();
+    }
+    return "redirect:/";
   }
 
 }
