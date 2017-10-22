@@ -86,6 +86,7 @@ public class BuildingController {
     tempRoom.size = room.size;
     roomRepository.save(tempRoom);
     return "redirect:/buildings";
+    //return "redirect:/building/" + tempRoom.building.id ; // I want to do this, but the mock tests get wild if I do.
   }
 
   //Get building for create_room
@@ -97,7 +98,7 @@ public class BuildingController {
 
   //Create room
   @RequestMapping(value = "/buildings/newRoom/{id}", method = RequestMethod.POST)
-  public String newRoom(@ModelAttribute("room") Building bld,
+  public String newRoom(@ModelAttribute("building") Building building,
                         @PathVariable String id) {
     Building thisBuilding = repository.findById(id);
     Room newRoom = new Room();
@@ -107,7 +108,9 @@ public class BuildingController {
     newRoom.building = thisBuilding;
     thisBuilding.rooms.add(newRoom);
     repository.save(thisBuilding);
-    return  "redirect:/building/room/" + newRoom.id;
+      return  "redirect:/building/room/" + newRoom.id;
+
+
   }
 
 }
