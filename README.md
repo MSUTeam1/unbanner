@@ -1,4 +1,4 @@
-# unbanner
+# unbanner [![Coverage Status](https://coveralls.io/repos/github/MSUTeam1/unbanner/badge.svg?branch=master)](https://coveralls.io/github/MSUTeam1/unbanner?branch=master)
 
 ## Collaboration Team
 
@@ -19,9 +19,7 @@ $ mongod
 
 $ ./gradlew bootRun
 
-## Coveralls
-
-[![Coverage Status](https://coveralls.io/repos/github/MSUTeam1/unbanner/badge.svg?branch=master)](https://coveralls.io/github/MSUTeam1/unbanner?branch=master)
+## Documentation
 
 open in browser:
 http://localhost:8080/
