@@ -85,7 +85,7 @@ public class BuildingController {
     tempRoom.name = room.name;
     tempRoom.size = room.size;
     roomRepository.save(tempRoom);
-    return "redirect:/building/" + tempRoom.building.id ;
+    return "redirect:/buildings";
   }
 
   //Get building for create_room

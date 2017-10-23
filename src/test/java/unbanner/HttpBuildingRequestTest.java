@@ -221,7 +221,7 @@ public class HttpBuildingRequestTest {
             .param("size", "15")
             .param("name", "new room name"))
             .andExpect(status().is3xxRedirection())
-            .andExpect(view().name("redirect:/building/" + bldList.get(0).id ))
+            .andExpect(view().name("redirect:/buildings"))
             .andDo(print());
   }
 
