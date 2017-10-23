@@ -194,6 +194,7 @@ public class HttpBuildingRequestTest {
              hasProperty("name", is("building name")))))
             .andDo(print());
   }
+
   @Test   //Update room
   public void updateRoom() throws Exception {
     roomRepo.deleteAll();
@@ -208,7 +209,10 @@ public class HttpBuildingRequestTest {
     Building myBuilding = new Building();
     myBuilding.description = "building desc";
     myBuilding.name = "building name";
+    myBuilding.rooms.add(myRoom);
     bldRepo.save(myBuilding);
+    myRoom.building = myBuilding;
+    roomRepo.save(myRoom);
 
     List<Building> bldList = bldRepo.findAll();
 
@@ -217,10 +221,8 @@ public class HttpBuildingRequestTest {
             .param("size", "15")
             .param("name", "new room name"))
             .andExpect(status().is3xxRedirection())
-            .andExpect(view().name("redirect:/buildings"))
-            //.andExpect(view().name("redirect:/building/" + bldRepo.findAll().get(0).id ))
+            .andExpect(view().name("redirect:/building/" + bldList.get(0).id ))
             .andDo(print());
-    //Want to do the Get verifications, but cant.
   }
 
 
@@ -247,14 +249,5 @@ public class HttpBuildingRequestTest {
             .andExpect(status().is3xxRedirection())
             .andExpect(view().name("redirect:/building/room/" + roomRepo.findAll().get(1).id))
             .andDo(print());
-
-/*
-    this.mockMvc.perform(get("/building/room/{id}", rmList.get(1).id))
-    // TODO
-*/
-
   }
-
-
-
 }

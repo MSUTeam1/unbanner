@@ -85,8 +85,7 @@ public class BuildingController {
     tempRoom.name = room.name;
     tempRoom.size = room.size;
     roomRepository.save(tempRoom);
-    return "redirect:/buildings";
-    //return "redirect:/building/" + tempRoom.building.id ; // I want to do this, but the mock tests get wild if I do.
+    return "redirect:/building/" + tempRoom.building.id ;
   }
 
   //Get building for create_room
@@ -108,9 +107,6 @@ public class BuildingController {
     newRoom.building = thisBuilding;
     thisBuilding.rooms.add(newRoom);
     repository.save(thisBuilding);
-      return  "redirect:/building/room/" + newRoom.id;
-
-
+    return  "redirect:/building/room/" + newRoom.id;
   }
-
 }
