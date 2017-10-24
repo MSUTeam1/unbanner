@@ -192,7 +192,7 @@ public class HttpRequestTest {
         .param("firstName", "Tom")
         .param("lastName", "Cruz"))
         .andExpect(status().is3xxRedirection())
-        .andExpect(view().name("redirect:/students"))
+        .andExpect(view().name("redirect:/student/" + stuList.get(0).id))
         .andDo(print());
 
     this.mockMvc.perform(get("/students"))
