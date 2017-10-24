@@ -177,8 +177,7 @@ public class HttpBuildingRequestTest {
   }
 
   @Test   //get building for create_room test
-  public void newRoomGet() throws Exception{
-
+  public void newRoomGet() throws Exception {
     bldRepo.deleteAll();
     Building myBuilding = new Building();
     myBuilding.description = "building desc";
@@ -187,7 +186,7 @@ public class HttpBuildingRequestTest {
 
     List<Building> bldList = bldRepo.findAll();
 
-    this.mockMvc.perform(get("/building/newRoom/{id}", bldList.get(0).id ))
+    this.mockMvc.perform(get("/building/newRoom/{id}", bldList.get(0).id))
             .andExpect(status().isOk())
             .andExpect(model().attribute("building",
              allOf(
@@ -200,7 +199,7 @@ public class HttpBuildingRequestTest {
     roomRepo.deleteAll();
     Room myRoom = new Room();
     myRoom.size = 10;
-    myRoom.name ="Room name";
+    myRoom.name = "Room name";
     roomRepo.save(myRoom);
 
     List<Room> rmList = roomRepo.findAll();
@@ -216,7 +215,7 @@ public class HttpBuildingRequestTest {
 
     List<Building> bldList = bldRepo.findAll();
 
-    this.mockMvc.perform(post("/building/room/{id}", rmList.get(0).id )
+    this.mockMvc.perform(post("/building/room/{id}", rmList.get(0).id)
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
             .param("size", "15")
             .param("name", "new room name"))
@@ -231,7 +230,7 @@ public class HttpBuildingRequestTest {
     roomRepo.deleteAll();
     Room myRoom = new Room();
     myRoom.size = 10;
-    myRoom.name ="Room name";
+    myRoom.name = "Room name";
     roomRepo.save(myRoom);
 
     List<Room> rmList = roomRepo.findAll();
@@ -244,7 +243,7 @@ public class HttpBuildingRequestTest {
 
     List<Building> bldList = bldRepo.findAll();
 
-    this.mockMvc.perform(post("/buildings/newRoom/{id}", bldList.get(0).id )
+    this.mockMvc.perform(post("/buildings/newRoom/{id}", bldList.get(0).id)
             .contentType(MediaType.APPLICATION_FORM_URLENCODED))
             .andExpect(status().is3xxRedirection())
             .andExpect(view().name("redirect:/building/room/" + roomRepo.findAll().get(1).id))
