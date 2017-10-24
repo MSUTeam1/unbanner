@@ -59,6 +59,16 @@
                 </div>
                 <div class="row">
                     <div class="col">
+                        <select class="form-control" id="sections" name="sections" multiple="multiple" >
+                            <option th:each="section : ${allSections}"
+                                    th:selected="${student.sections.contains(section)}"
+                                    th:value="${section.id}"
+                                    th:text="${section.course.name}">Course name</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
                         <button type="submit" class="btn btn-primary" id="updateButton">Update</button>
                     </div>
                 </div>

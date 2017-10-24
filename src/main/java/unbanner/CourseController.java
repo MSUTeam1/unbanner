@@ -67,6 +67,26 @@ public class CourseController {
     return "redirect:/courses";
   }
 
+  @RequestMapping(value = "/course/{id}/newsection", method = RequestMethod.GET)
+  public String newSection(@ModelAttribute("section") Section section,
+                           @PathVariable String id, Model model) {
+    Course course = repository.findOne(id);
+    model.addAttribute(course);
+    return "create_section";
+  }
+
+  @RequestMapping(value = "/course/{id}/newsection", method = RequestMethod.POST)
+  public String newSection(@ModelAttribute("section") Section section,
+                           @PathVariable String id) {
+    Course course = repository.findOne(id);
+    section.course = course;
+    Section savedSection = sectionRepository.save(section);
+    course.addSection(savedSection);
+    repository.save(course);
+
+    return "redirect:/courses";
+  }
+
   @RequestMapping(value = "/course/{id}", method = RequestMethod.POST)
   public String course(@ModelAttribute("course") Course course,
                        @PathVariable String id) {

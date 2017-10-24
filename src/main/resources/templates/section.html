@@ -44,6 +44,12 @@
             <input type="number" class="form-control" th:field="*{number}" />
             <input type="text" class="form-control" th:field="*{schedule}" />
             <input type="time" class="form-control" id="time" name="time" th:value="${section.getTimeStamp()}"/>
+            <select class="form-control" id="students" name="students" multiple="multiple" >
+                <option th:each="student : ${allStudents}"
+                        th:selected="${section.students.contains(student)}"
+                        th:value="${student.id}"
+                        th:text="${student.firstName + ' ' + student.lastName}">Name</option>
+            </select>
             <button type="submit" class="btn btn-primary" id="updateButton">Update</button>
         </form>
         </div>
