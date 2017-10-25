@@ -60,25 +60,6 @@ public class Course implements Storable {
     this.name = name;
   }
 
-  public Course(int number, int credits, String department,
-                String description, List<Course> prereqs) {
-    this(number, credits, department, description);
-    this.prereqs = prereqs;
-  }
-
-  public Course(String name, int number, int credits,
-                String department, String description, List<Course> prereqs) {
-    this(name, number, credits, department, description, "");
-    this.prereqs = prereqs;
-  }
-
-  public Course(int number, int credits, String department,
-                String description, List<Course> prereqs, List<Course> coreqs) {
-    this(number, credits, department, description);
-    this.prereqs = prereqs;
-    this.coreqs = coreqs;
-  }
-
   @Override
   public ObjectId getId() {
     return this.id;
