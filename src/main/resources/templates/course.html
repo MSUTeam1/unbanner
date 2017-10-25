@@ -16,12 +16,12 @@
                     <div class="col">Description: <b th:text="${course.description}" /></div>
                     <div class="col">Department: <b th:text="${course.department}" /></div>
                     <div class="col">Number: <b th:text="${course.number}" /></div>
-                </div>
-                <div class="row">
-                    <form action="#" th:action="@{'/course/{id}'(id=${course.id})}" th:method="delete" >
+                    <div class="col">
+                        <form action="#" th:action="@{'/course/{id}'(id=${course.id})}" th:method="delete" >
                         <input type="hidden" name="_method" value="delete" />
                         <button type="submit" class="btn btn-danger" id="submitButton">Delete</button>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -35,6 +35,8 @@
                                 <button type="submit" class="btn btn-secondary" id="submitButton">Create New Section</button>
                             </form>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class = "col">
                             <div class="container" th:each="section : ${course.sections}">
                                 <div class="row">
@@ -48,7 +50,7 @@
                                         <div class="container">
                                             <h6>Students:</h6>
                                             <div class="container">
-                                                <table>
+                                                <table class="table table-striped">
                                                     <tr th:each="student : ${section.students}">
                                                         <td th:text="${student.firstName + ' ' + student.lastName}"></td>
                                                         <td th:text="${student.studentNum}"></td>

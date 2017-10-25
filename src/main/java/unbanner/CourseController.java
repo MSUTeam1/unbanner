@@ -22,6 +22,14 @@ public class CourseController {
   @Autowired
   StudentRepository studentRepository;
 
+  @Autowired
+  RoomRepository roomRepository;
+
+  @ModelAttribute("allRooms")
+  public List<Room> getRooms() {
+    return roomRepository.findAll();
+  }
+
   @RequestMapping(value = "/courses", method = RequestMethod.GET)
   public String coursesList(Model model) {
     model.addAttribute("courses", repository.findAll());

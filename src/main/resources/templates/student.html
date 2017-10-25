@@ -32,7 +32,7 @@
         <div class="container">
             <h5>Courses:</h5>
             <div class="container">
-                <table>
+                <table class="table table-striped">
                     <tr th:each="section : ${student.sections}">
                         <td th:text="${section.course.department + ' ' + section.course.number}"></td>
                         <td th:text="${section.course.name}"></td>

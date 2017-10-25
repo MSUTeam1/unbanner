@@ -10,9 +10,21 @@
 <div layout:fragment="content">
     <h1>Section</h1>
     <div class="container">
+        <h6>Room:</h6>
+        <div class="container">
+            <table class="table">
+                <tr >
+                    <td th:text="${section.room.name}"></td>
+                    <td th:text="${section.room.size}"></td>
+                    <td><a class="badge badge-info" th:href="@{/building/room/{id}(id=${section.room.id})}">view</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="container">
         <h6>Course:</h6>
         <div class="container">
-            <table>
+            <table class="table">
                 <tr >
                     <td th:text="${section.course.department + ' ' + section.course.number}"></td>
                     <td th:text="${section.course.name}"></td>
@@ -24,7 +36,7 @@
     <div class="container">
         <h6>Students:</h6>
         <div class="container">
-            <table>
+            <table class="table table-striped">
                 <tr>
                 <tr th:each="student : ${section.students}">
                     <td th:text="${student.firstName + ' ' + student.lastName}"></td>
