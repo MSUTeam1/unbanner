@@ -97,7 +97,7 @@ public class BuildingController {
 
   //Create room
   @RequestMapping(value = "/buildings/newRoom/{id}", method = RequestMethod.POST)
-  public String newRoom(@ModelAttribute("room") Building bld,
+  public String newRoom(@ModelAttribute("building") Building building,
                         @PathVariable String id) {
     Building thisBuilding = repository.findById(id);
     Room newRoom = new Room();
@@ -109,5 +109,4 @@ public class BuildingController {
     repository.save(thisBuilding);
     return  "redirect:/building/room/" + newRoom.id;
   }
-
 }
