@@ -7,7 +7,7 @@ import org.junit.Test;
 public class WeekdayTest {
 
   @Test
-  public void toStringShouldWork(){
+  public void toStringShouldWork() {
     Assert.assertTrue(Weekday.W.toString().equals("W"));
   }
 }

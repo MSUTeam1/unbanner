@@ -43,6 +43,7 @@ public class HttpBuildingRequestTest {
   @Autowired
   private RoomRepository roomRepo;
 
+
   @Test
   public void buildingsShouldRespond() throws Exception {
 
@@ -175,8 +176,77 @@ public class HttpBuildingRequestTest {
         .andDo(print());
   }
 
+  @Test   //get building for create_room test
+  public void newRoomGet() throws Exception {
+    bldRepo.deleteAll();
+    Building myBuilding = new Building();
+    myBuilding.description = "building desc";
+    myBuilding.name = "building name";
+    bldRepo.save(myBuilding);
+
+    List<Building> bldList = bldRepo.findAll();
+
+    this.mockMvc.perform(get("/building/newRoom/{id}", bldList.get(0).id))
+            .andExpect(status().isOk())
+            .andExpect(model().attribute("building",
+             allOf(
+             hasProperty("name", is("building name")))))
+            .andDo(print());
+  }
+
+  @Test   //Update room
+  public void updateRoom() throws Exception {
+    roomRepo.deleteAll();
+    Room myRoom = new Room();
+    myRoom.size = 10;
+    myRoom.name = "Room name";
+    roomRepo.save(myRoom);
+
+    List<Room> rmList = roomRepo.findAll();
+
+    bldRepo.deleteAll();
+    Building myBuilding = new Building();
+    myBuilding.description = "building desc";
+    myBuilding.name = "building name";
+    myBuilding.rooms.add(myRoom);
+    bldRepo.save(myBuilding);
+    myRoom.building = myBuilding;
+    roomRepo.save(myRoom);
+
+    List<Building> bldList = bldRepo.findAll();
+
+    this.mockMvc.perform(post("/building/room/{id}", rmList.get(0).id)
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+            .param("size", "15")
+            .param("name", "new room name"))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(view().name("redirect:/buildings"))
+            .andDo(print());
+  }
+
+
   @Test
-  public void newRoomCreate() throws Exception{
-    //TODO
+  public void roomNewShouldCreate() throws Exception {
+    roomRepo.deleteAll();
+    Room myRoom = new Room();
+    myRoom.size = 10;
+    myRoom.name = "Room name";
+    roomRepo.save(myRoom);
+
+    List<Room> rmList = roomRepo.findAll();
+
+    bldRepo.deleteAll();
+    Building myBuilding = new Building();
+    myBuilding.description = "building desc";
+    myBuilding.name = "building name";
+    bldRepo.save(myBuilding);
+
+    List<Building> bldList = bldRepo.findAll();
+
+    this.mockMvc.perform(post("/buildings/newRoom/{id}", bldList.get(0).id)
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(view().name("redirect:/building/room/" + roomRepo.findAll().get(1).id))
+            .andDo(print());
   }
 }
