@@ -1,0 +1,74 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Building</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div layout:fragment="content">
+
+<h1>Edit Building</h1>
+Name:        <b th:text="${building.name}" /> <br/>
+Description: <b th:text="${building.description}" /> <br/>
+    <a th:href ="@{/building/newRoom/{bldId} (bldId=${building.id} ) }">Create New Room</a> <br/>
+
+    Rooms in this building:
+    <table th:each="room : ${building.rooms}">
+        <br/>
+        <tr>
+            <th>Room </th>
+            <th>Size</th>
+        </tr>
+        <tr>
+            <td th:text ="${room.name}"></td>
+            <td th:text="${room.size}"></td>
+            <td><a th:href ="@{/building/room/{roomId} (roomId=${room.id} ) }"> view  </a></td>
+        </tr>
+
+        <tr>
+            <td><b>Room's Sections:</b></td>
+        </tr>
+        <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>Days</th>
+            <th>Time</th>
+        </tr>
+        <tr th:each="section : ${room.sectionList}">
+            <td th:text="${section.number}"></td>
+            <td th:text="${section.course.name}"></td>
+            <td th:text="${section.schedule}"></td>
+            <td th:text="${section.getTimeStamp()}"></td>
+
+            <td><a th:href="@{/section/{id}(id=${section.id})}">view</a></td>
+        </tr>
+    </table>
+
+
+    <br/>
+Delete this buildings?
+<form action="#" th:action="@{'/building/{id}'(id=${building.id})}" th:method="delete" >
+    <input type="hidden" name="_method" value="delete" />
+    <button type="submit" id="submitButton">Delete</button>
+</form>
+
+<br/>
+
+<form action="#" th:action="@{'/building/{id}'(id=${building.id})}" th:object="${building}" th:method="post" >
+    <input type="hidden" th:field="*{id}" />
+
+    <label th:for="*{name}">Name</label>
+    <input type="text" th:field="*{name}" />
+
+    <label th:for="*{description}">Description</label>
+    <input type="text" th:field="*{description}" />
+
+    <button type="submit" id="updateButton">Update</button>
+</form>
+
+</div>
+</body>
+</html>

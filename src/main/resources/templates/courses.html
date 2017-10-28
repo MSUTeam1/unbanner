@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Courses</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Courses</h1>
+    <div class="container">
+        <table>
+            <tr>
+                <th>Number</th>
+                <th>Name</th>
+                <th>Information</th>
+            </tr>
+            <tr th:each="course : ${courses}">
+                <td th:text="${course.department + ' ' + course.number}"></td>
+                <td th:text="${course.name}"></td>
+                <td><a class="badge badge-info" th:href="@{/course/{id}(id=${course.id})}">view</a></td>
+            </tr>
+            <tr>
+                <a class="badge badge-primary" href="/courses/new">Create New Course</a>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

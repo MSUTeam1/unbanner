@@ -1,0 +1,59 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Room</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div layout:fragment="content">
+
+    <h1>Edit Room</h1>
+    Room:        <b th:text="${room.name}" /> <br/>
+    Size: <b th:text="${room.size}" /> <br/>
+    <table>
+    <tr>
+        <td><b>Room's Sections:</b></td>
+    </tr>
+    <tr>
+        <th>Number</th>
+        <th>Name</th>
+        <th>Days</th>
+        <th>Time</th>
+    </tr>
+    <tr th:each="section : ${room.sectionList}">
+        <td th:text="${section.number}"></td>
+        <td th:text="${section.course.name}"></td>
+        <td th:text="${section.schedule}"></td>
+        <td th:text="${section.getTimeStamp()}"></td>
+
+        <td><a th:href="@{/section/{id}(id=${section.id})}">view</a></td>
+    </tr>
+    </table>
+
+    Delete this room?
+    <form action="#" th:action="@{'/building/room/{id}'(id=${room.id})}" th:method="delete" >
+        <input type="hidden" name="_method" value="delete" />
+        <button type="submit" id="submitButton">Delete</button>
+    </form>
+
+    <br/>
+    <form action="#" th:action="@{'/building/room/{id}'(id=${room.id})}" th:object="${room}" th:method="post" >
+        <input type="hidden" th:field="*{id}" />
+
+        <label th:for="*{name}">Name</label>
+        <input type="text" th:field="*{name}" />
+
+        <label th:for="*{size}">Size</label>
+        <input type="number" th:field="*{size}" />
+
+        <button type="submit" id="updateButton">Update</button>
+    </form>
+
+
+
+</div>
+</body>
+</html>

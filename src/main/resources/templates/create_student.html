@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Create New Student</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Create New Student</h1>
+    <div class="container">
+        <form action="#" th:action="@{'/students/new'}" th:object="${student}" th:method="post" >
+            <div class="row">
+                <div class="col">
+                    <input placeholder="900xxx" type="number" class="form-control" th:field="*{studentNum}" />
+                </div>
+                <div class="col">
+                    <input placeholder="First Name" type="text" class="form-control" th:field="*{firstName}" />
+                </div>
+                <div class="col">
+                    <input placeholder="Last Name" type="text" class="form-control" th:field="*{lastName}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                <h6>Sections</h6>
+                </div>
+            </div>
+            <div class="row" th:each="section,stat : ${allSections}">
+                <div class="col">
+                    <label th:text="${section.course.name + ' : ' + section.number}"></label>
+                    <input type="checkbox" name="sec" th:field="*{sections[__${stat.index}__]}" th:value="${section.id}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary" id="updateButton">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
