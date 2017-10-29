@@ -1,12 +1,15 @@
 package unbanner;
 
-import org.bson.types.ObjectId;
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+
+
 
 public class BuildingTest {
   Building bld1;

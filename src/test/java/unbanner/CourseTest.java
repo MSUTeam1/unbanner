@@ -3,12 +3,12 @@ package unbanner;
 import static junit.framework.Assert.assertNotSame;
 import static junit.framework.TestCase.assertEquals;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.bson.types.ObjectId;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -161,14 +161,14 @@ public class CourseTest {
   }
 
   @Test
-  public void setSections(){
+  public void setSections() {
     Assert.assertNotEquals(course.sections, sections2);
     course.setSections(sections2);
     Assert.assertEquals(course.sections, sections2);
   }
 
   @Test
-  public void getSections(){
+  public void getSections() {
     Assert.assertEquals(course.sections, sections);
   }
 
