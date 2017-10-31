@@ -28,6 +28,8 @@ public class Section implements Storable {
   public Course course;
   @DBRef(lazy = true)
   public Room room;
+  @DBRef(lazy = true)
+  public Semester semester;
 
   //This method should  follow this assignment: mySection.room = myRoom.
   public void addSectionToRoomList(Room assignedRoom) {
