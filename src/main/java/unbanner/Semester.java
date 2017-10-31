@@ -1,11 +1,17 @@
 package unbanner;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 
 public class Semester implements Storable {
 
+
+    @Id
+    public ObjectId id;
+
     String season;
     int year;
+
 
     public Semester(String season, int year) {
         this.season = season;
@@ -31,11 +37,11 @@ public class Semester implements Storable {
 
     @Override
     public ObjectId getId() {
-        return null;
+        return id;
     }
 
     @Override
     public void setId(ObjectId id) {
-
+        this.id = id;
     }
 }

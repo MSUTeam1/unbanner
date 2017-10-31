@@ -42,17 +42,17 @@ public class SemesterTest {
     /*
     i have no idea why these dont work.
      */
-//    @Test
-//    public void getId() throws Exception {
-//        assertEquals(semester.getId().toHexString(),
-//                "dddd1111abcdabcd1234abcd");
-//    }
-//
-//    @Test
-//    public void setId() throws Exception {
-//        semester.setId(new ObjectId("abcd1234ab222bcd1234dfff"));
-//        assertEquals(semester.getId().toHexString(),
-//                "abcd1234ab222bcd1234dfff");
-//    }
+
+    @Test
+    public void setId() throws Exception {
+        semester.setId(new ObjectId("abcd1234ab222bcd1234dfff"));
+        assertEquals("abcd1234ab222bcd1234dfff",
+                semester.getId().toHexString());
+    }
+    @Test
+    public void getId() throws Exception {
+        assertEquals(semester.getId().toHexString(),
+                "dddd1111abcdabcd1234abcd");
+    }
 
 }
