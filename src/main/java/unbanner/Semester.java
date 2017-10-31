@@ -1,7 +1,12 @@
 package unbanner;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
+import java.util.List;
 
 public class Semester implements Storable {
 
@@ -11,6 +16,12 @@ public class Semester implements Storable {
 
     String season;
     int year;
+
+    @DBRef(lazy = true)
+    @Getter
+    @Setter
+    public List<Section> sections;
+
 
 
     public Semester(String season, int year) {
