@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Professor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Professor</h1>
+    <div class="container">
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    Name: <b th:text="${professor.firstName}" /> <b th:text="${professor.lastName}" />
+                <div class="col">
+                    <form action="#" th:action="@{'/student/{id}'(id=${professor.id})}" th:method="delete" >
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" class="btn btn-danger" id="submitButton">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br/>
+
+        <div class="container">
+            <h5>Courses:</h5>
+            <div class="container">
+                <table>
+                    <tr th:each="section : ${professor.sections}">
+                        <td th:text="${section.course.department + ' ' + section.course.number}"></td>
+                        <td th:text="${section.course.name}"></td>
+                        <td><a class="badge badge-info" th:href="@{/course/{id}(id=${section.course.id})}">view</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br/>
+
+        <div class="container">
+            <form action="#" th:action="@{'/student/{id}'(id=${professor.id})}" th:object="${professor}" th:method="post" >
+                <input type="hidden" th:field="*{id}" />
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" th:field="*{firstName}" />
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" th:field="*{lastName}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary" id="updateButton">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
