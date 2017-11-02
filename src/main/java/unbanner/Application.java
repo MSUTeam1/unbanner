@@ -36,6 +36,9 @@ public class Application implements CommandLineRunner {
   private BuildingRepository buildingRepository;
 
   @Autowired
+  private ProfessorRepository professorRepository;
+
+  @Autowired
   private Globals globals;
 
   @Bean
@@ -113,6 +116,7 @@ public class Application implements CommandLineRunner {
     sectionRepository.save(new Section(101, courseRepository.findByName("Computer Science I")));
     sectionRepository.save(new Section(201, courseRepository.findByName("Computer Science II")));
     sectionRepository.save(new Section(102, courseRepository.findByName("Computer Science I")));
+    professorRepository.save(new Professor("Steve", "Beaty"));
 
     Student alice = studentRepository.findByFirstName("Alice");
     Student bob = studentRepository.findByFirstName("Bob");
