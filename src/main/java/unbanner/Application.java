@@ -103,6 +103,7 @@ public class Application implements CommandLineRunner {
     sectionRepository.deleteAll();
     buildingRepository.deleteAll();
     roomRepository.deleteAll();
+    professorRepository.deleteAll();
 
     // save a couple of Courses and Students
     courseRepository.save(new Course("Computer Science I", 1050,
@@ -133,9 +134,9 @@ public class Application implements CommandLineRunner {
     s2.addToSchedule(Weekday.W);
 
 
-    Building bld1 = new Building("Building One","This is 1st building");
-    Building bld2 = new Building("Building Two","This is a 2nd building");
-    Building bld3 = new Building("Building Three","This is a 3rd building");
+    Building bld1 = new Building("Building One", "This is 1st building");
+    Building bld2 = new Building("Building Two", "This is a 2nd building");
+    Building bld3 = new Building("Building Three", "This is a 3rd building");
     Room rm1 = new Room("room1001", 35);
     Room rm2 = new Room("room2000", 20);
     buildingRepository.save(bld1);

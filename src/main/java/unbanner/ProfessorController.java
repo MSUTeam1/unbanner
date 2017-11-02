@@ -46,12 +46,14 @@ public class ProfessorController {
     newProfessor.firstName = professor.firstName;
     newProfessor.lastName = professor.lastName;
     newProfessor.sections = professor.sections;
-    Professor tempPro = repository.save(newProfessor);
-    for (Section section : tempPro.sections) {
-      section.professor = tempPro;
-      sectionRepository.save(section);
-    }
+    newProfessor = repository.save(newProfessor);
 
+    for (Section section : newProfessor.sections) {
+      if (section != null) {
+        section.professor = newProfessor;
+        sectionRepository.save(section);
+      }
+    }
     return "redirect:/professors";
   }
 

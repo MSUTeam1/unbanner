@@ -15,44 +15,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@EqualsAndHashCode
+public class Professor implements Storable {
 
-  @EqualsAndHashCode
-  public class Professor implements Storable {
+  @Id
+  public ObjectId id;
 
-    @Id
-    public ObjectId id;
+  @Getter
+  @Setter
+  public String firstName;
+  @Getter
+  @Setter
+  public String lastName;
+  @DBRef(lazy = true)
+  @Getter
+  @Setter
+  public List<Section> sections;
 
-    @Getter @Setter public String firstName;
-    @Getter @Setter public String lastName;
-    @DBRef(lazy = true)
-    @Getter @Setter public List<Section> sections;
-
-    public Professor() {
-      this.sections = new ArrayList<Section>();
-    }
-
-    public Professor(String firstName, String lastName) {
-      this.firstName = firstName;
-      this.lastName = lastName;
-    }
-
-    @Override
-    public ObjectId getId() {
-      return this.id;
-    }
-
-    @Override
-    public void setId(ObjectId id) {
-      this.id = id;
-    }
-
-    @Override
-    public String toString() {
-      return String.format(
-          "Professor[id=%s, firstName='%s', lastName='%s']",
-          id, firstName, lastName);
-    }
-
+  public Professor() {
+    this.sections = new ArrayList<Section>();
   }
+
+  public Professor(String firstName, String lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  @Override
+  public ObjectId getId() {
+    return this.id;
+  }
+
+  @Override
+  public void setId(ObjectId id) {
+    this.id = id;
+  }
+
+  @Override
+  public String toString() {
+    return String.format(
+        "Professor[id=%s, firstName='%s', lastName='%s']",
+        id, firstName, lastName);
+  }
+
+}
 
 

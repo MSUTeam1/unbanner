@@ -4,7 +4,7 @@
       layout:decorator="layout">
 <head>
     <title>Professor</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <div layout:fragment="content">
@@ -14,13 +14,15 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    Name: <b th:text="${professor.firstName}" /> <b th:text="${professor.lastName}" />
+                    Name: <b th:text="${professor.firstName}"/> <b th:text="${professor.lastName}"/>
+                </div>
                 <div class="col">
-                    <form action="#" th:action="@{'/student/{id}'(id=${professor.id})}" th:method="delete" >
-                        <input type="hidden" name="_method" value="delete" />
+                    <form action="#" th:action="@{'/professor/{id}'(id=${professor.id})}" th:method="delete">
+                        <input type="hidden" name="_method" value="delete"/>
                         <button type="submit" class="btn btn-danger" id="submitButton">Delete</button>
                     </form>
                 </div>
+
             </div>
         </div>
         <br/>
@@ -40,14 +42,15 @@
         <br/>
 
         <div class="container">
-            <form action="#" th:action="@{'/student/{id}'(id=${professor.id})}" th:object="${professor}" th:method="post" >
-                <input type="hidden" th:field="*{id}" />
+            <form action="#" th:action="@{'/professor/{id}'(id=${professor.id})}" th:object="${professor}"
+                  th:method="post">
+                <input type="hidden" th:field="*{id}"/>
                 <div class="row">
                     <div class="col">
-                        <input type="text" class="form-control" th:field="*{firstName}" />
+                        <input type="text" class="form-control" th:field="*{firstName}"/>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" th:field="*{lastName}" />
+                        <input type="text" class="form-control" th:field="*{lastName}"/>
                     </div>
                 </div>
                 <div class="row">
@@ -57,6 +60,7 @@
                 </div>
             </form>
         </div>
+
     </div>
 </div>
 </body>

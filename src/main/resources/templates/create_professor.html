@@ -10,13 +10,13 @@
 <div layout:fragment="content">
     <h1>Create New Professor</h1>
     <div class="container">
-        <form action="#" th:action="@{'/professors/new'}" th:object="${professor}" th:method="post" >
+        <form action="#" th:action="@{'/professors/new'}" th:object="${professor}" th:method="post">
             <div class="row">
                 <div class="col">
-                    <input placeholder="First Name" type="text" class="form-control" th:field="*{firstName}" />
+                    <input placeholder="First Name" type="text" class="form-control" th:field="*{firstName}"/>
                 </div>
                 <div class="col">
-                    <input placeholder="Last Name" type="text" class="form-control" th:field="*{lastName}" />
+                    <input placeholder="Last Name" type="text" class="form-control" th:field="*{lastName}"/>
                 </div>
             </div>
             <div class="row">
@@ -27,7 +27,8 @@
             <div class="row" th:each="section,stat : ${allSections}">
                 <div class="col">
                     <label th:text="${section.course.name + ' : ' + section.number}"></label>
-                    <input type="checkbox" name="sec" th:field="*{sections[__${stat.index}__]}" th:value="${section.id}"/>
+                    <input type="checkbox" name="sec" th:field="*{sections[__${stat.index}__]}"
+                           th:value="${section.id}"/>
                 </div>
             </div>
             <div class="row">
