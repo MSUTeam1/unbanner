@@ -176,12 +176,6 @@ public class Section implements Storable {
     this.room = room;
   }
 
-  public String getCourseDepartment() {
-    return course.department;
-  }
-  public int getCourseNumber() {
-    return course.number;
-  }
   @Override
   public ObjectId getId() {
     return id;

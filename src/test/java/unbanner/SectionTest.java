@@ -151,15 +151,6 @@ public class SectionTest {
   }
 
   @Test
-  public void getCourseDepartmentTest() {
-    assertNotNull(section.getCourseDepartment());
-  }
-
-  @Test
-  public void getCourseNumber() {
-    assertNotNull(section.getCourseNumber());
-  }
-  @Test
   public void setRoomTest() {
     Room room2 = Mockito.mock(Room.class);
     section.setRoom(room2);
