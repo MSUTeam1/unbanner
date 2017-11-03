@@ -39,6 +39,8 @@ public class SectionTest {
     assertNotNull(section);
     section = new Section(1, new ArrayList<Weekday>(), LocalTime.of(2, 0));
     assertNotNull(section);
+    section = new Section(1, new ArrayList<Weekday>(), LocalTime.of(2, 0),Semester.FALL);
+    assertNotNull(section);
     section = new Section(1, Mockito.mock(Course.class));
     assertNotNull(section);
   }
@@ -149,6 +151,15 @@ public class SectionTest {
   }
 
   @Test
+  public void getCourseDepartmentTest() {
+    assertNotNull(section.getCourseDepartment());
+  }
+
+  @Test
+  public void getCourseNumber() {
+    assertNotNull(section.getCourseNumber());
+  }
+  @Test
   public void setRoomTest() {
     Room room2 = Mockito.mock(Room.class);
     section.setRoom(room2);
@@ -172,4 +183,22 @@ public class SectionTest {
     section.addSectionToRoomList(room);
     assertTrue(room.sectionList.contains(section));
   }
+
+  @Test
+  public void setSemesterTest() {
+    assertEquals(Semester.FALL,section.getSemester());
+    section.setSemester(Semester.SPRING);
+    assertEquals(Semester.SPRING,section.getSemester());
+    section.setSemester("FALL");
+    assertEquals(Semester.FALL,section.getSemester());
+    section.setSemester("SPRING");
+    assertEquals(Semester.SPRING,section.getSemester());
+    section.setSemester("SUMMER");
+    assertEquals(Semester.SUMMER,section.getSemester());
+  }
+  @Test
+  public void getSemesterTest() {
+    assertEquals(Semester.FALL,section.getSemester());
+  }
+
 }

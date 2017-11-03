@@ -48,8 +48,12 @@ public class CourseController {
 
   @RequestMapping("/course/{id}")
   public String course(@PathVariable String id, Model model) {
-    model.addAttribute("course", repository.findOne(id));
-    return "course";
+    Course course = repository.findOne(id);
+    if (course != null) {
+      model.addAttribute("course", repository.findOne(id));
+      return "course";
+    }
+    return "redirect:/";
   }
 
   @RequestMapping(value = "/course/{id}", method = RequestMethod.DELETE)

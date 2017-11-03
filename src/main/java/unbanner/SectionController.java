@@ -16,8 +16,13 @@ public class SectionController {
 
   @RequestMapping(value = "/section/{id}")
   public String section(@PathVariable String id, Model model) {
-    model.addAttribute("section", repository.findById(id));
-    return "section";
+    Section section = repository.findById(id);
+    if (section != null) {
+      model.addAttribute("section", section);
+      model.addAttribute("course",section.course);
+      return "section";
+    }
+    return "redirect:/";
   }
 
   @RequestMapping(value = "/section/{id}", method = RequestMethod.DELETE)
@@ -44,6 +49,7 @@ public class SectionController {
       tempSec.number = section.number;
       tempSec.schedule = section.schedule;
       tempSec.time = section.time;
+      tempSec.semester = section.semester;
       repository.save(tempSec);
       return "redirect:/section/" + section.getId();
     }

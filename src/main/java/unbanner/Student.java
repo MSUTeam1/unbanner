@@ -22,6 +22,7 @@ public class Student implements Storable {
   @Getter @Setter public int studentNum;
   @DBRef(lazy = true)
   @Getter @Setter public List<Section> sections;
+  @Getter @Setter public String password;
 
   public Student() {
     this.sections = new ArrayList<Section>();

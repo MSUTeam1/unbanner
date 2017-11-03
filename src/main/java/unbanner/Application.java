@@ -145,6 +145,9 @@ public class Application implements CommandLineRunner {
     s1.addSectionToRoomList(rm1);
     s2.addSectionToRoomList(rm2);
     s3.addSectionToRoomList(rm2);
+    sectionRepository.save(s1);
+    sectionRepository.save(s2);
+    sectionRepository.save(s3);
     bld1.rooms.add(rm1);
     bld1.rooms.add(rm2);
     rm1.building = bld1;

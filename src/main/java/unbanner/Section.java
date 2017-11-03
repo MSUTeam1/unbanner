@@ -22,12 +22,14 @@ public class Section implements Storable {
   @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
   public LocalTime time;
   public int number;
+  public Semester semester;
   @DBRef(lazy = true)
   public List<Student> students = new ArrayList<Student>();
   @DBRef(lazy = true)
   public Course course;
   @DBRef(lazy = true)
   public Room room;
+
 
   //This method should  follow this assignment: mySection.room = myRoom.
   public void addSectionToRoomList(Room assignedRoom) {
@@ -38,6 +40,7 @@ public class Section implements Storable {
     this.number = 0;
     this.time = LocalTime.of(2, 0); // 2 hours
     this.schedule = new ArrayList<Weekday>();
+    this.semester = Semester.FALL;
   }
 
   public Section(int number) {
@@ -51,6 +54,10 @@ public class Section implements Storable {
     this.time = time;
   }
 
+  public Section(int number, List<Weekday> schedule, LocalTime time, Semester semester) {
+    this(number, schedule, time);
+    this.semester = semester;
+  }
   public Section(int number, Course course) {
     this(number);
     this.course = course;
@@ -93,6 +100,27 @@ public class Section implements Storable {
     }
     schedule.add(day);
   }
+  public Semester getSemester() {
+    return semester;
+  }
+  public void setSemester(Semester semester) {
+    this.semester = semester;
+  }
+  public void setSemester(String semester) {
+    switch (semester.toUpperCase()) {
+      case "FALL":
+        this.semester = Semester.FALL;
+        break;
+      case "SPRING":
+        this.semester = Semester.SPRING;
+        break;
+      case "SUMMER":
+        this.semester = Semester.SUMMER;
+        break;
+      default:
+    }
+  }
+
 
   public List<Weekday> getSchedule() {
     return schedule;
@@ -148,6 +176,12 @@ public class Section implements Storable {
     this.room = room;
   }
 
+  public String getCourseDepartment() {
+    return course.department;
+  }
+  public int getCourseNumber() {
+    return course.number;
+  }
   @Override
   public ObjectId getId() {
     return id;
