@@ -4,7 +4,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bson.types.ObjectId;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,6 +30,8 @@ public class Section implements Storable {
   public Course course;
   @DBRef(lazy = true)
   public Room room;
+  @DBRef(lazy = true)
+  @Getter @Setter public Professor professor;
 
   //This method should  follow this assignment: mySection.room = myRoom.
   public void addSectionToRoomList(Room assignedRoom) {
