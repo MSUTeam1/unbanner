@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraw.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Semester</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <h1>Semester</h1>
+        <div class="container">
+            <div class="container">
+                <div class="row">
+                    <div class="col">Season: <b th:text="${semester.season}"/></div>
+                    <div class="col">Year: <b th:text="${semester.year}"/></div>
+                </div>
+                <div class="row">
+                    <form action="#"
+                          th:action="@{'/semester/{id}'(id=${semester.id})}"
+                          th:method="delete">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button type="submit" class="btn btn-danger"
+                                id="submitButton">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="container">
+            <form action="#"
+                  th:action="@{'/semester/{id}'(id=${semester.id})}"
+                  th:object="${semester}" th:method="post">
+                <label th:for="*{season}">Season</label>
+                <input type="text" class="form-control" th:field="*{season}"/>
+                <label th:for="*{semester}">Year</label>
+                <input type="number" class="form-control" th:field="*{year}"/>
+                <button type="submit" class="btn btn-primary" id="updateButton">Update</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
