@@ -33,8 +33,7 @@ public class ProfessorTest {
     assertEquals("Professor[id=f240af3fe8bf240af3fe8ea1, firstName='Bob', lastName='Jones']",
         bob.toString());
   }
-
-
+  
   @Test
   public void getFirstName() throws Exception {
     assertEquals("Bob", bob.getFirstName());
