@@ -34,4 +34,28 @@ public class ProfessorTest {
         bob.toString());
   }
 
+
+  @Test
+  public void getFirstName() throws Exception {
+    assertEquals("Bob", bob.getFirstName());
+  }
+
+  @Test
+  public void getLastName() throws Exception {
+    assertEquals("Jones", bob.getLastName());
+  }
+
+  @Test
+  public void setLastName() throws Exception {
+    bob.setLastName("Smith");
+    assertEquals("Smith", bob.getLastName());
+  }
+
+  @Test
+  public void setFirstName() throws Exception {
+    bob.setFirstName("Alice");
+    assertEquals("Alice", bob.getFirstName());
+  }
+
+
 }
