@@ -19,4 +19,7 @@ public interface SectionRepository extends MongoRepository<Section, String> {
    * returns a list of sections containing a particular student
    */
   public List<Section> findByStudentsIn(Student student);
+
+  public List<Section> findBySemester(Semester semester);
+
 }

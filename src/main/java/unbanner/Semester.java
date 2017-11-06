@@ -29,6 +29,10 @@ public class Semester implements Storable {
         this.year = year;
     }
 
+    public Semester(){
+        //do nothing
+    }
+
     public String getSeason() {
         return this.season;
     }
