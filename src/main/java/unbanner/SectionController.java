@@ -20,9 +20,17 @@ public class SectionController {
   @Autowired
   StudentRepository studentRepository;
 
+  @Autowired
+  RoomRepository roomRepository;
+
   @ModelAttribute("allStudents")
   public List<Student> getStudents() {
     return studentRepository.findAll();
+  }
+
+  @ModelAttribute("allRooms")
+  public List<Room> getRooms() {
+    return roomRepository.findAll();
   }
 
 
@@ -56,6 +64,7 @@ public class SectionController {
       tempSec.number = section.number;
       tempSec.schedule = section.schedule;
       tempSec.time = section.time;
+      tempSec.room = section.room;
 
 
       for (Student student : section.students) {
@@ -65,10 +74,10 @@ public class SectionController {
         }
       }
 
-      for (Student student1 : tempSec.students) {
-        if (!section.students.contains(student1)) {
-          student1.removeSection(tempSec);
-          studentRepository.save(student1);
+      for (Student student : tempSec.students) {
+        if (!section.students.contains(student)) {
+          student.removeSection(tempSec);
+          studentRepository.save(student);
         }
       }
 

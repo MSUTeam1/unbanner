@@ -13,13 +13,13 @@
         <form action="#" th:action="@{'/course/{id}/newsection' (id=${course.id})}" th:object="${section}" th:method="post" >
             <div class="row">
                 <div class="col">
-                    <input type="number" class="form-control" th:field="*{number}" />
+                    <input type="number" label="Room #" class="form-control" th:field="*{number}" />
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" th:field="*{schedule}" />
+                    <input type="text" label="Schedule" class="form-control" th:field="*{schedule}" />
                 </div>
                 <div class="col">
-                    <input type="time" class="form-control" id="time" name="time" th:value="${section.getTimeStamp()}"/>
+                    <input type="time" label="Length" class="form-control" id="time" name="time" th:value="${section.getTimeStamp()}"/>
                 </div>
             </div>
             <div class="row">

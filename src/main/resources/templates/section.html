@@ -62,6 +62,12 @@
                         th:value="${student.id}"
                         th:text="${student.firstName + ' ' + student.lastName}">Name</option>
             </select>
+            <select class="form-control" id="room" name="room">
+                <option th:each="room : ${allRooms}"
+                        th:selected="${room.equals(section.room)}"
+                        th:value="${room.id}"
+                        th:text="${room.name}">Name</option>
+            </select>
             <button type="submit" class="btn btn-primary" id="updateButton">Update</button>
         </form>
         </div>
