@@ -66,11 +66,12 @@ public class SectionController {
       tempSec.time = section.time;
       tempSec.room = section.room;
 
-
-      for (Student student : section.students) {
-        if (!tempSec.students.contains(student)) {
-          student.sections.add(tempSec);
-          studentRepository.save(student);
+      if(section.students != null) {
+        for (Student student : section.students) {
+          if (!tempSec.students.contains(student)) {
+            student.sections.add(tempSec);
+            studentRepository.save(student);
+          }
         }
       }
 
