@@ -11,25 +11,34 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 @EqualsAndHashCode
-public class Student implements Storable {
+public class Professor implements Storable {
 
   @Id
   public ObjectId id;
 
-  @Getter @Setter public String firstName;
-  @Getter @Setter public String lastName;
-  @Getter @Setter public int studentNum;
+  @Getter
+  @Setter
+  public String firstName;
+  @Getter
+  @Setter
+  public String lastName;
   @DBRef(lazy = true)
-  @Getter @Setter public List<Section> sections = new ArrayList<Section>();
+  @Getter
+  @Setter
+  public List<Section> sections;
 
-  public Student() {
+  public Professor() {
+    this.sections = new ArrayList<Section>();
   }
 
-  public Student(String firstName, String lastName, int studentNum) {
+  public Professor(String firstName, String lastName) {
     this.firstName = firstName;
     this.lastName = lastName;
-    this.studentNum = studentNum;
   }
 
   @Override
@@ -42,15 +51,13 @@ public class Student implements Storable {
     this.id = id;
   }
 
-  public void removeSection(Section section){
-    this.sections.remove(section);
-  }
-
   @Override
   public String toString() {
     return String.format(
-        "Student[id=%s, firstName='%s', lastName='%s']",
+        "Professor[id=%s, firstName='%s', lastName='%s']",
         id, firstName, lastName);
   }
 
 }
+
+

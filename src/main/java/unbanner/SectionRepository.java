@@ -22,4 +22,5 @@ public interface SectionRepository extends MongoRepository<Section, String> {
 
   public List<Section> findBySemester(Semester semester);
 
+  public List<Section> findByProfessorIn(Professor professor);
 }

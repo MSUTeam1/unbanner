@@ -10,11 +10,11 @@
 <div layout:fragment="content">
     <h1>Students</h1>
     <div class="container">
-        <table>
+        <table class="table table-striped">
             <tr>
                 <th>Name</th>
                 <th>900 Number</th>
-                <th>ID</th>
+                <th></th>
             </tr>
             <tr th:each="student : ${students}">
                 <td th:text="${student.firstName + ' ' + student.lastName}"></td>
