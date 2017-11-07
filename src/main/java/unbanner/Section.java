@@ -33,6 +33,10 @@ public class Section implements Storable {
   public Room room;
   @DBRef(lazy = true)
   public Semester semester;
+<<<<<<< HEAD
+=======
+  @DBRef(lazy = true)
+>>>>>>> origin/development
   @Getter @Setter public Professor professor;
 
   //This method should  follow this assignment: mySection.room = myRoom.
