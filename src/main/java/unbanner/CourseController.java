@@ -22,6 +22,14 @@ public class CourseController {
   @Autowired
   StudentRepository studentRepository;
 
+  @Autowired
+  RoomRepository roomRepository;
+
+  @ModelAttribute("allRooms")
+  public List<Room> getRooms() {
+    return roomRepository.findAll();
+  }
+
   @RequestMapping(value = "/courses", method = RequestMethod.GET)
   public String coursesList(Model model) {
     model.addAttribute("courses", repository.findAll());
@@ -64,6 +72,26 @@ public class CourseController {
       sectionRepository.delete(section);
     }
     repository.delete(id);
+    return "redirect:/courses";
+  }
+
+  @RequestMapping(value = "/course/{id}/newsection", method = RequestMethod.GET)
+  public String newSection(@ModelAttribute("section") Section section,
+                           @PathVariable String id, Model model) {
+    Course course = repository.findOne(id);
+    model.addAttribute(course);
+    return "create_section";
+  }
+
+  @RequestMapping(value = "/course/{id}/newsection", method = RequestMethod.POST)
+  public String newSection(@ModelAttribute("section") Section section,
+                           @PathVariable String id) {
+    Course course = repository.findOne(id);
+    section.course = course;
+    Section savedSection = sectionRepository.save(section);
+    course.addSection(savedSection);
+    repository.save(course);
+
     return "redirect:/courses";
   }
 

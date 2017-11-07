@@ -1,5 +1,7 @@
 package unbanner;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,10 +11,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
 @Controller
 public class SectionController {
   @Autowired
   SectionRepository repository;
+
+  @Autowired
+  StudentRepository studentRepository;
+
+  @Autowired
+  RoomRepository roomRepository;
+
+  @ModelAttribute("allStudents")
+  public List<Student> getStudents() {
+    return studentRepository.findAll();
+  }
+
+  @ModelAttribute("allRooms")
+  public List<Room> getRooms() {
+    return roomRepository.findAll();
+  }
+
 
   @RequestMapping(value = "/section/{id}")
   public String section(@PathVariable String id, Model model) {
@@ -44,6 +64,25 @@ public class SectionController {
       tempSec.number = section.number;
       tempSec.schedule = section.schedule;
       tempSec.time = section.time;
+      tempSec.room = section.room;
+
+      if(section.students != null) {
+        for (Student student : section.students) {
+          if (!tempSec.students.contains(student)) {
+            student.sections.add(tempSec);
+            studentRepository.save(student);
+          }
+        }
+      }
+
+      for (Student student : tempSec.students) {
+        if (!section.students.contains(student)) {
+          student.removeSection(tempSec);
+          studentRepository.save(student);
+        }
+      }
+
+      tempSec.students = section.students;
       repository.save(tempSec);
       return "redirect:/section/" + section.getId();
     }

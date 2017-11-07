@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Create New Section</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Create New Section</h1>
+    <div class="container">
+        <form action="#" th:action="@{'/course/{id}/newsection' (id=${course.id})}" th:object="${section}" th:method="post" >
+            <div class="row">
+                <div class="col">
+                    <input type="number" label="Room #" class="form-control" th:field="*{number}" />
+                </div>
+                <div class="col">
+                    <input type="text" label="Schedule" class="form-control" th:field="*{schedule}" />
+                </div>
+                <div class="col">
+                    <input type="time" label="Length" class="form-control" id="time" name="time" th:value="${section.getTimeStamp()}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <select class="form-control" name="room" id="room">
+                        <option th:each="room : ${allRooms}"
+                                th:value="${room.id}"
+                                th:text="${room.name}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary" id="createButton">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

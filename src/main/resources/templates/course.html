@@ -16,37 +16,49 @@
                     <div class="col">Description: <b th:text="${course.description}" /></div>
                     <div class="col">Department: <b th:text="${course.department}" /></div>
                     <div class="col">Number: <b th:text="${course.number}" /></div>
-                </div>
-                <div class="row">
-                    <form action="#" th:action="@{'/course/{id}'(id=${course.id})}" th:method="delete" >
+                    <div class="col">
+                        <form action="#" th:action="@{'/course/{id}'(id=${course.id})}" th:method="delete" >
                         <input type="hidden" name="_method" value="delete" />
                         <button type="submit" class="btn btn-danger" id="submitButton">Delete</button>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
 
             <div class="container">
             <h5>Sections</h5>
                 <div class="container">
-                    <div class="container" th:each="section : ${course.sections}">
-                        <div class="row">
-                            <div class="col">Section #: <b th:text="${section.number}" /></div>
-                            <div clas="col">Schedule: <b th:text="${section.schedule}"/></div>
-                            <div class="col">Time: <b th:text="${section.getTimeLength()}"/></div>
-                            <td><a class="badge badge-info" th:href="@{/section/{id}(id=${section.id})}">view</a></td>
+                    <div class = "row">
+                        <div class="col">
+                            <form action="#" th:action="@{'/course/{id}/newsection'(id=${course.id})}" th:method="get" >
+                                <input type="hidden" name="_method" value="get" />
+                                <button type="submit" class="btn btn-secondary" id="submitButton">Create New Section</button>
+                            </form>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="container">
-                                    <h6>Students:</h6>
-                                    <div class="container">
-                                        <table>
-                                            <tr th:each="student : ${section.students}">
-                                                <td th:text="${student.firstName + ' ' + student.lastName}"></td>
-                                                <td th:text="${student.studentNum}"></td>
-                                                <td><a class="badge badge-info" th:href="@{/student/{id}(id=${student.id})}">view</a></td>
-                                            </tr>
-                                        </table>
+                    </div>
+                    <div class="row">
+                        <div class = "col">
+                            <div class="container" th:each="section : ${course.sections}">
+                                <div class="row">
+                                    <div class="col">Section #: <b th:text="${section.number}" /></div>
+                                    <div clas="col">Schedule: <b th:text="${section.schedule}"/></div>
+                                    <div class="col">Time: <b th:text="${section.getTimeLength()}"/></div>
+                                    <td><a class="badge badge-info" th:href="@{/section/{id}(id=${section.id})}">view</a></td>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="container">
+                                            <h6>Students:</h6>
+                                            <div class="container">
+                                                <table class="table table-striped">
+                                                    <tr th:each="student : ${section.students}">
+                                                        <td th:text="${student.firstName + ' ' + student.lastName}"></td>
+                                                        <td th:text="${student.studentNum}"></td>
+                                                        <td><a class="badge badge-info" th:href="@{/student/{id}(id=${student.id})}">view</a></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
