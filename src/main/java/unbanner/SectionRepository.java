@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
 
 public interface SectionRepository extends MongoRepository<Section, String> {
 
@@ -18,4 +19,6 @@ public interface SectionRepository extends MongoRepository<Section, String> {
    * returns a list of sections containing a particular student
    */
   public List<Section> findByStudentsIn(Student student);
+
+  public List<Section> findByProfessorIn(Professor professor);
 }
