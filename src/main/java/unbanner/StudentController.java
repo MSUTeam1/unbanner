@@ -28,7 +28,6 @@ public class StudentController {
     return sectionRepository.findAll();
   }
 
-
   /*
   *  Routing for students.html template
   *  Specifically for HTTP GET requests
@@ -122,8 +121,26 @@ public class StudentController {
     tempStu.studentNum = student.studentNum;
     tempStu.firstName = student.firstName;
     tempStu.lastName = student.lastName;
+
+    for (Section section : student.sections) {
+      if (!tempStu.sections.contains(section)) {
+        section.students.add(tempStu);
+        sectionRepository.save(section);
+      }
+    }
+
+    for (Section section : tempStu.sections) {
+      if (!student.sections.contains(section)) {
+        section.students.remove(tempStu);
+        sectionRepository.save(section);
+      }
+    }
+
+    tempStu.sections = student.sections;
+
     repository.save(tempStu);
-    return "redirect:/students";
+
+    return "redirect:/student/" + student.getId();
   }
 
 

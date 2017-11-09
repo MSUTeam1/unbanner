@@ -52,6 +52,15 @@ public class HttpRequestTest {
         .andDo(print());
   }
 
+  @Test
+  public void helpShouldRespond() throws Exception {
+    this.mockMvc.perform(get("/help"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("help"))
+            .andDo(print());
+  }
+
+
   /*
    * Checks the routing for a GET request to '/students'
    * Checks that the correct view has been called by the controller
@@ -192,7 +201,7 @@ public class HttpRequestTest {
         .param("firstName", "Tom")
         .param("lastName", "Cruz"))
         .andExpect(status().is3xxRedirection())
-        .andExpect(view().name("redirect:/students"))
+        .andExpect(view().name("redirect:/student/" + stuList.get(0).id))
         .andDo(print());
 
     this.mockMvc.perform(get("/students"))
