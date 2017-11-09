@@ -62,13 +62,13 @@ public class SectionController {
   }
 
   @RequestMapping(value = "/section/{id}", method = RequestMethod.POST)
-  public String section(@ModelAttribute("section") Section section,
+  public String section(@ModelAttribute("section") Section section, String startTime, String endTime,
                         @PathVariable String id) {
     Section tempSec = repository.findOne(id);
     if (tempSec != null) {
       tempSec.number = section.number;
       tempSec.schedule = section.schedule;
-      tempSec.time = section.time;
+      tempSec.setStartAndEndTime(startTime,endTime);
       tempSec.semester = section.semester;
       tempSec.room = section.room;
 

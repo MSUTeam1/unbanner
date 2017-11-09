@@ -53,14 +53,10 @@
         <div class="row">
         <form action="#" th:action="@{'/section/{id}'(id=${section.id})}" th:object="${section}" th:method="post" >
             <input type="hidden" th:field="*{course}" />
-            <select th:field="*{semester}">
-                <option value="FALL">FALL</option>
-                <option value="SPRING">SPRING</option>
-                <option value="SUMMER">SUMMER</option>
-            </select>
             <input type="number" class="form-control" th:field="*{number}" />
             <input type="text" class="form-control" th:field="*{schedule}" />
-            <input type="time" class="form-control" id="time" name="time" th:value="${section.getTimeStamp()}"/>
+            <input type="time" id="startTime" name="startTime" min="08:00" max="20:00" th:value="${section.startTime()}" />
+            <input type="time" id="endTime" name="endTime" min="09:00" max="22:00" th:value="${section.endTime()}" />
             <select class="form-control" id="students" name="students" multiple="multiple" >
                 <option th:each="student : ${allStudents}"
                         th:selected="${section.students.contains(student)}"
