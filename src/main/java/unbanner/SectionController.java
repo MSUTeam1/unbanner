@@ -69,7 +69,6 @@ public class SectionController {
       tempSec.number = section.number;
       tempSec.schedule = section.schedule;
       tempSec.setStartAndEndTime(startTime,endTime);
-      tempSec.semester = section.semester;
       tempSec.room = section.room;
 
       if(section.students != null) {
