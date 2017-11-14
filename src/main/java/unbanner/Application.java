@@ -24,6 +24,9 @@ public class Application implements CommandLineRunner {
   private StudentRepository studentRepository;
 
   @Autowired
+  private SemesterRepository semesterRepository;
+
+  @Autowired
   private CourseRepository courseRepository;
 
   @Autowired
@@ -104,6 +107,7 @@ public class Application implements CommandLineRunner {
     buildingRepository.deleteAll();
     roomRepository.deleteAll();
     professorRepository.deleteAll();
+    semesterRepository.deleteAll();
 
     // save a couple of Courses and Students
     courseRepository.save(new Course("Computer Science I", 1050,

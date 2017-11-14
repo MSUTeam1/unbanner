@@ -29,12 +29,13 @@ public class SemesterController {
     }
 
 //    @RequestMapping(value = "/courses/new", method = RequestMethod.GET)
-//    public String provideSemester(@ModelAttribute("semester") Semester semseter) {
+//    public String provideSemester(Model model) {
+//        model.addAttribute("semester",new Semester());
 //        return "create_semester";
 //    }
 
-    @RequestMapping (value = "/semesters/new", method = RequestMethod
-            .POST)
+
+    @RequestMapping (value = "/semesters/new", method = RequestMethod.POST)
     public String newSemester(@ModelAttribute("semester") Semester semester) {
         Semester newSemester = new Semester();
         newSemester.season = semester.season;
@@ -61,6 +62,7 @@ public class SemesterController {
         return "redirect:/semesters";
     }
 
+    //update? pretty sure this is update
     @RequestMapping(value = "/semester/{id}", method = RequestMethod.POST)
     public String semester(@ModelAttribute("semester") Semester semester,
                            @PathVariable String id) {
