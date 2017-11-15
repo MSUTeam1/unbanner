@@ -2,6 +2,7 @@ package unbanner;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
@@ -220,5 +221,28 @@ public class Section implements Storable {
   @Override
   public void setId(ObjectId id) {
     this.id = id;
+  }
+
+  public static boolean conflicts(List<Section> sections) {
+    HashSet<Weekday> weekdays = new HashSet();
+    LocalTime earliest = LocalTime.of(20,0);
+    LocalTime latest = LocalTime.of(9,0);
+    for (Section section : sections) {
+      if (section != null) {
+        for (Weekday day : section.getSchedule()) {
+          if (weekdays.contains(day)) {
+            if (section.getTime().getFirst().compareTo(earliest) >= 0 || section.getTime().getSecond().compareTo(latest) <= 0) {
+              return true;
+            }
+          }
+        }
+        if (section.getTime().getFirst().compareTo(earliest) < 0)
+          earliest = section.getTime().getFirst();
+        if (section.getTime().getSecond().compareTo(latest) > 0)
+          latest = section.getTime().getSecond();
+        weekdays.addAll(section.getSchedule());
+      }
+    }
+    return false;
   }
 }

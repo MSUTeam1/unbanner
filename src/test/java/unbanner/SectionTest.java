@@ -222,4 +222,33 @@ public class SectionTest {
     assertSame(9,section.getTime().getSecond().getHour());
     assertSame(14,section.getTime().getSecond().getMinute());
   }
+
+  @Test
+  public void conflictsTest() {
+    ArrayList<Section> sections = new ArrayList<Section>();
+    Section a = new Section();
+    a.addToSchedule("T");
+    a.addToSchedule("TH");
+    a.setStartAndEndTime("12:00","14:00");
+    Section b = new Section();
+    b.addToSchedule("M");
+    b.addToSchedule("W");
+    b.setStartAndEndTime("13:00","15:00");
+    Section c = new Section();
+    c.addToSchedule("F");
+    c.setStartAndEndTime("12:00","14:00");
+    Section d = new Section();
+    d.addToSchedule("M");
+    d.addToSchedule("W");
+    d.setStartAndEndTime("12:00","14:00");
+    sections.add(a);
+    sections.add(c);
+    sections.add(b);
+    sections.add(d);
+    assertTrue(Section.conflicts(sections));
+    sections = new ArrayList<Section>();
+    sections.add(a);
+    sections.add(c);
+    assertFalse(Section.conflicts(sections));
+  }
 }
