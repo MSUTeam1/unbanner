@@ -20,6 +20,7 @@ public class Student implements Storable {
   @Getter @Setter public String firstName;
   @Getter @Setter public String lastName;
   @Getter @Setter public int studentNum;
+  @DBRef(lazy = true)
   @Getter @Setter public List<Section> sections = new ArrayList<Section>();
 
   public Student() {
