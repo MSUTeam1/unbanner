@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.springframework.data.util.Pair;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class SectionTest {
     section.setNumber(1);
     section.setId(new ObjectId("507f191e810c19729de860ea"));
     section.setRoom(room);
-    section.setTime(LocalTime.of(2, 0));
+    section.setTime(Pair.of(LocalTime.of(2, 0),LocalTime.of(4,0)));
     section.setSchedule(new ArrayList<Weekday>(Arrays.asList(Weekday.M, Weekday.W)));
     students = new ArrayList<Student>(Arrays.asList(Mockito.mock(Student.class), Mockito.mock(Student.class)));
     section.setStudents(students);
@@ -37,7 +38,7 @@ public class SectionTest {
     assertNotNull(section);
     section = new Section(1);
     assertNotNull(section);
-    section = new Section(1, new ArrayList<Weekday>(), LocalTime.of(2, 0));
+    section = new Section(1, new ArrayList<Weekday>(), Pair.of(LocalTime.of(2, 0),LocalTime.of(4,0)));
     assertNotNull(section);
     section = new Section(1, Mockito.mock(Course.class));
     assertNotNull(section);
@@ -45,15 +46,17 @@ public class SectionTest {
 
   @Test
   public void setTimeTest() {
-    section.setTime(LocalTime.of(12, 0));
-    assertSame(12, section.getTime().getHour());
-    assertSame(0, section.getTime().getMinute());
+    section.setTime(Pair.of(LocalTime.of(12, 0),LocalTime.of(14,0)));
+    assertSame(12, section.getTime().getFirst().getHour());
+    assertSame(0, section.getTime().getFirst().getMinute());
+    assertSame(14,section.getTime().getSecond().getHour());
+    assertSame(0,section.getTime().getSecond().getMinute());
   }
 
   @Test
   public void getTimeTest() {
-    assertSame(2, section.getTime().getHour());
-    assertSame(0, section.getTime().getMinute());
+    assertSame(2, section.getTime().getFirst().getHour());
+    assertSame(0, section.getTime().getFirst().getMinute());
   }
 
   @Test
@@ -135,12 +138,12 @@ public class SectionTest {
 
   @Test
   public void getTimeLengthTest() {
-    assertEquals("2 hrs, 0 mins", section.getTimeLength());
+    assertEquals("02:00 - 04:00", section.getTimeLength());
   }
 
   @Test
   public void getTimeStampTest() {
-    assertEquals("02:00", section.getTimeStamp());
+    assertEquals("02:00 - 04:00", section.getTimeStamp());
   }
 
   @Test
@@ -171,5 +174,81 @@ public class SectionTest {
     Room room = new Room();
     section.addSectionToRoomList(room);
     assertTrue(room.sectionList.contains(section));
+  }
+
+  @Test
+  public void endTimeTest() {
+    assertEquals("04:00",section.endTime());
+  }
+
+  @Test
+  public void startTimeTest() {
+    assertEquals("02:00",section.startTime());
+  }
+
+  @Test
+  public void setStartTimeTest() {
+    section.setStartTime("08:14");
+    assertSame(8,section.getTime().getFirst().getHour());
+    assertSame(14,section.getTime().getFirst().getMinute());
+    section.setStartTime("a:99");
+    assertSame(8,section.getTime().getFirst().getHour());
+  }
+
+  @Test
+  public void setEndTimeTest() {
+    section.setEndTime("09:17");
+    assertSame(9,section.getTime().getSecond().getHour());
+    assertSame(17,section.getTime().getSecond().getMinute());
+    section.setEndTime("a:00");
+    assertSame(9,section.getTime().getSecond().getHour());
+  }
+
+  @Test
+  public void setStartAndEndTimeTest() {
+    section.setStartAndEndTime("08:16","09:14");
+    assertSame(8,section.getTime().getFirst().getHour());
+    assertSame(16,section.getTime().getFirst().getMinute());
+    assertSame(9,section.getTime().getSecond().getHour());
+    assertSame(14,section.getTime().getSecond().getMinute());
+    section.setStartAndEndTime("05:00","04:00");
+    assertSame(8,section.getTime().getFirst().getHour());
+    assertSame(16,section.getTime().getFirst().getMinute());
+    assertSame(9,section.getTime().getSecond().getHour());
+    assertSame(14,section.getTime().getSecond().getMinute());
+    section.setStartAndEndTime("01:00","7:00");
+    assertSame(8,section.getTime().getFirst().getHour());
+    assertSame(16,section.getTime().getFirst().getMinute());
+    assertSame(9,section.getTime().getSecond().getHour());
+    assertSame(14,section.getTime().getSecond().getMinute());
+  }
+
+  @Test
+  public void conflictsTest() {
+    ArrayList<Section> sections = new ArrayList<Section>();
+    Section a = new Section();
+    a.addToSchedule("T");
+    a.addToSchedule("TH");
+    a.setStartAndEndTime("12:00","14:00");
+    Section b = new Section();
+    b.addToSchedule("M");
+    b.addToSchedule("W");
+    b.setStartAndEndTime("13:00","15:00");
+    Section c = new Section();
+    c.addToSchedule("F");
+    c.setStartAndEndTime("12:00","14:00");
+    Section d = new Section();
+    d.addToSchedule("M");
+    d.addToSchedule("W");
+    d.setStartAndEndTime("12:00","14:00");
+    sections.add(a);
+    sections.add(c);
+    sections.add(b);
+    sections.add(d);
+    assertTrue(Section.conflicts(sections));
+    sections = new ArrayList<Section>();
+    sections.add(a);
+    sections.add(c);
+    assertFalse(Section.conflicts(sections));
   }
 }

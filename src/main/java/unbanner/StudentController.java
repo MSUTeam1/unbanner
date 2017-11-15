@@ -60,6 +60,7 @@ public class StudentController {
   */
   @RequestMapping(value = "/students/new", method = RequestMethod.POST)
   public String newStudent(@ModelAttribute("student") Student student) {
+    if (Section.conflicts(student.sections)) return "redirect:/error/Schedule Time Conflict";
     Student newStudent = new Student();
     newStudent.studentNum = student.studentNum;
     newStudent.firstName = student.firstName;
