@@ -13,9 +13,6 @@
         <form action="#" th:action="@{'/students/new'}" th:object="${student}" th:method="post" >
             <div class="row">
                 <div class="col">
-                    <input placeholder="900xxx" type="number" class="form-control" th:field="*{studentNum}" />
-                </div>
-                <div class="col">
                     <input placeholder="First Name" type="text" class="form-control" th:field="*{firstName}" />
                 </div>
                 <div class="col">

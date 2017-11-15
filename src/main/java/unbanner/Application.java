@@ -38,8 +38,13 @@ public class Application implements CommandLineRunner {
   @Autowired
   private ProfessorRepository professorRepository;
 
+  @Autowired NineHundredRepository nineHundredRepository;
+
   @Autowired
   private Globals globals;
+
+  @Autowired
+  private NineHundredService nineHundredService;
 
   @Bean
   public Globals getGlobals(@Value("${global.school}") String school,
@@ -104,6 +109,9 @@ public class Application implements CommandLineRunner {
     buildingRepository.deleteAll();
     roomRepository.deleteAll();
     professorRepository.deleteAll();
+    nineHundredRepository.deleteAll();
+
+    nineHundredRepository.save(new NineHundred(9000)); //start 900 number sequence at 9000
 
     // save a couple of Courses and Students
     courseRepository.save(new Course("Computer Science I", 1050,
@@ -112,8 +120,8 @@ public class Application implements CommandLineRunner {
     courseRepository.save(new Course("Computer Science II", 2050,
         4, "CS", "Computer Science 2",
         "Learning Object Oriented Programming in Computer Science"));
-    studentRepository.save(new Student("Alice", "Smith", 900123456));
-    studentRepository.save(new Student("Bob", "Smith", 900123456));
+    studentRepository.save(new Student("Alice", "Smith"));
+    studentRepository.save(new Student("Bob", "Smith"));
     sectionRepository.save(new Section(101, courseRepository.findByName("Computer Science I")));
     sectionRepository.save(new Section(201, courseRepository.findByName("Computer Science II")));
     sectionRepository.save(new Section(102, courseRepository.findByName("Computer Science I")));
@@ -157,6 +165,9 @@ public class Application implements CommandLineRunner {
 
     alice.setSections((List<Section>) new ArrayList<Section>(Arrays.asList(s1, s2, s3)));
     bob.setSections((List<Section>) new ArrayList<Section>(Arrays.asList(s1, s2, s3)));
+
+    alice.studentNum = nineHundredService.getNext();
+    bob.studentNum = nineHundredService.getNext();
 
     s1.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(alice, bob)));
     s2.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(bob, alice)));
