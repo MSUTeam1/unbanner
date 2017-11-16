@@ -26,10 +26,9 @@ public class Student implements Storable {
   public Student() {
   }
 
-  public Student(String firstName, String lastName, int studentNum) {
+  public Student(String firstName, String lastName) {
     this.firstName = firstName;
     this.lastName = lastName;
-    this.studentNum = studentNum;
   }
 
   @Override

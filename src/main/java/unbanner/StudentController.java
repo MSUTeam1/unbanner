@@ -23,6 +23,9 @@ public class StudentController {
   @Autowired
   SectionRepository sectionRepository;
 
+  @Autowired
+  NineHundredService nineHundredService;
+
   @ModelAttribute("allSections")
   public List<Section> getSections() {
     return sectionRepository.findAll();
@@ -62,16 +65,16 @@ public class StudentController {
   public String newStudent(@ModelAttribute("student") Student student) {
     if (Section.conflicts(student.sections)) return "redirect:/error/Schedule Time Conflict";
     Student newStudent = new Student();
-    newStudent.studentNum = student.studentNum;
+    newStudent.studentNum = nineHundredService.getNext();
     newStudent.firstName = student.firstName;
     newStudent.lastName = student.lastName;
     newStudent.sections = student.sections;
-    repository.save(newStudent);
-    Student tempStu = repository.findByFirstNameAndLastName(newStudent.firstName,
-        newStudent.lastName);
-    for (Section section : tempStu.sections) {
-      section.addToStudents(tempStu);
-      sectionRepository.save(section);
+    newStudent = repository.save(newStudent);
+    for (Section section : newStudent.sections) {
+      if(section != null) {
+        section.addToStudents(newStudent);
+        sectionRepository.save(section);
+      }
     }
 
     return "redirect:/students";
@@ -119,7 +122,6 @@ public class StudentController {
   public String student(@ModelAttribute("student") Student student,
                         @PathVariable String id) {
     Student tempStu = repository.findOne(id);
-    tempStu.studentNum = student.studentNum;
     tempStu.firstName = student.firstName;
     tempStu.lastName = student.lastName;
 

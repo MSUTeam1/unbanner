@@ -70,8 +70,8 @@ public class HttpRequestTest {
   public void studentsShouldRespond() throws Exception {
 
     repo.deleteAll();
-    repo.save(new Student("Alice", "Smith", 900123456));
-    repo.save(new Student("Bob", "Smith", 900123456));
+    repo.save(new Student("Alice", "Smith"));
+    repo.save(new Student("Bob", "Smith"));
 
     this.mockMvc.perform(get("/students"))
         .andExpect(status().isOk())
@@ -105,12 +105,11 @@ public class HttpRequestTest {
   @Test
   public void studentsNewShouldCreate() throws Exception {
     repo.deleteAll();
-    repo.save(new Student("Alice", "Smith", 900123456));
-    repo.save(new Student("Bob", "Smith", 900123456));
+    repo.save(new Student("Alice", "Smith"));
+    repo.save(new Student("Bob", "Smith"));
 
     this.mockMvc.perform(post("/students/new")
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-        .param("studentNum", "1234567")
         .param("firstName", "Tom")
         .param("lastName", "Cruz"))
         .andExpect(status().is3xxRedirection())
@@ -124,8 +123,7 @@ public class HttpRequestTest {
         .andExpect(model().attribute("students", hasItem(
             allOf(
                 hasProperty("firstName", is("Tom")),
-                hasProperty("lastName", is("Cruz")),
-                hasProperty("studentNum", is(1234567))))))
+                hasProperty("lastName", is("Cruz"))))))
         .andDo(print());
   }
 
@@ -138,8 +136,8 @@ public class HttpRequestTest {
   @Test
   public void studentShouldRespond() throws Exception {
     repo.deleteAll();
-    repo.save(new Student("Alice", "Smith", 900123456));
-    repo.save(new Student("Bob", "Smith", 900123456));
+    repo.save(new Student("Alice", "Smith"));
+    repo.save(new Student("Bob", "Smith"));
 
     List<Student> stuList = repo.findAll();
 
@@ -149,8 +147,7 @@ public class HttpRequestTest {
         .andExpect(model().attribute("student",
             allOf(
                 hasProperty("firstName", is("Alice")),
-                hasProperty("lastName", is("Smith")),
-                hasProperty("studentNum", is(900123456)))))
+                hasProperty("lastName", is("Smith")))))
         .andDo(print());
   }
 
@@ -162,8 +159,8 @@ public class HttpRequestTest {
   @Test
   public void studentShouldDelete() throws Exception {
     repo.deleteAll();
-    repo.save(new Student("Alice", "Smith", 900123456));
-    repo.save(new Student("Bob", "Smith", 900123456));
+    repo.save(new Student("Alice", "Smith"));
+    repo.save(new Student("Bob", "Smith"));
     List<Student> stuList = repo.findAll();
 
     this.mockMvc.perform(delete("/student/{id}", stuList.get(0).id))
@@ -190,8 +187,8 @@ public class HttpRequestTest {
   @Test
   public void studentShouldUpdate() throws Exception {
     repo.deleteAll();
-    repo.save(new Student("Alice", "Smith", 900123456));
-    repo.save(new Student("Bob", "Smith", 900123456));
+    repo.save(new Student("Alice", "Smith"));
+    repo.save(new Student("Bob", "Smith"));
 
     List<Student> stuList = repo.findAll();
 
@@ -211,8 +208,7 @@ public class HttpRequestTest {
         .andExpect(model().attribute("students", hasItem(
             allOf(
                 hasProperty("firstName", is("Tom")),
-                hasProperty("lastName", is("Cruz")),
-                hasProperty("studentNum", is(1234567))))))
+                hasProperty("lastName", is("Cruz"))))))
         .andDo(print());
   }
 
