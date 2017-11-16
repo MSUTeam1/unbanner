@@ -12,7 +12,7 @@ public class StudentTest {
   // Make sure we have the same object to test against for all tests
   @Before
   public void initObjects() {
-    bob = new Student("Bob", "Jones", 0);
+    bob = new Student("Bob", "Jones");
     bob.setId(new ObjectId("f240af3fe8bf240af3fe8ea1"));
   }
 
