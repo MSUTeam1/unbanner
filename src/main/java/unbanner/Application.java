@@ -24,6 +24,9 @@ public class Application implements CommandLineRunner {
   private StudentRepository studentRepository;
 
   @Autowired
+  private SemesterRepository semesterRepository;
+
+  @Autowired
   private CourseRepository courseRepository;
 
   @Autowired
@@ -110,6 +113,7 @@ public class Application implements CommandLineRunner {
     roomRepository.deleteAll();
     professorRepository.deleteAll();
     nineHundredRepository.deleteAll();
+    semesterRepository.deleteAll();
 
     nineHundredRepository.save(new NineHundred(9000)); //start 900 number sequence at 9000
 
@@ -126,6 +130,9 @@ public class Application implements CommandLineRunner {
     sectionRepository.save(new Section(201, courseRepository.findByName("Computer Science II")));
     sectionRepository.save(new Section(102, courseRepository.findByName("Computer Science I")));
     professorRepository.save(new Professor("Steve", "Beaty"));
+    semesterRepository.save(new Semester("Fall", 2017));
+    semesterRepository.save(new Semester("Spring", 2018));
+    semesterRepository.save(new Semester("Spring", 2019));
 
     Student alice = studentRepository.findByFirstName("Alice");
     Student bob = studentRepository.findByFirstName("Bob");
