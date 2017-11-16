@@ -24,6 +24,9 @@ public class Application implements CommandLineRunner {
   private StudentRepository studentRepository;
 
   @Autowired
+  private SemesterRepository semesterRepository;
+
+  @Autowired
   private CourseRepository courseRepository;
 
   @Autowired
@@ -109,8 +112,8 @@ public class Application implements CommandLineRunner {
     buildingRepository.deleteAll();
     roomRepository.deleteAll();
     professorRepository.deleteAll();
+    semesterRepository.deleteAll();
     nineHundredRepository.deleteAll();
-
     nineHundredRepository.save(new NineHundred(9000)); //start 900 number sequence at 9000
 
     // save a couple of Courses and Students
