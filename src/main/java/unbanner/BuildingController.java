@@ -8,12 +8,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 @Controller
 public class BuildingController {
   @Autowired
   BuildingRepository repository;
   @Autowired
   RoomRepository roomRepository;
+  @Autowired
+  private SectionRepository sectionRepository;
 
   //Get all buildings
   @RequestMapping(value = "/buildings", method = RequestMethod.GET)
@@ -41,8 +45,12 @@ public class BuildingController {
   //Get building
   @RequestMapping("/building/{id}")
   public String room0(@PathVariable String id, Model model) {
-    model.addAttribute("building", repository.findOne(id));
-    return "building";
+    Building bld = repository.findById(id);
+    if (bld != null) {
+      model.addAttribute("building", repository.findOne(id));
+      return "building";
+    }
+    return "redirect:/";
   }
 
   //Delete building
@@ -66,13 +74,25 @@ public class BuildingController {
   //Get room
   @RequestMapping("/building/room/{id}")
   public String room(@PathVariable String id, Model model) {
-    model.addAttribute("room", roomRepository.findOne(id));
-    return "room";
+    Room rm = roomRepository.findById(id);
+    if (rm != null) {
+      model.addAttribute("room", roomRepository.findOne(id));
+      return "room";
+    }
+    return "redirect:/";
   }
 
   //Delete room
   @RequestMapping(value = "/building/room/{id}", method = RequestMethod.DELETE)
   public String room(@PathVariable String id) {
+    Room rm = roomRepository.findById(id);
+    List<Section> sectionList = sectionRepository.findByRoom(rm);
+    for (Section section : sectionList){
+      if (section.room.equals(rm)){
+        section.room = null;
+      }
+    }
+    rm.building = null;
     roomRepository.delete(id);
     return "redirect:/buildings";
   }
