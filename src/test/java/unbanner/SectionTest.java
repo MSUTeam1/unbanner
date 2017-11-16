@@ -241,6 +241,10 @@ public class SectionTest {
     d.addToSchedule("M");
     d.addToSchedule("W");
     d.setStartAndEndTime("12:00","14:00");
+    Section e = new Section();
+    e.addToSchedule("M");
+    e.addToSchedule("W");
+    e.setStartAndEndTime("10:00","11:00");
     sections.add(a);
     sections.add(c);
     sections.add(b);
@@ -248,7 +252,9 @@ public class SectionTest {
     assertTrue(Section.conflicts(sections));
     sections = new ArrayList<Section>();
     sections.add(a);
+    sections.add(b);
     sections.add(c);
+    sections.add(e);
     assertFalse(Section.conflicts(sections));
   }
 }
