@@ -34,6 +34,8 @@ public class Section implements Storable {
   @DBRef(lazy = true)
   public Room room;
   @DBRef(lazy = true)
+  public Semester semester;
+  @DBRef(lazy = true)
   @Getter @Setter public Professor professor;
 
 
