@@ -56,6 +56,19 @@ public class BuildingController {
   //Delete building
   @RequestMapping(value = "/building/{id}", method = RequestMethod.DELETE)
   public String room0(@PathVariable String id) {
+    Building thisBuilding = repository.findById(id);
+    List<Room> roomList = roomRepository.findByBuilding(thisBuilding);
+    //List<Section> sectionList = sectionRepository.findByRoom(rm);
+    for (Room room : roomList) {
+      List<Section> sectionList = sectionRepository.findByRoom(room);
+      for (Section section : sectionList) {
+        if (section.room.equals(room)) {
+          section.room = null;
+        }
+        room.building = null;
+        roomRepository.delete(room);
+      }
+    }
     repository.delete(id);
     return "redirect:/buildings";
   }
@@ -87,8 +100,8 @@ public class BuildingController {
   public String room(@PathVariable String id) {
     Room rm = roomRepository.findById(id);
     List<Section> sectionList = sectionRepository.findByRoom(rm);
-    for (Section section : sectionList){
-      if (section.room.equals(rm)){
+    for (Section section : sectionList) {
+      if (section.room.equals(rm)) {
         section.room = null;
       }
     }
@@ -119,11 +132,11 @@ public class BuildingController {
   @RequestMapping(value = "/buildings/newRoom/{id}", method = RequestMethod.POST)
   public String newRoom(@ModelAttribute("building") Building building,
                         @PathVariable String id) {
-    Building thisBuilding = repository.findById(id);
     Room newRoom = new Room();
     newRoom.name = "New Room";
     newRoom.size = 0;
     roomRepository.save(newRoom);
+    Building thisBuilding = repository.findById(id);
     newRoom.building = thisBuilding;
     thisBuilding.rooms.add(newRoom);
     repository.save(thisBuilding);

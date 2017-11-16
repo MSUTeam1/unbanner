@@ -18,7 +18,7 @@
                 <div class="col">
                     <form action="#" th:action="@{'/building/{id}'(id=${building.id})}" th:method="delete" >
                         <input type="hidden" name="_method" value="delete" />
-                        <button type="submit"  class="btn btn-danger" id="submitButton">Delete</button>
+                        <button type="submit"  class="btn btn-danger" id="deleteButton">Delete</button>
                     </form>
                 </div>
             </div>
@@ -26,8 +26,12 @@
         <div class="container">
             <h5>Rooms</h5>
                 <div class="container">
-                    <a class="badge badge-info" th:href ="@{/building/newRoom/{bldId} (bldId=${building.id} ) }">Create New Room</a> <br/>
-                    <table th:each="room : ${building.rooms}">
+                    <form action ="#" th:action="@{'/buildings/newRoom/{bldId}'(bldId=${building.id})}" th:object="${building}" th:method="post">
+                        <button class="badge badge-primary" type="submit" id="submitButton">Create Room</button>
+                    </form>
+
+
+                    <table class="table table-striped" th:each="room : ${building.rooms}">
                         <tr>
                             <th>Room </th>
                             <th>Size</th>

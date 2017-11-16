@@ -15,9 +15,7 @@
                     <div class="col">Season: <b th:text="${semester.season}"/> <br/> </div>
                     <div class="col">Year: <b th:text="${semester.year}"/> <br/> </div>
                     <div class="col">
-                        <form action="#"
-                              th:action="@{'/semester/{id}'(id=${semester.id})}"
-                            th:method="delete">
+                        <form action="#" th:action="@{'/semester/{id}'(id=${semester.id})}" th:method="delete">
                             <input type="hidden" name="_method" value="delete"/>
                             <button type="submit" class="btn btn-danger" id="submitButton">Delete</button>
                         </form>
@@ -25,7 +23,31 @@
                 </div>
             </div>
         </div>
+
         <br/>
+        <div class="container">
+            <h5>Sections</h5>
+            <div class="container">
+                <table class="table table-striped" >
+                    <tr>
+                        <th>Course </th>
+                        <th>Section #</th>
+                        <th>Room</th>
+                        <th>Time</th>
+                    </tr>
+                    <tr th:each="section : ${semester.sections}">
+                        <td th:text ="${section.course.name}"></td>
+                        <td th:text ="${section.number}"></td>
+                        <td th:text= "${section.room.name}"> </td>
+                        <td th:text= "${section.getTimeLength()}"> </td>
+                        <td><a class="badge badge-info" th:href ="@{/section/{semesterID} (semesterId=${semester.id} ) }"> view  </a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br/>
+
+
         <div class="container">
             <form action="#" th:action="@{'/semester/{id}'(id=${semester.id})}" th:object="${semester}" th:method="post">
 
