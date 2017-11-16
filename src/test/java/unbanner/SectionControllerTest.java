@@ -26,6 +26,8 @@ public class SectionControllerTest {
   private SectionRepository repository;
 
   @Autowired
+  private StudentRepository studentRepository;
+  @Autowired
   CourseRepository courseRepository;
 
   @Mock
@@ -36,9 +38,13 @@ public class SectionControllerTest {
     Course course = new Course();
     course.setId(new ObjectId("508f191e810c19729de860ea"));
     courseRepository.save(course);
+    Student student1 = new Student();
     Section section = new Section();
+    student1.setId(new ObjectId("518f171e810c19729de860ea"));
+    studentRepository.save(student1);
     section.setId(new ObjectId("507f191e810c19729de860ea"));
     section.setCourse(course);
+    section.setStudents(Arrays.asList(student1));
     repository.save(section);
     course.setSections(Arrays.asList(section));
     courseRepository.save(course);
@@ -72,9 +78,26 @@ public class SectionControllerTest {
 
   @Test
   public void studentPostTest() throws Exception {
-    String ret = controller.section(Mockito.mock(Section.class), "507f191e810c19729de860ea");
+    Section section2 = new Section();
+    section2.setId(new ObjectId("608f191e810b19729de860ea"));
+    section2.setStudents(Arrays.asList(new Student()));
+    String ret = controller.section(section2, "1:00","2:00","507f191e810c19729de860ea");
     assertThat("redirect:/section/".equals(ret));
-    ret = controller.section(Mockito.mock(Section.class), "");
+    ret = controller.section(Mockito.mock(Section.class), "1:00","2:00","");
     assertThat("redirect:/section".equals(ret));
+
   }
+
+  @Test
+  public void getRoomsTest() {
+    assertThat(controller.getRooms().size() > 0);
+
+
+  }
+
+  @Test
+  public void getStudentsTest() {
+    assertThat(controller.getStudents().size() > 0);
+  }
+
 }

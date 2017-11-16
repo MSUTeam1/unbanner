@@ -2,6 +2,7 @@ package unbanner;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
@@ -11,6 +12,7 @@ import org.bson.types.ObjectId;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.util.Pair;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @EqualsAndHashCode
@@ -23,7 +25,7 @@ public class Section implements Storable {
   public List<Weekday> schedule;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-  public LocalTime time;
+  public Pair<LocalTime,LocalTime> time;
   public int number;
   @DBRef(lazy = true)
   public List<Student> students = new ArrayList<Student>();
@@ -36,6 +38,7 @@ public class Section implements Storable {
   @DBRef(lazy = true)
   @Getter @Setter public Professor professor;
 
+
   //This method should  follow this assignment: mySection.room = myRoom.
   public void addSectionToRoomList(Room assignedRoom) {
     assignedRoom.sectionList.add(this);
@@ -43,7 +46,7 @@ public class Section implements Storable {
 
   public Section() {
     this.number = 0;
-    this.time = LocalTime.of(2, 0); // 2 hours
+    this.time = Pair.of(LocalTime.of(12, 0),LocalTime.of(14,0)); // 2 hours
     this.schedule = new ArrayList<Weekday>();
   }
 
@@ -52,7 +55,7 @@ public class Section implements Storable {
     this.number = number;
   }
 
-  public Section(int number, List<Weekday> schedule, LocalTime time) {
+  public Section(int number, List<Weekday> schedule, Pair<LocalTime,LocalTime> time) {
     this(number);
     this.schedule = schedule;
     this.time = time;
@@ -63,11 +66,11 @@ public class Section implements Storable {
     this.course = course;
   }
 
-  public void setTime(LocalTime time) {
+  public void setTime(Pair<LocalTime,LocalTime> time) {
     this.time = time;
   }
 
-  public LocalTime getTime() {
+  public Pair<LocalTime,LocalTime> getTime() {
     return time;
   }
 
@@ -100,6 +103,7 @@ public class Section implements Storable {
     }
     schedule.add(day);
   }
+
 
   public List<Weekday> getSchedule() {
     return schedule;
@@ -134,19 +138,75 @@ public class Section implements Storable {
   }
 
   public String getTimeLength() {
-    return String.format("%d hrs, %d mins",
-        time.getHour(),
-        time.getMinute()
+    return String.format("%02d:%02d - %02d:%02d",
+        time.getFirst().getHour(),
+        time.getFirst().getMinute(),
+        time.getSecond().getHour(),
+        time.getSecond().getMinute()
     );
   }
 
-  public String getTimeStamp() {
+  public String startTime() {
     return String.format("%02d:%02d",
-        time.getHour(),
-        time.getMinute()
+        time.getFirst().getHour(),
+        time.getFirst().getMinute());
+  }
+  public String endTime() {
+    return String.format("%02d:%02d",
+        time.getSecond().getHour(),
+        time.getSecond().getMinute());
+  }
+  public String getTimeStamp() {
+    return String.format("%02d:%02d - %02d:%02d",
+        time.getFirst().getHour(),
+        time.getFirst().getMinute(),
+        time.getSecond().getHour(),
+        time.getSecond().getMinute()
     );
   }
 
+  public void setStartTime(String start) {
+    try {
+      LocalTime newTime = getTime(start);
+      assert(newTime.getHour() >= 8 && newTime.getHour() <= 20);
+      time = Pair.of(newTime,time.getSecond());
+    } catch (Exception e) {
+      System.err.println("Invalid start time: " + start);
+      e.printStackTrace();
+    }
+  }
+  public void setEndTime(String end) {
+    try {
+      LocalTime newTime = getTime(end);
+      assert(newTime.getHour() >= 9 && newTime.getHour() <= 22);
+      time = Pair.of(time.getFirst(),newTime);
+    } catch (Exception e) {
+      System.err.println("Invalid start time: " + end);
+      e.printStackTrace();
+    }
+  }
+
+  public LocalTime getTime(String time) throws Exception {
+      String[] atoms = time.split(":");
+      int hour = Integer.parseInt(atoms[0]);
+      int minutes = Integer.parseInt(atoms[1]);
+      return LocalTime.of(hour,minutes);
+  }
+  public void setStartAndEndTime(String start, String end) {
+    int SECONDS_IN_THREE_HOURS = 3 * 60 * 60;
+    try {
+      LocalTime startTime = getTime(start);
+      LocalTime endTime = getTime(end);
+      int startHour = startTime.getHour();
+      int endHour = endTime.getHour();
+      if (!endTime.isAfter(startTime)) throw new Exception("EndTtime must come after Start Time");
+      if (endTime.toSecondOfDay() - startTime.toSecondOfDay() >= SECONDS_IN_THREE_HOURS) throw new Exception("Invalid length of time.");
+      time = Pair.of(startTime,endTime);
+    } catch (Exception e) {
+      System.err.println("Invalid time: " + time);
+      e.printStackTrace();
+    }
+  }
   public Room getRoom() {
     return room;
   }
@@ -163,5 +223,28 @@ public class Section implements Storable {
   @Override
   public void setId(ObjectId id) {
     this.id = id;
+  }
+
+  public static boolean conflicts(List<Section> sections) {
+    HashSet<Weekday> weekdays = new HashSet();
+    LocalTime earliest = LocalTime.of(20,0);
+    LocalTime latest = LocalTime.of(9,0);
+    for (Section section : sections) {
+      if (section != null) {
+        for (Weekday day : section.getSchedule()) {
+          if (weekdays.contains(day)) {
+            if (section.getTime().getFirst().compareTo(earliest) >= 0 || section.getTime().getSecond().compareTo(latest) <= 0) {
+              return true;
+            }
+          }
+        }
+        if (section.getTime().getFirst().compareTo(earliest) < 0)
+          earliest = section.getTime().getFirst();
+        if (section.getTime().getSecond().compareTo(latest) > 0)
+          latest = section.getTime().getSecond();
+        weekdays.addAll(section.getSchedule());
+      }
+    }
+    return false;
   }
 }
