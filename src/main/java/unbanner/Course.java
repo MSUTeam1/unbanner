@@ -26,10 +26,10 @@ public class Course implements Storable {
   public List<Course> prereqs;
   public List<Course> coreqs;
   @DBRef(lazy = true)
-  public List<Section> sections;
+  public List<Section> sections = new ArrayList<Section>();
 
   /**
-   * Returns a course with null values.
+   * Returns a course with default values.
    */
   public Course() {
     this.number = 0;
