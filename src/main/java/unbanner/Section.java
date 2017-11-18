@@ -2,6 +2,8 @@ package unbanner;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -236,22 +238,29 @@ public class Section implements Storable {
 
   public static boolean conflicts(List<Section> sections) {
     HashSet<Weekday> weekdays = new HashSet();
-    LocalTime earliest = LocalTime.of(20,0);
-    LocalTime latest = LocalTime.of(9,0);
+    HashMap<Weekday,ArrayList<Pair<LocalTime,LocalTime>>> times = new HashMap<Weekday, ArrayList<Pair<LocalTime,LocalTime>>>();
     for (Section section : sections) {
       if (section != null) {
         for (Weekday day : section.getSchedule()) {
           if (weekdays.contains(day)) {
-            if (section.getTime().getFirst().compareTo(earliest) >= 0 || section.getTime().getSecond().compareTo(latest) <= 0) {
-              return true;
+            ArrayList<Pair<LocalTime,LocalTime>> pairs = times.get(day);
+            if (pairs != null) {
+              for (Pair<LocalTime,LocalTime> time : pairs) {
+                if
+                    ((section.getTime().getFirst().compareTo(time.getFirst()) >= 0 && section.getTime().getFirst().compareTo(time.getSecond()) <= 0) ||
+                    (section.getTime().getSecond().compareTo(time.getSecond()) <= 0 && section.getTime().getSecond().compareTo(time.getFirst()) >= 0)) {
+                  return true;
+                }
+              }
             }
           }
         }
-        if (section.getTime().getFirst().compareTo(earliest) < 0) {
-          earliest = section.getTime().getFirst();
-        }
-        if (section.getTime().getSecond().compareTo(latest) > 0) {
-          latest = section.getTime().getSecond();
+        for (Weekday day : section.getSchedule()) {
+          if (times.containsKey(day)) {
+            times.get(day).add(section.getTime());
+          } else {
+            times.put(day,new ArrayList<Pair<LocalTime,LocalTime>>(Arrays.asList(section.getTime())));
+          }
         }
         weekdays.addAll(section.getSchedule());
       }
