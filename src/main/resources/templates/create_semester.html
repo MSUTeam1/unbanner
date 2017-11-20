@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Semester</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Create New Semester</h1>
+
+
+    <form action="#" th:action="@{'/semesters/new'}" th:object="${semester}" th:method="post">
+
+        <label th:for="*{season}">Season</label>
+        <input type="text" th:field="*{season}" />
+
+        <label th:for="*{year}">Year</label>
+        <input placeholder="Year" type="text" th:field="*{year}" />
+
+        <button type="submit" id="submitButton">Create</button>
+    </form>
+</div>
+</body>
+</html>
