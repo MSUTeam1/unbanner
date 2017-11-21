@@ -48,7 +48,7 @@ public class Section implements Storable {
 
   public Section() {
     this.number = 0;
-    this.time = Pair.of(LocalTime.of(12, 0),LocalTime.of(14,0)); // 2 hours
+    this.time = Pair.of(LocalTime.of(12, 0),LocalTime.of(14,0)); // 2 hours ...//I think it would be better if we picked a different time as the default. Preferably a null. But idk how the Section class works, so maybe my suggestion wont work. Just imo (from chris)
     this.schedule = new ArrayList<Weekday>();
   }
 
@@ -74,6 +74,13 @@ public class Section implements Storable {
 
   public Pair<LocalTime,LocalTime> getTime() {
     return time;
+  }
+
+  public LocalTime getTime(String time) throws Exception {
+    String[] atoms = time.split(":");
+    int hour = Integer.parseInt(atoms[0]);
+    int minutes = Integer.parseInt(atoms[1]);
+    return LocalTime.of(hour,minutes);
   }
 
   public void setSchedule(List<Weekday> schedule) {
@@ -153,11 +160,13 @@ public class Section implements Storable {
         time.getFirst().getHour(),
         time.getFirst().getMinute());
   }
+
   public String endTime() {
     return String.format("%02d:%02d",
         time.getSecond().getHour(),
         time.getSecond().getMinute());
   }
+
   public String getTimeStamp() {
     return String.format("%02d:%02d - %02d:%02d",
         time.getFirst().getHour(),
@@ -170,17 +179,18 @@ public class Section implements Storable {
   public void setStartTime(String start) {
     try {
       LocalTime newTime = getTime(start);
-      assert(newTime.getHour() >= 8 && newTime.getHour() <= 20);
+      assert (newTime.getHour() >= 8 && newTime.getHour() <= 20);
       time = Pair.of(newTime,time.getSecond());
     } catch (Exception e) {
       System.err.println("Invalid start time: " + start);
       e.printStackTrace();
     }
   }
+
   public void setEndTime(String end) {
     try {
       LocalTime newTime = getTime(end);
-      assert(newTime.getHour() >= 9 && newTime.getHour() <= 22);
+      assert (newTime.getHour() >= 9 && newTime.getHour() <= 22);
       time = Pair.of(time.getFirst(),newTime);
     } catch (Exception e) {
       System.err.println("Invalid start time: " + end);
@@ -188,12 +198,6 @@ public class Section implements Storable {
     }
   }
 
-  public LocalTime getTime(String time) throws Exception {
-      String[] atoms = time.split(":");
-      int hour = Integer.parseInt(atoms[0]);
-      int minutes = Integer.parseInt(atoms[1]);
-      return LocalTime.of(hour,minutes);
-  }
   public void setStartAndEndTime(String start, String end) {
     int SECONDS_IN_THREE_HOURS = 3 * 60 * 60;
     try {
@@ -201,14 +205,19 @@ public class Section implements Storable {
       LocalTime endTime = getTime(end);
       int startHour = startTime.getHour();
       int endHour = endTime.getHour();
-      if (!endTime.isAfter(startTime)) throw new Exception("EndTtime must come after Start Time");
-      if (endTime.toSecondOfDay() - startTime.toSecondOfDay() >= SECONDS_IN_THREE_HOURS) throw new Exception("Invalid length of time.");
+      if (!endTime.isAfter(startTime)) {
+        throw new Exception("EndTtime must come after Start Time");
+      }
+      if (endTime.toSecondOfDay() - startTime.toSecondOfDay() >= SECONDS_IN_THREE_HOURS) {
+        throw new Exception("Invalid length of time.");
+      }
       time = Pair.of(startTime,endTime);
     } catch (Exception e) {
       System.err.println("Invalid time: " + time);
       e.printStackTrace();
     }
   }
+
   public Room getRoom() {
     return room;
   }

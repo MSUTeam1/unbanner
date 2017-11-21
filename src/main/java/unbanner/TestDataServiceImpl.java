@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class TestDataServiceImpl implements TestDataService{
+public class TestDataServiceImpl implements TestDataService {
 
   @Autowired
   private StudentRepository studentRepository;
@@ -31,13 +31,14 @@ public class TestDataServiceImpl implements TestDataService{
   @Autowired
   private ProfessorRepository professorRepository;
 
-  @Autowired NineHundredRepository nineHundredRepository;
+  @Autowired
+  NineHundredRepository nineHundredRepository;
 
   @Autowired
   private NineHundredService nineHundredService;
 
   @Override
-  public void loadTestData(){
+  public void loadTestData() {
 
     studentRepository.deleteAll();
     courseRepository.deleteAll();
