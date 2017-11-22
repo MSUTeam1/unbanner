@@ -16,7 +16,6 @@ public class Course implements Storable {
 
   @Id
   public ObjectId id;
-
   public String name;
   public String department;
   public int number;

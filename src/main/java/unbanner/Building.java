@@ -62,6 +62,5 @@ public class Building implements Storable {
         "Building[id=%s, description='%s']",
         id, description);
   }
-
 }
 

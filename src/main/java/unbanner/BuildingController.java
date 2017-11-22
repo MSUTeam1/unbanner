@@ -117,6 +117,10 @@ public class BuildingController {
     Room tempRoom = roomRepository.findById(id);
     tempRoom.name = room.name;
     tempRoom.size = room.size;
+    if (Room.doesNameConflict(tempRoom)) {
+      return "redirect:/error/Duplicate Name Conflict";
+    }
+    // else
     roomRepository.save(tempRoom);
     return "redirect:/buildings";
   }
@@ -140,6 +144,7 @@ public class BuildingController {
     newRoom.building = thisBuilding;
     thisBuilding.rooms.add(newRoom);
     repository.save(thisBuilding);
+    roomRepository.save(newRoom);
     return  "redirect:/building/room/" + newRoom.id;
   }
 }

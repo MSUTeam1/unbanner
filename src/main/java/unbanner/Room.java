@@ -17,8 +17,10 @@ public class Room implements Storable {
   public ObjectId id;
   public String name;
   public int size;
-  @DBRef(lazy = true)
+
+  @DBRef(lazy = false)
   public Building building;
+
   @DBRef(lazy = true)
   public List<Section> sectionList = new ArrayList<Section>();
 
@@ -56,4 +58,22 @@ public class Room implements Storable {
   public void setSize(int size) {
     this.size = size;
   }
+
+  // Verifies that no two rooms have the same name
+  public static boolean doesNameConflict(Room userInputRoom ){
+    if(userInputRoom.building == null){
+      return false;
+    }
+    Building building = userInputRoom.building;
+    for (Room room : building.rooms){
+      if (room.id.equals(userInputRoom.id)) { //Skip itself
+        continue;
+      }
+      if (room.name.equals(userInputRoom.name) && !room.name.equals("New Room") ){
+        return true;
+      }
+    }
+    return false;
+  }
+
 }
