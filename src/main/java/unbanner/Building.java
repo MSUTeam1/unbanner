@@ -59,8 +59,8 @@ public class Building implements Storable {
   public String toString() {
     return String.format(
         //Make more informative, later.
-        "Building[id=%s, description='%s', rooms='%s']" ,
-        id, description, rooms);
+        "Building[id=%s, description='%s']" ,
+        id, description);
   }
 }
 
