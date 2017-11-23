@@ -26,17 +26,18 @@
         <div class="container">
             <h5>Rooms</h5>
                 <div class="container">
-                    <form action ="#" th:action="@{'/buildings/newRoom/{bldId}'(bldId=${building.id})}" th:object="${building}" th:method="post">
+                    <form action ="#" th:action="@{'/buildings/newRoom/{bldId}'(bldId=${building.id})}" th:method="get">
+                        <input type="hidden" name="_method" value="get" />
                         <button class="badge badge-primary" type="submit" id="submitButton">Create Room</button>
                     </form>
 
 
-                    <table class="table table-striped" th:each="room : ${building.rooms}">
+                    <table class="table table-striped">
                         <tr>
                             <th>Room </th>
                             <th>Size</th>
                         </tr>
-                        <tr>
+                        <tr th:each="room : ${building.rooms}">
                             <td th:text ="${room.name}"></td>
                             <td th:text= "${room.size}"> </td>
                             <td><a class="badge badge-info" th:href ="@{/building/room/{roomId} (roomId=${room.id} ) }"> view  </a></td>
