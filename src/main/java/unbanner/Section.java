@@ -248,6 +248,34 @@ public class Section implements Storable {
     this.id = id;
   }
 
+  public boolean doesTimeConflictsRoom(){
+    for (Section sec : this.room.sectionList){
+      if (sec.equals(this)){
+        continue; //Skip itself
+      }
+
+      //If the object (this) begins between any other section.
+      System.out.println("sec.getTime().getFirst() " + sec.getTime().getFirst());
+      System.out.println("sec.getTime().getSecond() " + sec.getTime().getSecond());
+      System.out.println("this.getTime().getFirst() " + this.getTime().getFirst());
+      System.out.println("this.getTime().getSecond() " + this.getTime().getSecond());
+      if (this.time.getFirst().isAfter(sec.getTime().getFirst()) && this.time.getFirst().isBefore(sec.time.getSecond()) ) {
+         return true;
+      }
+      //if the object (this) ends between any other section.
+      if (this.time.getSecond().isAfter(sec.getTime().getFirst()) && this.time.getSecond().isBefore(sec.time.getSecond())){
+          return true;
+      }
+      //if this object (this) is equal to any other section
+      //        (I allowed a section to end at the exact same time when a section begins, for development practicality)
+      if (this.time.getFirst().equals(sec.getTime().getFirst()) || this.time.getSecond().equals(sec.time.getSecond())){
+        return true;
+      }
+    }
+    return false;
+  }
+
+
   public static boolean conflicts(List<Section> sections) {
     HashSet<Weekday> weekdays = new HashSet();
     HashMap<Weekday,ArrayList<Pair<LocalTime,LocalTime>>> times = new HashMap<Weekday, ArrayList<Pair<LocalTime,LocalTime>>>();

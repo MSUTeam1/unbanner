@@ -67,6 +67,8 @@ public class SectionController {
     Section tempSec = repository.findOne(id);
 
     if (tempSec != null) {
+      if (section.doesTimeConflictsRoom()) return "redirect:/error/Schedule Time Conflict";
+
       tempSec.number = section.number;
       tempSec.schedule = section.schedule;
       tempSec.setStartAndEndTime(startTime,endTime);
