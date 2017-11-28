@@ -57,14 +57,13 @@ public class Building implements Storable {
 
   @Override
   public String toString() {
-    String str = "";
+    String str = "Building[";
     //return String.format("Building[id=%s, description='%s']" ,id, description);
     str = str + "name " + this.name;
     for (Room r : this.rooms) {
       str = str + "\n    room " + r.name;
-      str = str + ". id " + r.id;
     }
-    str = str + "id " + this.id;
+    str = str + "\nid " + this.id + "]";
     return  str;
   }
 }

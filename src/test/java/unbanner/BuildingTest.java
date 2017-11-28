@@ -19,6 +19,13 @@ public class BuildingTest {
     bld1 = new Building("Building One", "This is 1st building");
     bld1.setId(new ObjectId("abcd1234abcdabcd1234abcd"));
     Room rm1 = new Room("room1 id", 30);
+    System.out.println("_____________");
+    System.out.println("_____________");
+    System.out.println("_____________");
+    System.out.println("_____________");
+    System.out.println("_____________");
+    System.out.println(bld1.toString());
+    System.out.println(rm1.id);
     bld1.rooms.add(rm1);
 
   }
@@ -67,9 +74,12 @@ public class BuildingTest {
 
   @Test
   public void toStringTest() throws Exception {
-    assertEquals(bld1.toString(),
-        "Building[id=abcd1234abcdabcd1234abcd, " + "description='This is 1st building']");
+//    bld1.rooms.get(0).setId(new ObjectId("12345"));
 
+    assertEquals(bld1.toString(),
+        "Building[name Building One\n" +
+                "    " + "room room1 id" +
+                "\nid abcd1234abcdabcd1234abcd]");
   }
 
 }
