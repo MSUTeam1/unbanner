@@ -33,7 +33,7 @@ public class Section implements Storable {
   public List<Student> students = new ArrayList<Student>();
   @DBRef(lazy = true)
   public Course course;
-  @DBRef(lazy = true)
+  @DBRef(lazy = false)
   public Room room;
   @DBRef(lazy = true)
   public Semester semester;
@@ -224,6 +224,18 @@ public class Section implements Storable {
 
   public void setRoom(Room room) {
     this.room = room;
+  }
+
+  @Override
+  public String toString() {
+    String str = "";
+    str = str + "number: " + this.number;
+    str = str + "\nroom #: " + this.room.name;
+    str = str + "\ncourse: " + this.course.name;
+    str = str + "\nstartTime: " + this.startTime();
+    str = str + "\nendTime: " + this.endTime();
+    str = str + "\nid " + this.id;
+    return str;
   }
 
   @Override

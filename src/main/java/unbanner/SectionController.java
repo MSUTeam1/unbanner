@@ -65,13 +65,20 @@ public class SectionController {
   public String section(@ModelAttribute("section") Section section, String startTime, String endTime,
                         @PathVariable String id) {
     Section tempSec = repository.findOne(id);
+
     if (tempSec != null) {
       tempSec.number = section.number;
       tempSec.schedule = section.schedule;
       tempSec.setStartAndEndTime(startTime,endTime);
-      tempSec.room = section.room;
 
-      if(section.students != null) {
+      tempSec.room.sectionList.remove(tempSec);
+      section.room.sectionList.add(section);
+      roomRepository.save(tempSec.room);
+
+      tempSec.room = section.room;
+      roomRepository.save(tempSec.room);
+
+      if (section.students != null) {
         for (Student student : section.students) {
           if (!tempSec.students.contains(student)) {
             student.sections.add(tempSec);
