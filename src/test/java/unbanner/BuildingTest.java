@@ -19,13 +19,6 @@ public class BuildingTest {
     bld1 = new Building("Building One", "This is 1st building");
     bld1.setId(new ObjectId("abcd1234abcdabcd1234abcd"));
     Room rm1 = new Room("room1 id", 30);
-    System.out.println("_____________");
-    System.out.println("_____________");
-    System.out.println("_____________");
-    System.out.println("_____________");
-    System.out.println("_____________");
-    System.out.println(bld1.toString());
-    System.out.println(rm1.id);
     bld1.rooms.add(rm1);
 
   }
