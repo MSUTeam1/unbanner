@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -182,15 +183,11 @@ public class HttpBuildingRequestTest {
     Building myBuilding = new Building();
     myBuilding.description = "building desc";
     myBuilding.name = "building name";
-    bldRepo.save(myBuilding);
+    myBuilding = bldRepo.save(myBuilding);
 
-    List<Building> bldList = bldRepo.findAll();
-
-    this.mockMvc.perform(get("/building/newRoom/{id}", bldList.get(0).id))
+    this.mockMvc.perform(get("/buildings/newRoom/{id}", myBuilding.id) )
             .andExpect(status().isOk())
-            .andExpect(model().attribute("building",
-             allOf(
-             hasProperty("name", is("building name")))))
+            .andExpect(view().name("create_room"))
             .andDo(print());
   }
 
@@ -246,7 +243,7 @@ public class HttpBuildingRequestTest {
     this.mockMvc.perform(post("/buildings/newRoom/{id}", bldList.get(0).id)
             .contentType(MediaType.APPLICATION_FORM_URLENCODED))
             .andExpect(status().is3xxRedirection())
-            .andExpect(view().name("redirect:/building/room/" + roomRepo.findAll().get(1).id))
+            .andExpect(view().name("redirect:/buildings"))
             .andDo(print());
   }
 }
