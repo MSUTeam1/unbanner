@@ -17,8 +17,10 @@ public class Room implements Storable {
   public ObjectId id;
   public String name;
   public int size;
+
   @DBRef(lazy = true)
   public Building building;
+
   @DBRef(lazy = true)
   public List<Section> sectionList = new ArrayList<Section>();
 
@@ -56,4 +58,6 @@ public class Room implements Storable {
   public void setSize(int size) {
     this.size = size;
   }
+
+
 }

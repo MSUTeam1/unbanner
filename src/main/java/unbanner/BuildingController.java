@@ -17,7 +17,9 @@ public class BuildingController {
   @Autowired
   RoomRepository roomRepository;
   @Autowired
-  private SectionRepository sectionRepository;
+  SectionRepository sectionRepository;
+  @Autowired
+  RoomService roomService;
 
   //Get all buildings
   @RequestMapping(value = "/buildings", method = RequestMethod.GET)
@@ -117,29 +119,43 @@ public class BuildingController {
     Room tempRoom = roomRepository.findById(id);
     tempRoom.name = room.name;
     tempRoom.size = room.size;
+    //tempRoom.building = room.building;
+    if (roomService.checkConflicts(tempRoom)) {
+      return "redirect:/error/Duplicate Name Conflict";
+    }
+    // else
     roomRepository.save(tempRoom);
     return "redirect:/buildings";
   }
 
-  //Get building for create_room
-  @RequestMapping("/building/newRoom/{id}")
-  public String newroom0(@PathVariable String id, Model model) {
-    model.addAttribute("building", repository.findOne(id));
+  //Get route for create_room
+  @RequestMapping(value = "/buildings/newRoom/{id}", method = RequestMethod.GET)
+  public String newRoomGet(@ModelAttribute("room") Room room,
+                           @PathVariable String id, Model model) {
+    Building building = repository.findOne(id);
+    model.addAttribute(building);
     return "create_room";
   }
 
-  //Create room
+  //Create room post route
   @RequestMapping(value = "/buildings/newRoom/{id}", method = RequestMethod.POST)
-  public String newRoom(@ModelAttribute("building") Building building,
-                        @PathVariable String id) {
-    Room newRoom = new Room();
-    newRoom.name = "New Room";
-    newRoom.size = 0;
-    roomRepository.save(newRoom);
-    Building thisBuilding = repository.findById(id);
-    newRoom.building = thisBuilding;
-    thisBuilding.rooms.add(newRoom);
-    repository.save(thisBuilding);
-    return  "redirect:/building/room/" + newRoom.id;
+  public String newRoomPost(@ModelAttribute("room") Room room,
+                            @PathVariable String id) {
+
+    Building building = repository.findOne(id);
+    Room tempRoom = new Room();
+    tempRoom.name = room.name;
+    tempRoom.size = room.size;
+    tempRoom.building = building;
+    //tempRoom.sectionList = room.sectionList;
+    if (roomService.checkConflicts(tempRoom)) {
+      return "redirect:/error/Duplicate Name Conflict";
+    }
+    else {
+      tempRoom = roomRepository.save(tempRoom);
+      building.rooms.add(tempRoom);
+      repository.save(building);
+      return  "redirect:/buildings";
+    }
   }
 }

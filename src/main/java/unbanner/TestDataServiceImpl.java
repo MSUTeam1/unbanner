@@ -63,6 +63,12 @@ public class TestDataServiceImpl implements TestDataService {
     sectionRepository.save(new Section(201, courseRepository.findByName("Computer Science II")));
     sectionRepository.save(new Section(102, courseRepository.findByName("Computer Science I")));
     professorRepository.save(new Professor("Steve", "Beaty"));
+    Semester semest1 = new Semester("Fall", 2017);
+    Semester semest2 = new Semester("Spring", 2018);
+    Semester semest3 = new Semester("Spring", 2019);
+    semesterRepository.save(semest1);
+    semesterRepository.save(semest2);
+    semesterRepository.save(semest3);
 
     Student alice = studentRepository.findByFirstName("Alice");
     Student bob = studentRepository.findByFirstName("Bob");
@@ -100,7 +106,9 @@ public class TestDataServiceImpl implements TestDataService {
     sectionRepository.save(s3);
     bld1.rooms.add(rm1);
     bld1.rooms.add(rm2);
+
     rm1.building = bld1;
+    rm2.building = bld1;
 
 
     alice.setSections((List<Section>) new ArrayList<Section>(Arrays.asList(s1, s2, s3)));
@@ -117,6 +125,13 @@ public class TestDataServiceImpl implements TestDataService {
     c1.addSection(s3);
     c2.addSection(s2);
 
+    semest1.sections.add(s1);
+    semest2.sections.add(s2);
+    semest3.sections.add(s3);
+    semesterRepository.save(semest1);
+    semesterRepository.save(semest2);
+    semesterRepository.save(semest3);
+
     studentRepository.save(alice);
     studentRepository.save(bob);
 
@@ -132,7 +147,6 @@ public class TestDataServiceImpl implements TestDataService {
 
     roomRepository.save(rm1);
     roomRepository.save(rm2);
-
 
   }
 }

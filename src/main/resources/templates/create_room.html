@@ -10,12 +10,26 @@
 <div layout:fragment="content">
     <h1>Create New Room?</h1>
 
-    Name:        <b th:text="${building.name}" /> <br/>
-    Description: <b th:text="${building.description}" /> <br/>
-    <form action ="#" th:action="@{'/buildings/newRoom/{bldId}'(bldId=${building.id})}" th:object="${building}" th:method="post">
-        <button type="submit" id="submitButton">Create</button>
-    </form>
 
+    <div class = "container">
+        <form action="#" th:action="@{'/buildings/newRoom/{id}'(id=${building.id})}" th:object="${room}" th:method="post" >
+            <div class="row">
+                <div class="col">
+                    <label th:for="*{name}">Name</label>
+                    <input type="text" label="Room Name" class="form-control" th:field="*{name}" />
+                </div>
+                <div class="col">
+                    <label th:for="*{size}">Size</label>
+                    <input type="number" label="Room Name" class="form-control" th:field="*{size}" />
+                </div>
+                <div class="col">
+                    <input type="hidden" name="_method" value="post" />
+                    <button type="submit" class="btn btn-primary"  id="submitButton">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
+
 </body>
 </html>
