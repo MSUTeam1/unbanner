@@ -39,6 +39,12 @@
                                 th:text="${room.name}">
                         </option>
                     </select>
+                    <select class="form-control" name="professor" id="professor">
+                        <option th:each="professor : ${allProfessors}"
+                                th:value="${professor.id}"
+                                th:text="${professor.firstname}">
+                        </option>
+                    </select>
                 </div>
             </div>
             <div class="row">
