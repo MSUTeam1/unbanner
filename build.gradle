@@ -38,7 +38,6 @@ dependencies {
     compile 'org.springframework.security:spring-security-config:4.2.3.RELEASE'
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-devtools')
-    compile('org.springframework.boot:spring-boot-starter-data-rest')
     compile('org.springframework.boot:spring-boot-starter-data-mongodb')
     compileOnly 'org.projectlombok:lombok:1.16.18'
     testCompile("junit:junit")
