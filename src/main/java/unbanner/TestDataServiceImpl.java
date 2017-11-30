@@ -62,7 +62,7 @@ public class TestDataServiceImpl implements TestDataService {
     sectionRepository.save(new Section(101, courseRepository.findByName("Computer Science I")));
     sectionRepository.save(new Section(201, courseRepository.findByName("Computer Science II")));
     sectionRepository.save(new Section(102, courseRepository.findByName("Computer Science I")));
-    professorRepository.save(new Professor("Steve", "Beaty"));
+    Professor steve = professorRepository.save(new Professor("Steve", "Beaty"));
     Semester semest1 = new Semester("Fall", 2017);
     Semester semest2 = new Semester("Spring", 2018);
     Semester semest3 = new Semester("Spring", 2019);
@@ -120,6 +120,9 @@ public class TestDataServiceImpl implements TestDataService {
     s1.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(alice, bob)));
     s2.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(bob, alice)));
     s3.setStudents((List<Student>) new ArrayList<Student>(Arrays.asList(bob, alice)));
+    s1.professor = steve;
+    s2.professor = steve;
+    s3.professor = steve;
 
     c1.addSection(s1);
     c1.addSection(s3);

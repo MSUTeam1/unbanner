@@ -48,7 +48,7 @@
                     <select class="form-control" name="professor" id="professor">
                         <option th:each="professor : ${allProfessors}"
                                 th:value="${professor.id}"
-                                th:text="${professor.firstName}">
+                                th:text="${professor.firstName + ' ' + professor.lastName}">
                         </option>
                     </select>
                 </div>
