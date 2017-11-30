@@ -9,6 +9,7 @@
 <body>
 <div layout:fragment="content">
     <h1>Create New Section</h1>
+    <h2 th:text="${course.name}">course_name</h2>
     <div class="container">
         <form action="#" th:action="@{'/course/{id}/newsection' (id=${course.id})}" th:object="${section}" th:method="post" >
             <div class="row">
@@ -39,10 +40,15 @@
                                 th:text="${room.name}">
                         </option>
                     </select>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
                     <select class="form-control" name="professor" id="professor">
                         <option th:each="professor : ${allProfessors}"
                                 th:value="${professor.id}"
-                                th:text="${professor.firstname}">
+                                th:text="${professor.firstName}">
                         </option>
                     </select>
                 </div>
