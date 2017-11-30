@@ -5,6 +5,9 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -26,12 +29,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class HttpCourseRequestTest {
+
+  @Autowired
+  private WebApplicationContext context;
 
   @Autowired
   private MockMvc mockMvc;
@@ -51,6 +59,12 @@ public class HttpCourseRequestTest {
 
   @Before
   public void init() {
+
+    mockMvc = MockMvcBuilders
+        .webAppContextSetup(context)
+        .defaultRequest(get("/").with(user("user").password("password").roles("USER")))
+        .apply(springSecurity())
+        .build();
 
     courseRepo.deleteAll();
 
@@ -126,6 +140,7 @@ public class HttpCourseRequestTest {
   public void coursesNewShouldCreate() throws Exception {
 
     this.mockMvc.perform(post("/courses/new")
+        .with(csrf().asHeader())
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("name", "underwater")
         .param("department", "test")
@@ -184,7 +199,7 @@ public class HttpCourseRequestTest {
         .andExpect(model().attribute("courses", hasSize(3)));
 
     List<Course> courseList = courseRepo.findAll();
-    this.mockMvc.perform(delete("/course/{id}", courseList.get(0).id))
+    this.mockMvc.perform(delete("/course/{id}", courseList.get(0).id).with(csrf().asHeader()))
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/courses"))
         .andDo(print());
@@ -207,6 +222,7 @@ public class HttpCourseRequestTest {
     List<Course> courseList = courseRepo.findAll();
 
     this.mockMvc.perform(post("/course/{id}", courseList.get(0).id)
+        .with(csrf().asHeader())
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("name", "newName")
         .param("department", "newDept")
