@@ -42,6 +42,7 @@
                                 <div class="row">
                                     <div class="col">Section #: <b th:text="${section.number}" /></div>
                                     <div class="col">Room: <b th:text="${section.room.name}"/></div>
+                                    <div class="col">Professor: <b th:text="${section.professor.firstName + ' ' + section.professor.lastName}"/></div>
                                     <!--<div class="col">Building: <b th:text="${section.room.building.name}"/></div>-->
                                     <div class="col">Schedule: <b th:text="${section.schedule}"/></div>
                                     <div class="col">Time: <b th:text="${section.getTimeLength()}"/></div>

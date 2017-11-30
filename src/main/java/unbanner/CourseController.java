@@ -23,7 +23,15 @@ public class CourseController {
   StudentRepository studentRepository;
 
   @Autowired
+  ProfessorRepository professorRepository;
+
+  @Autowired
   RoomRepository roomRepository;
+
+  @ModelAttribute("allProfessors")
+  public List<Professor> getProfessors() {
+    return professorRepository.findAll();
+  }
 
   @ModelAttribute("allRooms")
   public List<Room> getRooms() {
@@ -90,7 +98,9 @@ public class CourseController {
   @RequestMapping(value = "/course/{id}/newsection", method = RequestMethod.POST)
   public String newSection(@ModelAttribute("section") Section section,
                            @PathVariable String id, String startTime, String endTime) {
-    section.setStartAndEndTime(startTime, endTime);
+
+    section = sectionRepository.save(section); //generate an ObjectID
+    section.setStartAndEndTime(startTime,endTime);
     Course course = repository.findOne(id);
     List<Section> sections = course.getSections();
     sections.add(section);
@@ -98,9 +108,10 @@ public class CourseController {
       return "redirect:/error/Schedule Time Conflict";
     }
     section.course = course;
-    Section savedSection = sectionRepository.save(section);
-    course.addSection(savedSection);
+    //Section savedSection = sectionRepository.save(section);
+    course.addSection(section);
     repository.save(course);
+    sectionRepository.save(section);
 
     return "redirect:/courses";
   }

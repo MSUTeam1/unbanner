@@ -15,6 +15,8 @@ public interface ProfessorRepository extends MongoRepository<Professor, String> 
 
   public Professor findByFirstNameAndLastName(String firstName, String lastName);
 
+  public Professor findById(String id);
+
 }
 
 
