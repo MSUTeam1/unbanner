@@ -19,4 +19,5 @@ public class MessageWebApplicationInitializer extends
   protected String[] getServletMappings() {
     return new String[0];
   }
+
 }

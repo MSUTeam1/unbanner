@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -60,6 +61,7 @@ public class HttpBuildingRequestTest {
   public void setup() {
     mockMvc = MockMvcBuilders
         .webAppContextSetup(context)
+        .defaultRequest(get("/").with(user("user").password("password").roles("USER")))
         .apply(springSecurity())
         .build();
   }
@@ -153,7 +155,8 @@ public class HttpBuildingRequestTest {
 
     List<Building> bldList = bldRepo.findAll();
 
-    this.mockMvc.perform(delete("/building/{id}", bldList.get(1).id))
+    this.mockMvc.perform(delete("/building/{id}", bldList.get(1).id)
+        .with(csrf().asHeader()))
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/buildings"))
         .andDo(print());
@@ -180,6 +183,7 @@ public class HttpBuildingRequestTest {
     List<Building> bldList = bldRepo.findAll();
 
     this.mockMvc.perform(post("/building/{id}", bldList.get(0).id)
+        .with(csrf().asHeader())
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("description", "new desc")
         .param("name", "new name"))
@@ -234,6 +238,7 @@ public class HttpBuildingRequestTest {
     List<Building> bldList = bldRepo.findAll();
 
     this.mockMvc.perform(post("/building/room/{id}", rmList.get(0).id)
+        .with(csrf().asHeader())
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
             .param("size", "15")
             .param("name", "new room name"))
@@ -262,9 +267,10 @@ public class HttpBuildingRequestTest {
     List<Building> bldList = bldRepo.findAll();
 
     this.mockMvc.perform(post("/buildings/newRoom/{id}", bldList.get(0).id)
-            .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-            .andExpect(status().is3xxRedirection())
-            .andExpect(view().name("redirect:/buildings"))
-            .andDo(print());
+        .with(csrf().asHeader())
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/buildings"))
+        .andDo(print());
   }
 }

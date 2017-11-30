@@ -90,11 +90,13 @@ public class CourseController {
   @RequestMapping(value = "/course/{id}/newsection", method = RequestMethod.POST)
   public String newSection(@ModelAttribute("section") Section section,
                            @PathVariable String id, String startTime, String endTime) {
-    section.setStartAndEndTime(startTime,endTime);
+    section.setStartAndEndTime(startTime, endTime);
     Course course = repository.findOne(id);
     List<Section> sections = course.getSections();
     sections.add(section);
-    if (Section.conflicts(sections)) return "redirect:/error/Schedule Time Conflict";
+    if (Section.conflicts(sections)) {
+      return "redirect:/error/Schedule Time Conflict";
+    }
     section.course = course;
     Section savedSection = sectionRepository.save(section);
     course.addSection(savedSection);
