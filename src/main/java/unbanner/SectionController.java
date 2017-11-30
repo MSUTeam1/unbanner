@@ -23,9 +23,19 @@ public class SectionController {
   @Autowired
   RoomRepository roomRepository;
 
+  @Autowired
+  ProfessorRepository professorRepository;
+
+
+
   @ModelAttribute("allStudents")
   public List<Student> getStudents() {
     return studentRepository.findAll();
+  }
+
+  @ModelAttribute("allProfessors")
+  public List<Professor> getProfessors() {
+    return professorRepository.findAll();
   }
 
   @ModelAttribute("allRooms")
@@ -70,6 +80,7 @@ public class SectionController {
       tempSec.schedule = section.schedule;
       tempSec.setStartAndEndTime(startTime,endTime);
       tempSec.room = section.room;
+      tempSec.professor = section.professor;
 
       if(section.students != null) {
         for (Student student : section.students) {
