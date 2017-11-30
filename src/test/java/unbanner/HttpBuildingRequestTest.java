@@ -5,6 +5,8 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -12,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
 
 import java.util.List;
 
@@ -25,15 +28,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 import unbanner.Building;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ContextConfiguration
+@WebAppConfiguration
 @AutoConfigureMockMvc
 public class HttpBuildingRequestTest {
+
+  @Autowired
+  private WebApplicationContext context;
 
   @Autowired
   private MockMvc mockMvc;
@@ -43,6 +55,14 @@ public class HttpBuildingRequestTest {
 
   @Autowired
   private RoomRepository roomRepo;
+
+  @Before
+  public void setup() {
+    mockMvc = MockMvcBuilders
+        .webAppContextSetup(context)
+        .apply(springSecurity())
+        .build();
+  }
 
 
   @Test
@@ -83,6 +103,7 @@ public class HttpBuildingRequestTest {
     bldRepo.save(myBuilding);
 
     this.mockMvc.perform(post("/buildings/new")
+        .with(csrf())
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("description", "new desc")
         .param("name", "new name"))
@@ -90,7 +111,7 @@ public class HttpBuildingRequestTest {
         .andExpect(view().name("redirect:/buildings"))
         .andDo(print());
 
-    this.mockMvc.perform(get("/buildings"))
+    this.mockMvc.perform(get("/buildings").with(csrf()))
         .andExpect(status().isOk())
         .andExpect(view().name("buildings"))
         .andExpect(model().attribute("buildings", hasSize(2)))

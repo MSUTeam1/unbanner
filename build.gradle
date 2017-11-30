@@ -36,6 +36,7 @@ dependencies {
     compile group: 'org.mongodb', name: 'bson', version: '3.5.0'
     compile 'org.springframework.security:spring-security-web:4.2.3.RELEASE'
     compile 'org.springframework.security:spring-security-config:4.2.3.RELEASE'
+    compile 'org.springframework.security:spring-security-test:4.1.1.RELEASE'
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-devtools')
     compile('org.springframework.boot:spring-boot-starter-data-mongodb')
