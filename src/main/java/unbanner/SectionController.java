@@ -75,14 +75,22 @@ public class SectionController {
   public String section(@ModelAttribute("section") Section section, String startTime, String endTime,
                         @PathVariable String id) {
     Section tempSec = repository.findOne(id);
+
     if (tempSec != null) {
+      if (section.doesTimeConflictsRoom()) return "redirect:/error/Schedule Time Conflict";
+
       tempSec.number = section.number;
       tempSec.schedule = section.schedule;
       tempSec.setStartAndEndTime(startTime,endTime);
+
+      tempSec.room.sectionList.remove(tempSec);
+      section.room.sectionList.add(section);
+      roomRepository.save(tempSec.room);
+
       tempSec.room = section.room;
       tempSec.professor = section.professor;
 
-      if(section.students != null) {
+      if (section.students != null) {
         for (Student student : section.students) {
           if (!tempSec.students.contains(student)) {
             student.sections.add(tempSec);

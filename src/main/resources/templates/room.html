@@ -28,12 +28,14 @@
             <div class ="container">
                 <table class ="table table-striped">
                     <tr>
-                        <th>Number</th>
+                        <th>Course #</th>
+                        <th>Section #</th>
                         <th>Name</th>
                         <th>Days</th>
                         <th>Time</th>
                     </tr>
                     <tr th:each="section : ${room.sectionList}">
+                        <td th:text="${section.course.number}"></td>
                         <td th:text="${section.number}"></td>
                         <td th:text="${section.course.name}"></td>
                         <td th:text="${section.schedule}"></td>

@@ -67,9 +67,12 @@ public class BuildingTest {
 
   @Test
   public void toStringTest() throws Exception {
-    assertEquals(bld1.toString(),
-        "Building[id=abcd1234abcdabcd1234abcd, " + "description='This is 1st building']");
+//    bld1.rooms.get(0).setId(new ObjectId("12345"));
 
+    assertEquals(bld1.toString(),
+        "Building[name Building One\n" +
+                "    " + "room room1 id" +
+                "\nid abcd1234abcdabcd1234abcd]");
   }
 
 }
