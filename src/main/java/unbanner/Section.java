@@ -250,10 +250,11 @@ public class Section implements Storable {
 
   public boolean doesTimeConflictsRoom(){
     for (Section sec : this.room.sectionList){
-      if (sec.equals(this)){
+      if (sec.id.equals(this.id)){
         continue; //Skip itself
       }
-
+      System.out.println("this "+this);
+      System.out.println("sec " +sec);
       //If the object (this) begins between any other section.
       System.out.println("sec.getTime().getFirst() " + sec.getTime().getFirst());
       System.out.println("sec.getTime().getSecond() " + sec.getTime().getSecond());
@@ -271,6 +272,11 @@ public class Section implements Storable {
       if (this.time.getFirst().equals(sec.getTime().getFirst()) || this.time.getSecond().equals(sec.time.getSecond())){
         return true;
       }
+      //if this object (this) begins before another section and ends after that section
+      if (this.time.getSecond().isBefore(sec.getTime().getFirst()) && this.time.getSecond().isAfter(sec.time.getSecond())){
+        return true;
+      }
+
     }
     return false;
   }
