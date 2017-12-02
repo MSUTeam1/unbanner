@@ -33,12 +33,12 @@ public class Section implements Storable {
   public List<Student> students = new ArrayList<Student>();
   @DBRef(lazy = true)
   public Course course;
-  @DBRef(lazy = true)
+  @DBRef(lazy = false)
   public Room room;
   @DBRef(lazy = true)
   public Semester semester;
   @DBRef(lazy = true)
-  @Getter @Setter public Professor professor;
+  public Professor professor;
 
 
   //This method should  follow this assignment: mySection.room = myRoom.
@@ -226,6 +226,16 @@ public class Section implements Storable {
     this.room = room;
   }
 
+  public void printInfo() {
+    System.out.println("section id : " + this.id);
+    System.out.println("section room : " + this.room.name);
+    System.out.println("section building : " + this.room.building.name);
+    System.out.println("section course name " + this.course.name);
+    System.out.println(this.time.getFirst());
+    System.out.println(this.time.getSecond());
+    return;
+  }
+
   @Override
   public ObjectId getId() {
     return id;
@@ -235,6 +245,32 @@ public class Section implements Storable {
   public void setId(ObjectId id) {
     this.id = id;
   }
+
+  public boolean doesTimeConflictsRoom(){
+    for (Section sec : this.room.sectionList){
+      if (sec.id.equals(this.id)){
+        continue; //Skip itself
+      }
+      //If the object (this) begins between any other section.
+      if (this.time.getFirst().isAfter(sec.getTime().getFirst()) && this.time.getFirst().isBefore(sec.time.getSecond()) ) {
+         return true;
+      }
+      //if this ends between any other section.
+      if (this.time.getSecond().isAfter(sec.getTime().getFirst()) && this.time.getSecond().isBefore(sec.time.getSecond())){
+          return true;
+      }
+      //if this is equal to any other section
+      if (this.time.getFirst().equals(sec.getTime().getFirst()) || this.time.getSecond().equals(sec.time.getSecond())){
+        return true;
+      }
+      //if this begins before another section and ends after that section
+      if (this.time.getSecond().isBefore(sec.getTime().getFirst()) && this.time.getSecond().isAfter(sec.time.getSecond())){
+        return true;
+      }
+    }
+    return false;
+  }
+
 
   public static boolean conflicts(List<Section> sections) {
     HashSet<Weekday> weekdays = new HashSet();
