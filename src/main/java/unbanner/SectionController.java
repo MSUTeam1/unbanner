@@ -26,6 +26,9 @@ public class SectionController {
   @Autowired
   ProfessorRepository professorRepository;
 
+  @Autowired
+  BuildingRepository buildingRepo;
+
 
 
   @ModelAttribute("allStudents")
@@ -71,24 +74,34 @@ public class SectionController {
     return "redirect:/";
   }
 
+  //Update
   @RequestMapping(value = "/section/{id}", method = RequestMethod.POST)
   public String section(@ModelAttribute("section") Section section, String startTime, String endTime,
                         @PathVariable String id) {
     Section tempSec = repository.findOne(id);
+    System.out.println("UPDATE HAS BEEN CALLED");
 
     if (tempSec != null) {
+      System.out.println("TempSec != null. calling .doesTimeConflictsRoom");
       if (section.doesTimeConflictsRoom()) return "redirect:/error/Schedule Time Conflict";
+
+
+      System.out.println("tempSec.id = " + tempSec.id);
+      System.out.println("section.id = " + section.id);
+      if (tempSec.room != null && !tempSec.room.sectionList.isEmpty()) {
+        tempSec.room.sectionList.remove(tempSec);
+        roomRepository.save(tempSec.room);
+      }
+
+      tempSec.room = section.room;
+      section.room.sectionList.add(section);
+      roomRepository.save(section.room);
+
+      tempSec.professor = section.professor;
 
       tempSec.number = section.number;
       tempSec.schedule = section.schedule;
       tempSec.setStartAndEndTime(startTime,endTime);
-
-      tempSec.room.sectionList.remove(tempSec);
-      section.room.sectionList.add(section);
-      roomRepository.save(tempSec.room);
-
-      tempSec.room = section.room;
-      tempSec.professor = section.professor;
 
       if (section.students != null) {
         for (Student student : section.students) {

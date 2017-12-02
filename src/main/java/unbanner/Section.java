@@ -38,7 +38,7 @@ public class Section implements Storable {
   @DBRef(lazy = true)
   public Semester semester;
   @DBRef(lazy = true)
-  @Getter @Setter public Professor professor;
+  public Professor professor;
 
 
   //This method should  follow this assignment: mySection.room = myRoom.
@@ -226,16 +226,14 @@ public class Section implements Storable {
     this.room = room;
   }
 
-  @Override
-  public String toString() {
-    String str = "";
-    str = str + "number: " + this.number;
-    str = str + "\nroom #: " + this.room.name;
-    str = str + "\ncourse: " + this.course.name;
-    str = str + "\nstartTime: " + this.startTime();
-    str = str + "\nendTime: " + this.endTime();
-    str = str + "\nid " + this.id;
-    return str;
+  public void printInfo() {
+    System.out.println("section id : " + this.id);
+    System.out.println("section room : " + this.room.name);
+    System.out.println("section building : " + this.room.building.name);
+    System.out.println("section course name " + this.course.name);
+    System.out.println(this.time.getFirst());
+    System.out.println(this.time.getSecond());
+    return;
   }
 
   @Override
@@ -253,30 +251,22 @@ public class Section implements Storable {
       if (sec.id.equals(this.id)){
         continue; //Skip itself
       }
-      System.out.println("this "+this);
-      System.out.println("sec " +sec);
       //If the object (this) begins between any other section.
-      System.out.println("sec.getTime().getFirst() " + sec.getTime().getFirst());
-      System.out.println("sec.getTime().getSecond() " + sec.getTime().getSecond());
-      System.out.println("this.getTime().getFirst() " + this.getTime().getFirst());
-      System.out.println("this.getTime().getSecond() " + this.getTime().getSecond());
       if (this.time.getFirst().isAfter(sec.getTime().getFirst()) && this.time.getFirst().isBefore(sec.time.getSecond()) ) {
          return true;
       }
-      //if the object (this) ends between any other section.
+      //if this ends between any other section.
       if (this.time.getSecond().isAfter(sec.getTime().getFirst()) && this.time.getSecond().isBefore(sec.time.getSecond())){
           return true;
       }
-      //if this object (this) is equal to any other section
-      //        (I allowed a section to end at the exact same time when a section begins, for development practicality)
+      //if this is equal to any other section
       if (this.time.getFirst().equals(sec.getTime().getFirst()) || this.time.getSecond().equals(sec.time.getSecond())){
         return true;
       }
-      //if this object (this) begins before another section and ends after that section
+      //if this begins before another section and ends after that section
       if (this.time.getSecond().isBefore(sec.getTime().getFirst()) && this.time.getSecond().isAfter(sec.time.getSecond())){
         return true;
       }
-
     }
     return false;
   }

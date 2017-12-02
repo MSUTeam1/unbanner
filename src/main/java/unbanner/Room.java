@@ -43,8 +43,8 @@ public class Room implements Storable {
     this.id = id;
   }
 
-  @Override
-  public String toString() {
+  //@Override
+  public String printInfo() {
     String str = "";
     str = str + "this.name " + this.name;
     str = str + "\nthis.sectionList.size() " + this.sectionList.size();
