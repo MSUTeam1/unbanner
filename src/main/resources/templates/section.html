@@ -78,6 +78,13 @@
                         th:value="${room.id}"
                         th:text="${room.name}">Name</option>
             </select>
+<!--            <label>Instructor</label>
+            <select class="form-control" id="professors" name="professor">
+                <option th:each ="professor : ${allProfessors}"
+                        th:value ="${professor.id}"
+                        th:text = "${professor.firstName"> Instructor </option>
+            </select>
+            -->
             <button type="submit" class="btn btn-primary" id="updateButton">Update</button>
         </form>
         </div>

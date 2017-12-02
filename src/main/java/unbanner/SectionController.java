@@ -26,11 +26,6 @@ public class SectionController {
   @Autowired
   ProfessorRepository professorRepository;
 
-  @Autowired
-  BuildingRepository buildingRepo;
-
-
-
   @ModelAttribute("allStudents")
   public List<Student> getStudents() {
     return studentRepository.findAll();
@@ -47,6 +42,7 @@ public class SectionController {
   }
 
 
+  //Get
   @RequestMapping(value = "/section/{id}")
   public String section(@PathVariable String id, Model model) {
     Section section = repository.findById(id);
@@ -58,6 +54,7 @@ public class SectionController {
     return "redirect:/";
   }
 
+  //Delete
   @RequestMapping(value = "/section/{id}", method = RequestMethod.DELETE)
   public String section(@PathVariable String id) {
     Section section = repository.findById(id);
@@ -79,15 +76,10 @@ public class SectionController {
   public String section(@ModelAttribute("section") Section section, String startTime, String endTime,
                         @PathVariable String id) {
     Section tempSec = repository.findOne(id);
-    System.out.println("UPDATE HAS BEEN CALLED");
 
     if (tempSec != null) {
-      System.out.println("TempSec != null. calling .doesTimeConflictsRoom");
       if (section.doesTimeConflictsRoom()) return "redirect:/error/Schedule Time Conflict";
 
-
-      System.out.println("tempSec.id = " + tempSec.id);
-      System.out.println("section.id = " + section.id);
       if (tempSec.room != null && !tempSec.room.sectionList.isEmpty()) {
         tempSec.room.sectionList.remove(tempSec);
         roomRepository.save(tempSec.room);
