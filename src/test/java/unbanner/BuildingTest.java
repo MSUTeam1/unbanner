@@ -68,8 +68,7 @@ public class BuildingTest {
   @Test
   public void toStringTest() throws Exception {
     assertEquals(bld1.toString(),
-        "Building[id=abcd1234abcdabcd1234abcd, " + "description='This is 1st building']");
-
+            "Building[id=abcd1234abcdabcd1234abcd, " + "description='This is 1st building']");
   }
 
 }
