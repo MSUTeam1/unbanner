@@ -30,10 +30,9 @@ public class Professor implements Storable {
   @DBRef(lazy = true)
   @Getter
   @Setter
-  public List<Section> sections;
+  public List<Section> sections = new ArrayList<Section>();
 
   public Professor() {
-    this.sections = new ArrayList<Section>();
   }
 
   public Professor(String firstName, String lastName) {
