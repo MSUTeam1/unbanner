@@ -26,6 +26,7 @@ public class Room implements Storable {
 
   public Room() {
     this.name = "";
+    this.size = 0;
   }
 
   public Room(String name, int size) {

@@ -16,7 +16,7 @@ public class Building implements Storable {
 
   public String name;
   public String description;
-  @DBRef(lazy = false)
+  @DBRef(lazy = true)
   public List<Room> rooms = new ArrayList<Room>();
 
   public Building() {

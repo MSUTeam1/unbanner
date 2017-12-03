@@ -62,8 +62,7 @@ public class BuildingController {
     List<Room> roomList = roomRepository.findByBuilding(thisBuilding);
     //List<Section> sectionList = sectionRepository.findByRoom(rm);
     for (Room room : roomList) {
-      List<Section> sectionList = sectionRepository.findByRoom(room);
-      for (Section section : sectionList) {
+      for (Section section : room.sectionList) {
         if (section.room.equals(room)) {
           section.room = null;
         }

@@ -50,6 +50,7 @@ public class TestDataServiceImpl implements TestDataService {
     nineHundredRepository.deleteAll();
     nineHundredRepository.save(new NineHundred(9000)); //start 900 number sequence at 9000
 
+    /*
     // save a couple of Courses and Students
     courseRepository.save(new Course("Computer Science I", 1050,
         4, "CS", "Intro to Computer Science",
@@ -57,15 +58,15 @@ public class TestDataServiceImpl implements TestDataService {
     courseRepository.save(new Course("Computer Science II", 2050,
         4, "CS", "Computer Science 2",
         "Learning Object Oriented Programming in Computer Science"));
-    courseRepository.save(new Course("Numerical Analysis", 4100, 4, "MATH", "Study alogithms to solve problems numerically", "Do Euler  method and Runge-Kutta stuff"));
+    //courseRepository.save(new Course("Numerical Analysis", 4100, 4, "MATH", "Study alogithms to solve problems numerically", "Do Euler  method and Runge-Kutta stuff"));
     studentRepository.save(new Student("Alice", "Smith"));
     studentRepository.save(new Student("Bob", "Smith"));
     sectionRepository.save(new Section(101, courseRepository.findByName("Computer Science I")));
     sectionRepository.save(new Section(201, courseRepository.findByName("Computer Science II")));
     sectionRepository.save(new Section(102, courseRepository.findByName("Computer Science I")));
     Professor steve = professorRepository.save(new Professor("Steve", "Beaty"));
-    Professor jody = professorRepository.save(new Professor("Jody", "Paul"));
-    Professor aaron = professorRepository.save(new Professor("Aaron", "Gordon"));
+    //Professor jody = professorRepository.save(new Professor("Jody", "Paul"));
+    //Professor aaron = professorRepository.save(new Professor("Aaron", "Gordon"));
     Semester semest1 = new Semester("Fall", 2017);
     Semester semest2 = new Semester("Spring", 2018);
     Semester semest3 = new Semester("Spring", 2019);
@@ -86,7 +87,7 @@ public class TestDataServiceImpl implements TestDataService {
     s3.addToSchedule(Weekday.TH);
     s2.addToSchedule(Weekday.M);
     s2.addToSchedule(Weekday.W);
-    s2.setStartAndEndTime("14:00","16:00");
+    //s2.setStartAndEndTime("14:00","16:00");
 
 
     Building bld1 = new Building("Building One", "This is 1st building");
@@ -159,7 +160,10 @@ public class TestDataServiceImpl implements TestDataService {
 
     professorRepository.save(steve);
 
+    */
+
     //I left this here so that you could see how @EqualsAndHash crashes if not commented out (via professor.java)
+    /*
     Professor stv2 = professorRepository.findById(steve.id.toString());
     System.out.println(stv2.firstName);
     System.out.println(stv2.sections );
@@ -170,5 +174,6 @@ public class TestDataServiceImpl implements TestDataService {
     System.out.println(steve.sections );
     System.out.println(steve.sections.get(0).room.name );
     System.out.println(steve.sections.get(0).course.name );
+    */
   }
 }

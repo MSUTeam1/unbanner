@@ -31,13 +31,15 @@ public class Section implements Storable {
   public int number;
   @DBRef(lazy = true)
   public List<Student> students = new ArrayList<Student>();
-  @DBRef(lazy = false)
+  @DBRef(lazy = true)
   public Course course;
   @DBRef(lazy = false)
   public Room room;
   @DBRef(lazy = true)
   public Semester semester;
-  @DBRef(lazy = false)
+  @DBRef(lazy = true)
+  @Setter
+  @Getter
   public Professor professor;
 
 

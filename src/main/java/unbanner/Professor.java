@@ -10,12 +10,13 @@ import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-//@EqualsAndHashCode
+@EqualsAndHashCode
 public class Professor implements Storable {
 
   @Id
@@ -27,12 +28,14 @@ public class Professor implements Storable {
   @Getter
   @Setter
   public String lastName;
-
-  @DBRef(lazy = false)
+  @DBRef(lazy = true)
+  @Getter
+  @Setter
   public List<Section> sections = new ArrayList<Section>();
 
   public Professor() {
-    this.sections = new ArrayList<Section>();
+    this.firstName = "";
+    this.lastName = "";
   }
 
   public Professor(String firstName, String lastName) {
