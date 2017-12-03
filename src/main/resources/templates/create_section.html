@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Create New Section</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Create New Section</h1>
+    <h2 th:text="${course.name}">course_name</h2>
+    <div class="container">
+        <form action="#" th:action="@{'/course/{id}/newsection' (id=${course.id})}" th:object="${section}" th:method="post" >
+            <div class="row">
+                <div class="col">
+                    <label th:for="*{number}">Section #</label>
+                    <input type="number" label="Section #" class="form-control" th:field="*{number}" />
+                </div>
+                <div class="col">
+                    <label th:for="*{schedule}">Weekdays</label>
+                    <input type="text" label="Schedule" class="form-control" th:field="*{schedule}" />
+                </div>
+                <div class="col">
+                    <div class="col">
+                        <label th:for="startTime">Start Time</label>
+                        <input type="time" id="startTime" name="startTime" min="08:00" max="20:00" th:value="${section.startTime()}" />
+                    </div>
+                    <div class="col">
+                        <label th:for="endTime">End Time</label>
+                        <input type="time" id="endTime" name="endTime" min="09:00" max="22:00" th:value="${section.endTime()}" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <select class="form-control" name="room" id="room">
+                        <option th:each="room : ${allRooms}"
+                                th:value="${room.id}"
+                                th:text="${room.name}">
+                        </option>
+                    </select>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <select class="form-control" name="professor" id="professor" th:field="${section.professor}">
+                        <option th:each="professor : ${allProfessors}"
+                                th:value="${professor.id}"
+                                th:text="${professor.firstName + ' ' + professor.lastName}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary" id="createButton">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

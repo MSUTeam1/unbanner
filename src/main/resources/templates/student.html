@@ -32,10 +32,10 @@
         <div class="container">
             <h5>Courses:</h5>
             <div class="container">
-                <table>
+                <table class="table table-striped">
                     <tr th:each="section : ${student.sections}">
                         <td th:text="${section.course.department + ' ' + section.course.number}"></td>
-                        <td th:text="${section.course.name}"></td>
+                        <td th:text="${section.course.name + ' ' + section.number}"></td>
                         <td><a class="badge badge-info" th:href="@{/course/{id}(id=${section.course.id})}">view</a></td>
                     </tr>
                 </table>
@@ -48,13 +48,20 @@
                 <input type="hidden" th:field="*{id}" />
                 <div class="row">
                     <div class="col">
-                        <input type="number" class="form-control" th:field="*{studentNum}" />
-                    </div>
-                    <div class="col">
                             <input type="text" class="form-control" th:field="*{firstName}" />
                     </div>
                     <div class="col">
                         <input type="text" class="form-control" th:field="*{lastName}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <select class="form-control" id="sections" name="sections" multiple="multiple" >
+                            <option th:each="section : ${allSections}"
+                                    th:selected="${student.sections.contains(section)}"
+                                    th:value="${section.id}"
+                                    th:text="${section.course.name}">Course name</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row">

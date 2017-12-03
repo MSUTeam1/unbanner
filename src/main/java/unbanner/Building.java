@@ -57,11 +57,8 @@ public class Building implements Storable {
 
   @Override
   public String toString() {
-    return String.format(
-        //Make more informative, later.
-        "Building[id=%s, description='%s']",
-        id, description);
-  }
 
+    return String.format("Building[id=%s, description='%s']" ,id, description);
+  }
 }
 

@@ -5,6 +5,9 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -13,8 +16,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,15 +29,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 import unbanner.Building;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ContextConfiguration
+@WebAppConfiguration
 @AutoConfigureMockMvc
 public class HttpBuildingRequestTest {
+
+  @Autowired
+  private WebApplicationContext context;
 
   @Autowired
   private MockMvc mockMvc;
@@ -42,6 +56,15 @@ public class HttpBuildingRequestTest {
 
   @Autowired
   private RoomRepository roomRepo;
+
+  @Before
+  public void setup() {
+    mockMvc = MockMvcBuilders
+        .webAppContextSetup(context)
+        .defaultRequest(get("/").with(user("user").password("password").roles("USER")))
+        .apply(springSecurity())
+        .build();
+  }
 
 
   @Test
@@ -82,6 +105,7 @@ public class HttpBuildingRequestTest {
     bldRepo.save(myBuilding);
 
     this.mockMvc.perform(post("/buildings/new")
+        .with(csrf())
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("description", "new desc")
         .param("name", "new name"))
@@ -89,7 +113,7 @@ public class HttpBuildingRequestTest {
         .andExpect(view().name("redirect:/buildings"))
         .andDo(print());
 
-    this.mockMvc.perform(get("/buildings"))
+    this.mockMvc.perform(get("/buildings").with(csrf()))
         .andExpect(status().isOk())
         .andExpect(view().name("buildings"))
         .andExpect(model().attribute("buildings", hasSize(2)))
@@ -131,7 +155,8 @@ public class HttpBuildingRequestTest {
 
     List<Building> bldList = bldRepo.findAll();
 
-    this.mockMvc.perform(delete("/building/{id}", bldList.get(1).id))
+    this.mockMvc.perform(delete("/building/{id}", bldList.get(1).id)
+        .with(csrf().asHeader()))
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/buildings"))
         .andDo(print());
@@ -158,6 +183,7 @@ public class HttpBuildingRequestTest {
     List<Building> bldList = bldRepo.findAll();
 
     this.mockMvc.perform(post("/building/{id}", bldList.get(0).id)
+        .with(csrf().asHeader())
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("description", "new desc")
         .param("name", "new name"))
@@ -182,15 +208,11 @@ public class HttpBuildingRequestTest {
     Building myBuilding = new Building();
     myBuilding.description = "building desc";
     myBuilding.name = "building name";
-    bldRepo.save(myBuilding);
+    myBuilding = bldRepo.save(myBuilding);
 
-    List<Building> bldList = bldRepo.findAll();
-
-    this.mockMvc.perform(get("/building/newRoom/{id}", bldList.get(0).id))
+    this.mockMvc.perform(get("/buildings/newRoom/{id}", myBuilding.id) )
             .andExpect(status().isOk())
-            .andExpect(model().attribute("building",
-             allOf(
-             hasProperty("name", is("building name")))))
+            .andExpect(view().name("create_room"))
             .andDo(print());
   }
 
@@ -216,6 +238,7 @@ public class HttpBuildingRequestTest {
     List<Building> bldList = bldRepo.findAll();
 
     this.mockMvc.perform(post("/building/room/{id}", rmList.get(0).id)
+        .with(csrf().asHeader())
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
             .param("size", "15")
             .param("name", "new room name"))
@@ -244,9 +267,10 @@ public class HttpBuildingRequestTest {
     List<Building> bldList = bldRepo.findAll();
 
     this.mockMvc.perform(post("/buildings/newRoom/{id}", bldList.get(0).id)
-            .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-            .andExpect(status().is3xxRedirection())
-            .andExpect(view().name("redirect:/building/room/" + roomRepo.findAll().get(1).id))
-            .andDo(print());
+        .with(csrf().asHeader())
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/buildings"))
+        .andDo(print());
   }
 }

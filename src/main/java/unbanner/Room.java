@@ -17,13 +17,16 @@ public class Room implements Storable {
   public ObjectId id;
   public String name;
   public int size;
-  @DBRef(lazy = true)
+
+  @DBRef(lazy = false)
   public Building building;
-  @DBRef(lazy = true)
+
+  @DBRef(lazy = false)
   public List<Section> sectionList = new ArrayList<Section>();
 
   public Room() {
     this.name = "";
+    this.size = 0;
   }
 
   public Room(String name, int size) {
@@ -41,6 +44,15 @@ public class Room implements Storable {
     this.id = id;
   }
 
+  //@Override
+  public String printInfo() {
+    String str = "";
+    str = str + "this.name " + this.name;
+    str = str + "\nthis.sectionList.size() " + this.sectionList.size();
+
+    return str;
+  }
+
   public String getName() {
     return this.name;
   }
@@ -56,4 +68,6 @@ public class Room implements Storable {
   public void setSize(int size) {
     this.size = size;
   }
+
+
 }
