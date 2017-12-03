@@ -94,7 +94,7 @@ public class SectionController {
       if (!(tempSec.professor.sections == null)){
         Section removeThisSec = null;
         for (Section profSec : tempSec.professor.sections){
-          if (profSec.id.equals(   tempSec.id   )){
+          if (profSec.id.equals( tempSec.id)){
             removeThisSec = profSec; //Cant remove from a list that its being iterated on.
             break;
           }

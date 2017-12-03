@@ -159,5 +159,16 @@ public class TestDataServiceImpl implements TestDataService {
 
     professorRepository.save(steve);
 
+    //I left this here so that you could see how @EqualsAndHash crashes if not commented out (via professor.java)
+    Professor stv2 = professorRepository.findById(steve.id.toString());
+    System.out.println(stv2.firstName);
+    System.out.println(stv2.sections );
+    System.out.println(stv2.sections.get(0).room.name );
+    System.out.println(stv2.sections.get(0).course.name );
+
+    System.out.println(steve.firstName);
+    System.out.println(steve.sections );
+    System.out.println(steve.sections.get(0).room.name );
+    System.out.println(steve.sections.get(0).course.name );
   }
 }

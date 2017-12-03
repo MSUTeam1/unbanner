@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.util.Pair;
 import org.springframework.format.annotation.DateTimeFormat;
 
-//@EqualsAndHashCode
+@EqualsAndHashCode
 public class Section implements Storable {
 
 
