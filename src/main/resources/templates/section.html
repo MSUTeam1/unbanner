@@ -34,6 +34,17 @@
         </div>
     </div>
     <div class="container">
+        <h6>Professor:</h6>
+        <div class="container">
+            <table class="table">
+                <tr>
+                    <td th:text="${section.professor.firstName + ' ' + section.professor.lastName}"></td>
+                    <td><a class="badge badge-info" th:href="@{/professor/{id}(id=${section.professor.id})}">view</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="container">
         <h6>Students:</h6>
         <div class="container">
             <table class="table table-striped">
@@ -78,13 +89,14 @@
                         th:value="${room.id}"
                         th:text="${room.name}">Name</option>
             </select>
-<!--            <label>Instructor</label>
-            <select class="form-control" id="professors" name="professor">
-                <option th:each ="professor : ${allProfessors}"
-                        th:value ="${professor.id}"
-                        th:text = "${professor.firstName"> Instructor </option>
+            <label>Instructor</label>
+            <select class="form-control" id="professor" name="professorID">
+                <option th:each="professor : ${allProfessors}"
+                        th:value="${professor.id}"
+                        th:text="${professor.firstName + ' ' + professor.lastName}">
+                </option>
             </select>
-            -->
+
             <button type="submit" class="btn btn-primary" id="updateButton">Update</button>
         </form>
         </div>

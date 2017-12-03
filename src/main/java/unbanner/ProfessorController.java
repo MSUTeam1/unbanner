@@ -56,7 +56,7 @@ public class ProfessorController {
     }
     return "redirect:/professors";
   }
-
+  // Get
   @RequestMapping("/professor/{id}")
   public String professor(@PathVariable String id, Model model) {
     model.addAttribute("professor", repository.findOne(id));

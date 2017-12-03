@@ -57,12 +57,15 @@ public class TestDataServiceImpl implements TestDataService {
     courseRepository.save(new Course("Computer Science II", 2050,
         4, "CS", "Computer Science 2",
         "Learning Object Oriented Programming in Computer Science"));
+    courseRepository.save(new Course("Numerical Analysis", 4100, 4, "MATH", "Study alogithms to solve problems numerically", "Do Euler  method and Runge-Kutta stuff"));
     studentRepository.save(new Student("Alice", "Smith"));
     studentRepository.save(new Student("Bob", "Smith"));
     sectionRepository.save(new Section(101, courseRepository.findByName("Computer Science I")));
     sectionRepository.save(new Section(201, courseRepository.findByName("Computer Science II")));
     sectionRepository.save(new Section(102, courseRepository.findByName("Computer Science I")));
     Professor steve = professorRepository.save(new Professor("Steve", "Beaty"));
+    Professor jody = professorRepository.save(new Professor("Jody", "Paul"));
+    Professor aaron = professorRepository.save(new Professor("Aaron", "Gordon"));
     Semester semest1 = new Semester("Fall", 2017);
     Semester semest2 = new Semester("Spring", 2018);
     Semester semest3 = new Semester("Spring", 2019);
@@ -83,6 +86,7 @@ public class TestDataServiceImpl implements TestDataService {
     s3.addToSchedule(Weekday.TH);
     s2.addToSchedule(Weekday.M);
     s2.addToSchedule(Weekday.W);
+    s1.setStartAndEndTime("14:00","16:00");
 
 
     Building bld1 = new Building("Building One", "This is 1st building");
@@ -123,6 +127,9 @@ public class TestDataServiceImpl implements TestDataService {
     s1.professor = steve;
     s2.professor = steve;
     s3.professor = steve;
+    steve.sections.add(s1);
+    steve.sections.add(s2);
+    steve.sections.add(s3);
 
     c1.addSection(s1);
     c1.addSection(s3);
@@ -145,11 +152,24 @@ public class TestDataServiceImpl implements TestDataService {
     sectionRepository.save(s2);
     sectionRepository.save(s3);
 
-
     buildingRepository.save(bld1);
 
     roomRepository.save(rm1);
     roomRepository.save(rm2);
+
+    professorRepository.save(steve);
+
+    Professor stv2 = professorRepository.findById(steve.id.toString());
+
+    System.out.println(stv2.firstName);
+    System.out.println(stv2.sections );
+    System.out.println(stv2.sections.get(0).room.name );
+    System.out.println(stv2.sections.get(0).course.name );
+
+    System.out.println(steve.firstName);
+    System.out.println(steve.sections );
+    System.out.println(steve.sections.get(0).room.name );
+    System.out.println(steve.sections.get(0).course.name );
 
   }
 }

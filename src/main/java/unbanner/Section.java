@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.util.Pair;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@EqualsAndHashCode
+//@EqualsAndHashCode
 public class Section implements Storable {
 
 
@@ -31,13 +31,13 @@ public class Section implements Storable {
   public int number;
   @DBRef(lazy = true)
   public List<Student> students = new ArrayList<Student>();
-  @DBRef(lazy = true)
+  @DBRef(lazy = false)
   public Course course;
   @DBRef(lazy = false)
   public Room room;
   @DBRef(lazy = true)
   public Semester semester;
-  @DBRef(lazy = true)
+  @DBRef(lazy = false)
   public Professor professor;
 
 
