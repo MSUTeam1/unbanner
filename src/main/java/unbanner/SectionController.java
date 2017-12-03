@@ -49,7 +49,6 @@ public class SectionController {
     if (section != null) {
       model.addAttribute("section", section);
       model.addAttribute("course",section.course);
-//      model.addAttribute("professors", professorRepository.findAll());
       return "section";
     }
     return "redirect:/";
@@ -90,48 +89,17 @@ public class SectionController {
       section.room.sectionList.add(section);
       roomRepository.save(section.room);
 
-      System.out.println("``````````````````SecController: professor " + professorID );
       Professor selectedProf = professorRepository.findById(professorID);
-
-      System.out.println("``````````````````SecController: selectedProf " + selectedProf );
-      System.out.println("``````````````````SecController: selectedProf id " + selectedProf.id );
-      System.out.println("``````````````````SecController: selectedProf first " + selectedProf.firstName );
-      System.out.println("``````````````````SecController: selectedProf last " + selectedProf.lastName );
-      System.out.println("``````````````````SecController: section.professor " +section.professor);
-      System.out.println("``````````````````SecController: tempSec.professor " + tempSec.professor);
-      System.out.println("``````````````````SecController: WTF ");
-      System.out.println("``````````````````SecController: tempSec.professor.sections " + tempSec.professor.sections);
-      System.out.println("``````````````````SecController: tempSec.professor.sections.isEmpty() " + tempSec.professor.sections.isEmpty() );
-      System.out.println("``````````````````SecController: tempSec.professor.sections.size() " + tempSec.professor.sections.size());
-
-      for (Section profSec : tempSec.professor.sections) {
-        profSec.printInfo();
-      }
-      //Professor previousProfessor = tempSec.professor;
 
       if (!(tempSec.professor.sections == null)){
         Section removeThisSec = null;
-        System.out.println("NNNNNNNNOOOOOOOOOOOOOOOTTTTTTTTTT empty");
-        tempSec.printInfo();
-        System.out.println("NNNNNNNNOOOOOOOOOOOOOOOTTTTTTTTTT empty");
         for (Section profSec : tempSec.professor.sections){
-//          profSec.printInfo();
-          if (profSec.id.equals(   tempSec.id   )){ //If the professor selected == section we are operating on's professor
-            System.out.println("IF IS TRUE");
+          if (profSec.id.equals(   tempSec.id   )){
             removeThisSec = profSec; //Cant remove from a list that its being iterated on.
             break;
           }
         }
-        System.out.println("printing removeThisSec");
-        System.out.println("printing removeThisSec");
-        System.out.println("printing removeThisSec");
-        removeThisSec.printInfo();
-        System.out.println("=========================");
-        System.out.println("=========================");
         tempSec.professor.sections.remove(removeThisSec);
-        for (Section profSec : tempSec.professor.sections) {
-          profSec.printInfo();
-        }
       }
       professorRepository.save(tempSec.professor);
       tempSec.professor = selectedProf;

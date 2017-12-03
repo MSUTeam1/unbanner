@@ -91,14 +91,6 @@ public class CourseController {
   public String newSection(@ModelAttribute("section") Section section,
                            @PathVariable String id, Model model) {
     Course course = repository.findOne(id);
-    System.out.println("Course name:" + course.name   );
-    System.out.println("Course number:" +course.number  );
-    System.out.println("Course id:" +course.id  );
-    for ( Section sec : course.sections){
-      sec.printInfo();
-    }
-
-
     model.addAttribute(course);
     return "create_section";
   }

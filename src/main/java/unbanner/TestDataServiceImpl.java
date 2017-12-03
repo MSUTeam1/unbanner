@@ -86,7 +86,7 @@ public class TestDataServiceImpl implements TestDataService {
     s3.addToSchedule(Weekday.TH);
     s2.addToSchedule(Weekday.M);
     s2.addToSchedule(Weekday.W);
-    s1.setStartAndEndTime("14:00","16:00");
+    s2.setStartAndEndTime("14:00","16:00");
 
 
     Building bld1 = new Building("Building One", "This is 1st building");
@@ -158,18 +158,6 @@ public class TestDataServiceImpl implements TestDataService {
     roomRepository.save(rm2);
 
     professorRepository.save(steve);
-
-    Professor stv2 = professorRepository.findById(steve.id.toString());
-
-    System.out.println(stv2.firstName);
-    System.out.println(stv2.sections );
-    System.out.println(stv2.sections.get(0).room.name );
-    System.out.println(stv2.sections.get(0).course.name );
-
-    System.out.println(steve.firstName);
-    System.out.println(steve.sections );
-    System.out.println(steve.sections.get(0).room.name );
-    System.out.println(steve.sections.get(0).course.name );
 
   }
 }
