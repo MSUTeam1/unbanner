@@ -120,6 +120,7 @@ public class CourseController {
       return "redirect:/error/Schedule Time Conflict";
     } else {
       tempSection = sectionRepository.save(tempSection);
+      prof.sections.add(tempSection);
       professorRepository.save(prof);
       repository.save(course);
       sectionRepository.save(tempSection);

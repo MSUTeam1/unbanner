@@ -75,6 +75,7 @@ public class ProfessorController {
     return "redirect:/professors";
   }
 
+  //update
   @RequestMapping(value = "/professor/{id}", method = RequestMethod.POST)
   public String student(@ModelAttribute("professor") Professor professor,
                         @PathVariable String id) {
