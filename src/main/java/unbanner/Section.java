@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.util.Pair;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@EqualsAndHashCode
+
 public class Section implements Storable {
 
 
@@ -35,7 +35,7 @@ public class Section implements Storable {
   public Course course;
   @DBRef(lazy = false)
   public Room room;
-  @DBRef(lazy = true)
+  @DBRef(lazy = false)
   public Semester semester;
   @DBRef(lazy = false)
   public Professor professor;
@@ -246,26 +246,80 @@ public class Section implements Storable {
     this.id = id;
   }
 
-  public boolean doesTimeConflictsRoom(){
+  @Override
+  public boolean equals(Object o){
+//    System.out.println("!!!!!!!!!!!!!Inside equals");
+    if (o == this){
+  //    System.out.println("!!!!!!!!!!!!!Inside TRUE");
+      return true;
+    }
+    if (!(o instanceof Section)){
+  //    System.out.println("!!!!!!!!!!!!!Inside FALSE");
+      return false;
+    }
+  //  System.out.println("!!!!!!!!!!!!!3");
+    Section section = (Section) o;
+    return section.id.equals(this.id);
+  }
+
+
+  //Assumes that "sec" is on the same day and time
+  private boolean checkDayHours(Section sec){
+
+    //If the object (this) begins between any other section.
+    if (this.time.getFirst().isAfter(sec.getTime().getFirst()) && this.time.getFirst().isBefore(sec.time.getSecond()) ) {
+      return true;
+    }
+    //if this ends between any other section.
+    if (this.time.getSecond().isAfter(sec.getTime().getFirst()) && this.time.getSecond().isBefore(sec.time.getSecond())){
+      return true;
+    }
+    //if this is equal to any other section
+    if (this.time.getFirst().equals(sec.getTime().getFirst()) || this.time.getSecond().equals(sec.time.getSecond())){
+      return true;
+    }
+    //if this begins before another section and ends after that section
+    if (this.time.getSecond().isBefore(sec.getTime().getFirst()) && this.time.getSecond().isAfter(sec.time.getSecond())) {
+      return true;
+    }
+    return false;
+  }
+
+  public boolean doesTimeConflictsRoom(){  // some ".compare" and ".equals" methods would be ideal
+    System.out.println("does time conflict~~~~~~~~~~~~~~~~~~~");
+    System.out.println("does time conflict~~~~~~szie" + this.room.sectionList.size());
     for (Section sec : this.room.sectionList){
+      System.out.println("Loopoing~~~~~~~~~~~~~~~~~~~");
       if (sec.id.equals(this.id)){
+        System.out.println("~~~~Skipping self");
         continue; //Skip itself
       }
-      //If the object (this) begins between any other section.
-      if (this.time.getFirst().isAfter(sec.getTime().getFirst()) && this.time.getFirst().isBefore(sec.time.getSecond()) ) {
-         return true;
+      System.out.println("Looping~~~~sec.semester.year; " + sec.semester.year);
+      System.out.println("Loopoing~~~~sec.semester.season; "+ sec.semester.season);
+      System.out.println("Looping~~~~this.semester.year; " + this.semester.year);
+      System.out.println("Loopoing~~~~this.semester.season; "+ this.semester.season);
+      System.out.println("Loopoing~~~~ sec.semester.year != this.semester.year  "+ (sec.semester.year != this.semester.year));
+      System.out.println("Loopoing~~~~ sec.semester.season.equals(this.semester.season)  "+ !sec.semester.season.equals(this.semester.season));
+      if (sec.semester.year != this.semester.year || !sec.semester.season.equals(this.semester.season)){
+        System.out.println("Skipping, same semester");
+        System.out.println("room name" + sec.room.name);
+        System.out.println("season year" + sec.semester.season + " " + sec.semester.year);
+        continue; //Skip. Want to compare with rooms in current semester
       }
-      //if this ends between any other section.
-      if (this.time.getSecond().isAfter(sec.getTime().getFirst()) && this.time.getSecond().isBefore(sec.time.getSecond())){
-          return true;
-      }
-      //if this is equal to any other section
-      if (this.time.getFirst().equals(sec.getTime().getFirst()) || this.time.getSecond().equals(sec.time.getSecond())){
-        return true;
-      }
-      //if this begins before another section and ends after that section
-      if (this.time.getSecond().isBefore(sec.getTime().getFirst()) && this.time.getSecond().isAfter(sec.time.getSecond())){
-        return true;
+      boolean doesConflict = false;
+      //Compares everyday that the two sections meet. If on the same day, check meeting hours.
+      for (Weekday secDay : sec.schedule){
+        for (Weekday thisDay : this.schedule){
+          System.out.println("secday, thisdDay"+ secDay + ", " + thisDay );
+          if (secDay.equals(thisDay)){
+            System.out.println("Same day!!!!!");
+            doesConflict = checkDayHours(sec);
+            if (doesConflict ){
+              System.out.println("DOES CONFLICT RETURNING" );
+              return doesConflict;
+            }
+          }
+        }
       }
     }
     return false;

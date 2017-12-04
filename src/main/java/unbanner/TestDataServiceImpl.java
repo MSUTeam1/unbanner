@@ -71,7 +71,7 @@ public class TestDataServiceImpl implements TestDataService {
       Professor aaron = professorRepository.save(new Professor("Aaron", "Gordon"));
       Semester semest1 = new Semester("Fall", 2017);
       Semester semest2 = new Semester("Spring", 2018);
-      Semester semest3 = new Semester("Spring", 2019);
+      Semester semest3 = new Semester("Spring", 2018);
       semesterRepository.save(semest1);
       semesterRepository.save(semest2);
       semesterRepository.save(semest3);
@@ -89,7 +89,7 @@ public class TestDataServiceImpl implements TestDataService {
       s3.addToSchedule(Weekday.TH);
       s2.addToSchedule(Weekday.M);
       s2.addToSchedule(Weekday.W);
-      s2.setStartAndEndTime("14:00", "16:00");
+      s2.setStartAndEndTime("12:00", "14:00");
 
 
       Building bld1 = new Building("Building One", "This is 1st building");
@@ -141,6 +141,12 @@ public class TestDataServiceImpl implements TestDataService {
       semest1.sections.add(s1);
       semest2.sections.add(s2);
       semest3.sections.add(s3);
+      s1.semester = semest1;
+      s2.semester = semest2;
+      s3.semester = semest3;
+
+
+
       semesterRepository.save(semest1);
       semesterRepository.save(semest2);
       semesterRepository.save(semest3);

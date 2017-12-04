@@ -17,11 +17,7 @@ public class Semester implements Storable {
   int year;
 
   @DBRef(lazy = true)
-  @Getter
-  @Setter
   public List<Section> sections = new ArrayList<Section>();
-
-
 
   public Semester(String season, int year) {
     this.season = season;

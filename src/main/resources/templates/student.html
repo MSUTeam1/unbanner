@@ -34,8 +34,9 @@
             <div class="container">
                 <table class="table table-striped">
                     <tr th:each="section : ${student.sections}">
-                        <td th:text="${section.course.department + ' ' + section.course.number}"></td>
-                        <td th:text="${section.course.name + ' ' + section.number}"></td>
+                        <td th:text="${section.course?.department + ' ' + section.course?.number}"></td>
+                        <td th:text="${section.course?.name + ' ' + section.number}"></td>
+                        <td th:text="${section.semester?.year + ' ' + section.semester?.season}"></td>
                         <td><a class="badge badge-info" th:href="@{/course/{id}(id=${section.course.id})}">view</a></td>
                     </tr>
                 </table>
@@ -58,9 +59,9 @@
                     <div class="col">
                         <select class="form-control" id="sections" name="sections" multiple="multiple" >
                             <option th:each="section : ${allSections}"
-                                    th:selected="${student.sections.contains(section)}"
+                                    th:selected="${student.sections?.contains(section)}"
                                     th:value="${section.id}"
-                                    th:text="${section.course.name}">Course name</option>
+                                    th:text="${section.course?.name}">Course name</option>
                         </select>
                     </div>
                 </div>

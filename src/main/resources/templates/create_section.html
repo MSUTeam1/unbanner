@@ -34,6 +34,7 @@
             </div>
             <div class="row">
                 <div class="col">
+                    <label>Room</label>
                     <select class="form-control" name="room" id="room">
                         <option th:each="room : ${allRooms}"
                                 th:value="${room.id}"
@@ -45,6 +46,7 @@
             </div>
             <div class="row">
                 <div class="col">
+                    <label>Professor</label>
                     <select class="form-control" name="professor" id="professor">
                         <option th:each="professor : ${allProfessors}"
                                 th:value="${professor.id}"

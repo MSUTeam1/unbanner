@@ -2,6 +2,7 @@ package unbanner;
 
 import java.util.List;
 
+import groovy.transform.EqualsAndHashCode;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
+@EqualsAndHashCode
 @Controller
 public class SectionController {
   @Autowired
@@ -75,13 +76,21 @@ public class SectionController {
   @RequestMapping(value = "/section/{id}", method = RequestMethod.POST)
   public String section(@ModelAttribute("section") Section section, String startTime, String endTime, String professorID,
                         @PathVariable String id) {
+    //Temporary solution until update is working. The problem is that section.semeset == null is true
+    section.semester = new Semester();
+    section.semester.year = 2018;
+    section.semester.season = "Spring";
+
     Section tempSec = sectionRepository.findOne(id);
 
     if (tempSec != null) {
+      System.out.println("------------------------------SECTIONCONTROLER: tempSec:");
+      if (tempSec.semester == null) return "redirect:/error/Section's Semester is Null";
       if (section.doesTimeConflictsRoom()) return "redirect:/error/Schedule Time Conflict";
 
       if (tempSec.room != null && !tempSec.room.sectionList.isEmpty()) {
         tempSec.room.sectionList.remove(tempSec);
+        System.out.println("temp room sectionLIst contrains tempsec: " +  tempSec.room.sectionList.contains(tempSec));
         roomRepository.save(tempSec.room);
       }
 
