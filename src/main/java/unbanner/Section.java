@@ -247,21 +247,16 @@ public class Section implements Storable {
   }
 
   @Override
-  public boolean equals(Object o){
-//    System.out.println("!!!!!!!!!!!!!Inside equals");
+  public boolean equals(Object o){ //http://www.geeksforgeeks.org/overriding-equals-method-in-java/
     if (o == this){
-  //    System.out.println("!!!!!!!!!!!!!Inside TRUE");
       return true;
     }
     if (!(o instanceof Section)){
-  //    System.out.println("!!!!!!!!!!!!!Inside FALSE");
       return false;
     }
-  //  System.out.println("!!!!!!!!!!!!!3");
     Section section = (Section) o;
     return section.id.equals(this.id);
   }
-
 
   //Assumes that "sec" is on the same day and time
   private boolean checkDayHours(Section sec){
@@ -285,37 +280,34 @@ public class Section implements Storable {
     return false;
   }
 
-  public boolean doesTimeConflictsRoom(){  // some ".compare" and ".equals" methods would be ideal
-    System.out.println("does time conflict~~~~~~~~~~~~~~~~~~~");
-    System.out.println("does time conflict~~~~~~szie" + this.room.sectionList.size());
+  public boolean doesTimeConflictsRoom(){  // some ".compare" and ".equals" methods would have be ideal
+    System.out.println("doesTimeConflictsRoom~~~~~~~~~~~~~~~~~~~");
+    System.out.println("doesTimeConflictsRoom~~~~~~this.room.sectionList.size(): " + this.room.sectionList.size());
     for (Section sec : this.room.sectionList){
-      System.out.println("Loopoing~~~~~~~~~~~~~~~~~~~");
+      System.out.println("Looping~~~~~~~~~~~~~~~~~~~");
       if (sec.id.equals(this.id)){
         System.out.println("~~~~Skipping self");
         continue; //Skip itself
       }
-      System.out.println("Looping~~~~sec.semester.year; " + sec.semester.year);
-      System.out.println("Loopoing~~~~sec.semester.season; "+ sec.semester.season);
-      System.out.println("Looping~~~~this.semester.year; " + this.semester.year);
-      System.out.println("Loopoing~~~~this.semester.season; "+ this.semester.season);
-      System.out.println("Loopoing~~~~ sec.semester.year != this.semester.year  "+ (sec.semester.year != this.semester.year));
-      System.out.println("Loopoing~~~~ sec.semester.season.equals(this.semester.season)  "+ !sec.semester.season.equals(this.semester.season));
+      System.out.println("Looping~~~~sec.semester.year " + sec.semester.year);
+      System.out.println("Looping~~~~sec.semester.season "+ sec.semester.season);
+      System.out.println("Looping~~~~this.semester.year " + this.semester.year);
+      System.out.println("Looping~~~~this.semester.season "+ this.semester.season);
+      System.out.println("Looping~~~~ sec.semester.year != this.semester.year  "+ (sec.semester.year != this.semester.year));
+      System.out.println("Looping~~~~ sec.semester.season.equals(this.semester.season)  "+ !sec.semester.season.equals(this.semester.season));
       if (sec.semester.year != this.semester.year || !sec.semester.season.equals(this.semester.season)){
         System.out.println("Skipping, same semester");
-        System.out.println("room name" + sec.room.name);
-        System.out.println("season year" + sec.semester.season + " " + sec.semester.year);
+        System.out.println("room name: " + sec.room.name);
+        System.out.println("season year: " + sec.semester.season + " " + sec.semester.year);
         continue; //Skip. Want to compare with rooms in current semester
       }
       boolean doesConflict = false;
       //Compares everyday that the two sections meet. If on the same day, check meeting hours.
       for (Weekday secDay : sec.schedule){
         for (Weekday thisDay : this.schedule){
-          System.out.println("secday, thisdDay"+ secDay + ", " + thisDay );
           if (secDay.equals(thisDay)){
-            System.out.println("Same day!!!!!");
             doesConflict = checkDayHours(sec);
             if (doesConflict ){
-              System.out.println("DOES CONFLICT RETURNING" );
               return doesConflict;
             }
           }

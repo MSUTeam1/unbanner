@@ -42,7 +42,6 @@ public class SectionController {
     return roomRepository.findAll();
   }
 
-
   //Get
   @RequestMapping(value = "/section/{id}")
   public String section(@PathVariable String id, Model model) {
@@ -84,13 +83,12 @@ public class SectionController {
     Section tempSec = sectionRepository.findOne(id);
 
     if (tempSec != null) {
-      System.out.println("------------------------------SECTIONCONTROLER: tempSec:");
+
       if (tempSec.semester == null) return "redirect:/error/Section's Semester is Null";
       if (section.doesTimeConflictsRoom()) return "redirect:/error/Schedule Time Conflict";
 
       if (tempSec.room != null && !tempSec.room.sectionList.isEmpty()) {
         tempSec.room.sectionList.remove(tempSec);
-        System.out.println("temp room sectionLIst contrains tempsec: " +  tempSec.room.sectionList.contains(tempSec));
         roomRepository.save(tempSec.room);
       }
 
