@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -13,6 +14,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrlPattern;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -27,6 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -36,15 +41,13 @@ import org.springframework.web.context.WebApplicationContext;
 import unbanner.Student;
 
 @RunWith(SpringRunner.class)
+@WithMockUser
 @SpringBootTest
 @AutoConfigureMockMvc
 public class HttpRequestTest {
 
   @Autowired
   private WebApplicationContext context;
-
-  @Autowired
-  private FilterChainProxy springSecurityFilterChain;
 
   @Autowired
   private MockMvc mockMvc;
@@ -57,7 +60,6 @@ public class HttpRequestTest {
   public void setup() {
     mockMvc = MockMvcBuilders
         .webAppContextSetup(context)
-        .defaultRequest(get("/").with(user("user").password("password").roles("USER")))
         .apply(springSecurity())
         .build();
   }
@@ -74,12 +76,25 @@ public class HttpRequestTest {
         .andDo(print());
   }
 
+  /*
+   * Checks the routing for an unauthorized GET request to '/'
+   * Ensures that it is redirected to the login page
+   */
+  @Test
+  @WithAnonymousUser
+  public void anonShouldBeRedirectToLogin() throws Exception {
+    this.mockMvc.perform(get("/"))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(redirectedUrlPattern("**/login"))
+        .andDo(print());
+  }
+
   @Test
   public void helpShouldRespond() throws Exception {
     this.mockMvc.perform(get("/help"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("help"))
-            .andDo(print());
+        .andExpect(status().isOk())
+        .andExpect(view().name("help"))
+        .andDo(print());
   }
 
 
@@ -130,7 +145,8 @@ public class HttpRequestTest {
     repo.save(new Student("Alice", "Smith"));
     repo.save(new Student("Bob", "Smith"));
 
-    this.mockMvc.perform(post("/students/new").with(csrf().asHeader())
+    this.mockMvc.perform(post("/students/new")
+        .with(csrf().asHeader())
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("firstName", "Tom")
         .param("lastName", "Cruz"))
@@ -185,7 +201,8 @@ public class HttpRequestTest {
     repo.save(new Student("Bob", "Smith"));
     List<Student> stuList = repo.findAll();
 
-    this.mockMvc.perform(delete("/student/{id}", stuList.get(0).id).with(csrf().asHeader()))
+    this.mockMvc.perform(delete("/student/{id}", stuList.get(0).id)
+        .with(csrf().asHeader()))
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/students"))
         .andDo(print());
