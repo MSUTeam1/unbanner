@@ -76,21 +76,20 @@
             <input type="time" id="endTime" name="endTime" min="09:00" max="22:00" th:value="${section.endTime()}" />
 
             <br/> <label>Students</label>
-            <select class="form-control" id="students" name="students" multiple="multiple" >
+            <select class="form-control" id="students" name="students" multiple="multiple" th:field="${section.students}">
                 <option th:each="student : ${allStudents}"
                         th:selected="${section.students.contains(student)}"
                         th:value="${student.id}"
                         th:text="${student.firstName + ' ' + student.lastName}">Name</option>
             </select>
             <label>Room</label>
-            <select class="form-control" id="room" name="room">
+            <select class="form-control" id="room" name="room" th:field="${section.room}">
                 <option th:each="room : ${allRooms}"
-                        th:selected="${room.equals(section.room)}"
                         th:value="${room.id}"
                         th:text="${room.name}">Name</option>
             </select>
             <label>Instructor</label>
-            <select class="form-control" id="professor" name="professorID">
+            <select class="form-control" id="professor" name="professorID" th:field="${section.professor}">
                 <option th:each="professor : ${allProfessors}"
                         th:value="${professor.id}"
                         th:text="${professor.firstName + ' ' + professor.lastName}">

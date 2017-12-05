@@ -88,8 +88,12 @@ public class StudentController {
   */
   @RequestMapping("/student/{id}")
   public String student(@PathVariable String id, Model model) {
-    model.addAttribute("student", repository.findOne(id));
-    return "student";
+    if(repository.findOne(id) != null) {
+      model.addAttribute("student", repository.findOne(id));
+      return "student";
+    } else {
+      return "redirect:/error/Null Student";
+    }
   }
 
   /*
