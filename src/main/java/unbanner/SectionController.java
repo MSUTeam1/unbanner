@@ -110,6 +110,7 @@ public class SectionController {
       Section oldSection = sectionRepository.findOne(id);
 
       tempSection.semester = oldSection.semester;
+
       sectionService.updateReferences(oldSection, tempSection);
       return "redirect:/courses";
     }
