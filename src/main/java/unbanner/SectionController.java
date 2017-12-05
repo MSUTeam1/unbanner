@@ -61,7 +61,7 @@ public class SectionController {
     return "redirect:/";
   }
 
-  //Delete
+  //Delete TODO update all references after delete
   @RequestMapping(value = "/section/{id}", method = RequestMethod.DELETE)
   public String section(@PathVariable String id) {
     Section section = sectionRepository.findById(id);
