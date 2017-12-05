@@ -24,6 +24,9 @@ public class Student implements Storable {
   @Getter @Setter public List<Section> sections = new ArrayList<Section>();
 
   public Student() {
+    this.firstName = "";
+    this.lastName = "";
+    this.studentNum = 0;
   }
 
   public Student(String firstName, String lastName) {

@@ -3,6 +3,7 @@ package unbanner;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -11,17 +12,19 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 /*
  * Building ---1:M---< Room >---M:1-- Sections
  */
+@EqualsAndHashCode
 public class Room implements Storable {
 
   @Id
   public ObjectId id;
+
   public String name;
   public int size;
 
-  @DBRef(lazy = false)
+  @DBRef(lazy = true)
   public Building building;
 
-  @DBRef(lazy = false)
+  @DBRef(lazy = true)
   public List<Section> sectionList = new ArrayList<Section>();
 
   public Room() {

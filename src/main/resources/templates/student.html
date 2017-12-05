@@ -14,10 +14,10 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    Name: <b th:text="${student.firstName}" /> <b th:text="${student.lastName}" />
+                    Name: <b th:text="${student != null ? student.firstName + student.lastName : 'NOT FOUND'}" />
                 </div>
                 <div class="col">
-                    Number: <b th:text="${student.studentNum}" />
+                    Number: <b th:text="${student != null ? student.studentNum : 'NOT FOUND'}" />
                 </div>
                 <div class="col">
                     <form action="#" th:action="@{'/student/{id}'(id=${student.id})}" th:method="delete" >

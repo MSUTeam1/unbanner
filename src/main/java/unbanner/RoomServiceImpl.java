@@ -19,10 +19,7 @@ public class RoomServiceImpl implements RoomService {
     System.out.println(building);
     for (Room room : building.rooms){
       System.out.println(room);
-      if (room.id.equals(userInputRoom.id)) { //Skip itself
-        continue;
-      }
-      else if (room.name.equals(userInputRoom.name) ){
+      if (room.name.equals(userInputRoom.name) ){
         return true;
       }
     }

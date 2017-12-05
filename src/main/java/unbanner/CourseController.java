@@ -68,8 +68,9 @@ public class CourseController {
     if (course != null) {
       model.addAttribute("course", repository.findOne(id));
       return "course";
+    } else {
+      return "redirect:/";
     }
-    return "redirect:/";
   }
 
   @RequestMapping(value = "/course/{id}", method = RequestMethod.DELETE)
@@ -104,7 +105,7 @@ public class CourseController {
     //tempSection.professor = section.professor;
     tempSection.setStartAndEndTime(startTime, endTime);
     tempSection.schedule = section.schedule;
-    System.out.println("professor!" + section.professor);
+    System.out.println("professor: " + section.professor);
     System.out.println("room: " + section.room);
     Professor prof = section.professor;
     tempSection.professor = section.professor;

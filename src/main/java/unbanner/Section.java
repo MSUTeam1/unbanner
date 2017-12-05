@@ -33,7 +33,7 @@ public class Section implements Storable {
   public List<Student> students = new ArrayList<Student>();
   @DBRef(lazy = true)
   public Course course;
-  @DBRef(lazy = false)
+  @DBRef(lazy = true)
   public Room room;
   @DBRef(lazy = true)
   public Semester semester;
