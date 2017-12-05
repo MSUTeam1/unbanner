@@ -124,9 +124,14 @@ public class TestDataServiceImpl implements TestDataService {
     s1.professor = steve;
     s2.professor = steve;
     s3.professor = steve;
+
     steve.sections.add(s1);
     steve.sections.add(s2);
     steve.sections.add(s3);
+
+    s1.semester = semest1;
+    s2.semester = semest2;
+    s3.semester = semest3;
 
     c1.addSection(s1);
     c1.addSection(s3);

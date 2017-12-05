@@ -28,6 +28,9 @@ public class CourseController {
   @Autowired
   RoomRepository roomRepository;
 
+  @Autowired
+  SemesterRepository semesterRepository;
+
   @ModelAttribute("allProfessors")
   public List<Professor> getProfessors() {
     return professorRepository.findAll();
@@ -36,6 +39,11 @@ public class CourseController {
   @ModelAttribute("allRooms")
   public List<Room> getRooms() {
     return roomRepository.findAll();
+  }
+
+  @ModelAttribute("allSemesters")
+  public List<Semester> getSemesters() {
+    return semesterRepository.findAll();
   }
 
   @RequestMapping(value = "/courses", method = RequestMethod.GET)
@@ -100,9 +108,8 @@ public class CourseController {
   public String newSection(@ModelAttribute("section") Section section,
                            @PathVariable String id, String startTime, String endTime) {
 
+
     Section tempSection = new Section();
-    //section = sectionRepository.save(section); //generate an ObjectID
-    //tempSection.professor = section.professor;
     tempSection.setStartAndEndTime(startTime, endTime);
     tempSection.schedule = section.schedule;
     System.out.println("professor: " + section.professor);

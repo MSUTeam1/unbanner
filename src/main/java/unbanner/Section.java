@@ -52,6 +52,7 @@ public class Section implements Storable {
     this.number = 0;
     this.time = Pair.of(LocalTime.of(12, 0),
         LocalTime.of(14, 0)); // 2 hours
+
     this.schedule = new ArrayList<Weekday>();
   }
 
