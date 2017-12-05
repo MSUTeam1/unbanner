@@ -63,6 +63,7 @@ public class TestDataServiceImpl implements TestDataService {
     sectionRepository.save(new Section(201, courseRepository.findByName("Computer Science II")));
     sectionRepository.save(new Section(102, courseRepository.findByName("Computer Science I")));
     Professor steve = professorRepository.save(new Professor("Steve", "Beaty"));
+    Professor gurka = professorRepository.save(new Professor("Judith","Gurka"));
     Semester semest1 = new Semester("Fall", 2017);
     Semester semest2 = new Semester("Spring", 2018);
     Semester semest3 = new Semester("Spring", 2019);

@@ -54,6 +54,22 @@
         <form action="#" th:action="@{'/section/{id}'(id=${section.id})}" th:object="${section}" th:method="post" >
             <input type="hidden" th:field="*{course}" />
 
+            <div class="container">
+                <h6>Professor:</h6>
+                <div class="container">
+                    <table class="table">
+                        <tr >
+                            <select class="form-control" name="professorId" id="professorId">
+                                <option th:each="professor : ${allProfessors}"
+                                        th:value="${professor.id}"
+                                        th:text="${professor.firstName} + ' ' + ${professor.lastName}"
+                                        th:selected="(${professor.id} == ${section.professor.id})">
+                                </option>
+                            </select>
+                        </tr>
+                    </table>
+                </div>
+            </div>
             <label>Number</label>
             <input type="number" class="form-control" th:field="*{number}" />
 

@@ -53,6 +53,7 @@ public class SectionController {
     if (section != null) {
       model.addAttribute("section", section);
       model.addAttribute("course",section.course);
+      model.addAttribute("allProfessors",professorRepository.findAll());
       return "section";
     }
     return "redirect:/";
@@ -76,7 +77,7 @@ public class SectionController {
 
   //Update
   @RequestMapping(value = "/section/{id}", method = RequestMethod.POST)
-  public String section(@ModelAttribute("section") Section section, String startTime, String endTime,
+  public String section(@ModelAttribute("section") Section section, String professorId, String startTime, String endTime,
                         @PathVariable String id) {
     Section tempSec = repository.findOne(id);
     System.out.println("UPDATE HAS BEEN CALLED");
@@ -88,6 +89,7 @@ public class SectionController {
 
       System.out.println("tempSec.id = " + tempSec.id);
       System.out.println("section.id = " + section.id);
+      System.out.println("professor id = " + professorId);
       if (tempSec.room != null && !tempSec.room.sectionList.isEmpty()) {
         tempSec.room.sectionList.remove(tempSec);
         roomRepository.save(tempSec.room);
@@ -120,6 +122,7 @@ public class SectionController {
       }
 
       tempSec.students = section.students;
+      tempSec.professor = professorRepository.findById(professorId);
       repository.save(tempSec);
       return "redirect:/section/" + section.getId();
     }
