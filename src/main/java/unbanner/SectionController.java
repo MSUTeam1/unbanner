@@ -111,8 +111,6 @@ public class SectionController {
 
       tempSection.semester = oldSection.semester;
       sectionService.updateReferences(oldSection, tempSection);
-      sectionRepository.save(tempSection);
-      courseRepository.save(course);
       return "redirect:/courses";
     }
 

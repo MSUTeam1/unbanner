@@ -15,6 +15,12 @@ public class SectionServiceImpl implements SectionService {
   @Autowired
   ProfessorRepository professorRepository;
 
+  @Autowired
+  SectionRepository sectionRepository;
+
+  @Autowired
+  CourseRepository courseRepository;
+
   @Override
   public void updateReferences(Section oldSection, Section tempSection) {
 
@@ -25,8 +31,8 @@ public class SectionServiceImpl implements SectionService {
         + oldSection.professor.getId().toHexString()
         + "\nnew professor: "
         + tempSection.professor.getId().toHexString());
-    if (!oldSection.professor.getId().toHexString().equals(tempSection.professor.getId().toHexString())) { //professor changed
 
+    if (!oldSection.professor.getId().toHexString().equals(tempSection.professor.getId().toHexString())) { //professor changed
       int count = 0;
       for (Section section : oldSection.professor.getSections()) {
         if (section.id.toHexString().equals(tempSection.id.toHexString())) {
@@ -45,10 +51,20 @@ public class SectionServiceImpl implements SectionService {
     System.out.println(oldSection.room.getName());
     System.out.println(tempSection.room.getName());
     if (!oldSection.room.getName().equals(tempSection.room.getName())) { //room changed
-      oldSection.room.sectionList.remove(tempSection);
-      roomRepository.save(oldSection.room);
+      int i = 0;
+      for (Section section : oldSection.room.getSectionList()) {
+        if (section.id.toHexString().equals(tempSection.id.toHexString())) {
+          oldSection.room.sectionList.remove(i);
+          roomRepository.save(oldSection.room);
+          break;
+        } else {
+        }
+        i++;
+      }
     } else {
     }
+    tempSection.room.sectionList.add(tempSection);
+    roomRepository.save(tempSection.room);
 
     //if (!oldSection.semester) TODO Check if semester changed
 
@@ -69,5 +85,8 @@ public class SectionServiceImpl implements SectionService {
       } else {
       }
     }
+
+    sectionRepository.save(tempSection);
+    courseRepository.save(tempSection.course);
   }
 }

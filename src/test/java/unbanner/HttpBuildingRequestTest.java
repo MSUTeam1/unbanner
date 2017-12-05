@@ -210,10 +210,10 @@ public class HttpBuildingRequestTest {
     myBuilding.name = "building name";
     myBuilding = bldRepo.save(myBuilding);
 
-    this.mockMvc.perform(get("/buildings/newRoom/{id}", myBuilding.id) )
-            .andExpect(status().isOk())
-            .andExpect(view().name("create_room"))
-            .andDo(print());
+    this.mockMvc.perform(get("/buildings/newRoom/{id}", myBuilding.id))
+        .andExpect(status().isOk())
+        .andExpect(view().name("create_room"))
+        .andDo(print());
   }
 
   @Test   //Update room
@@ -239,12 +239,12 @@ public class HttpBuildingRequestTest {
 
     this.mockMvc.perform(post("/building/room/{id}", rmList.get(0).id)
         .with(csrf().asHeader())
-            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-            .param("size", "15")
-            .param("name", "new room name"))
-            .andExpect(status().is3xxRedirection())
-            .andExpect(view().name("redirect:/buildings"))
-            .andDo(print());
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .param("size", "15")
+        .param("name", "new room name"))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/buildings"))
+        .andDo(print());
   }
 
 

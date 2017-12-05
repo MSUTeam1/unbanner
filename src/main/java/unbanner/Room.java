@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -25,6 +27,8 @@ public class Room implements Storable {
   public Building building;
 
   @DBRef(lazy = true)
+  @Getter
+  @Setter
   public List<Section> sectionList = new ArrayList<Section>();
 
   public Room() {

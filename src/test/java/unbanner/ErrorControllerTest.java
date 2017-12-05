@@ -21,9 +21,10 @@ public class ErrorControllerTest {
   public void contextLoads() {
     assertNotNull(controller);
   }
+
   @Test
   public void ErrorTest() {
     String ret = controller.error("some random error", Mockito.mock(Model.class));
-    assertEquals(ret,"error");
+    assertEquals(ret, "error");
   }
 }
