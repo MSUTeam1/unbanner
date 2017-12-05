@@ -1,5 +1,7 @@
 package unbanner;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
 
 @Controller
 public class BuildingController {
@@ -149,12 +150,11 @@ public class BuildingController {
     //tempRoom.sectionList = room.sectionList;
     if (roomService.checkConflicts(tempRoom)) {
       return "redirect:/error/Duplicate Name Conflict";
-    }
-    else {
+    } else {
       tempRoom = roomRepository.save(tempRoom);
       building.rooms.add(tempRoom);
       repository.save(building);
-      return  "redirect:/buildings";
+      return "redirect:/buildings";
     }
   }
 }
