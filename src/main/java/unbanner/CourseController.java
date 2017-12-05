@@ -28,6 +28,9 @@ public class CourseController {
   @Autowired
   RoomRepository roomRepository;
 
+  @Autowired
+  SemesterRepository semesterRepository;
+
   @ModelAttribute("allProfessors")
   public List<Professor> getProfessors() {
     return professorRepository.findAll();
@@ -36,6 +39,11 @@ public class CourseController {
   @ModelAttribute("allRooms")
   public List<Room> getRooms() {
     return roomRepository.findAll();
+  }
+
+  @ModelAttribute("allSemesters")
+  public List<Semester> getSemesters() {
+    return semesterRepository.findAll();
   }
 
   @RequestMapping(value = "/courses", method = RequestMethod.GET)
@@ -68,8 +76,9 @@ public class CourseController {
     if (course != null) {
       model.addAttribute("course", repository.findOne(id));
       return "course";
+    } else {
+      return "redirect:/";
     }
-    return "redirect:/";
   }
 
   @RequestMapping(value = "/course/{id}", method = RequestMethod.DELETE)
@@ -99,12 +108,11 @@ public class CourseController {
   public String newSection(@ModelAttribute("section") Section section,
                            @PathVariable String id, String startTime, String endTime) {
 
+
     Section tempSection = new Section();
-    //section = sectionRepository.save(section); //generate an ObjectID
-    //tempSection.professor = section.professor;
     tempSection.setStartAndEndTime(startTime, endTime);
     tempSection.schedule = section.schedule;
-    System.out.println("professor!" + section.professor);
+    System.out.println("professor: " + section.professor);
     System.out.println("room: " + section.room);
     Professor prof = section.professor;
     tempSection.professor = section.professor;
@@ -114,13 +122,16 @@ public class CourseController {
     tempSection.course = course;
     tempSection.number = section.number;
     tempSection.room = section.room;
+    tempSection.semester = section.semester;
 
 
     if (Section.conflicts(tempSection.course.sections)) {
       return "redirect:/error/Schedule Time Conflict";
     } else {
-      tempSection = sectionRepository.save(tempSection);
+      tempSection = sectionRepository.save(tempSection); //generate an ObjectID
       prof.sections.add(tempSection);
+      section.semester.sections.add(tempSection);
+      semesterRepository.save(section.semester);
       professorRepository.save(prof);
       repository.save(course);
       sectionRepository.save(tempSection);

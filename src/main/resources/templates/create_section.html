@@ -34,7 +34,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <select class="form-control" name="room" id="room">
+                    <select class="form-control" name="room" id="room" th:field="${section.room}">
                         <option th:each="room : ${allRooms}"
                                 th:value="${room.id}"
                                 th:text="${room.name}">
@@ -51,6 +51,17 @@
                                 th:text="${professor.firstName + ' ' + professor.lastName}">
                         </option>
                     </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <select class="form-control" name="semester" id="semester" th:field="${section.semester}">
+                        <option th:each="semester : ${allSemesters}"
+                                th:value="${semester.id}"
+                                th:text="${semester.season + ' ' + semester.year}">
+                        </option>
+                    </select>
+
                 </div>
             </div>
             <div class="row">

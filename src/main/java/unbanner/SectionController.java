@@ -14,8 +14,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class SectionController {
+
+  @Autowired
+  SectionService sectionService;
+
   @Autowired
   SectionRepository sectionRepository;
+
+  @Autowired
+  CourseRepository courseRepository;
 
   @Autowired
   StudentRepository studentRepository;
@@ -48,7 +55,7 @@ public class SectionController {
     Section section = sectionRepository.findById(id);
     if (section != null) {
       model.addAttribute("section", section);
-      model.addAttribute("course",section.course);
+      model.addAttribute("course", section.course);
       return "section";
     }
     return "redirect:/";
@@ -73,64 +80,42 @@ public class SectionController {
 
   //Update
   @RequestMapping(value = "/section/{id}", method = RequestMethod.POST)
-  public String section(@ModelAttribute("section") Section section, String startTime, String endTime, String professorID,
+  public String section(@ModelAttribute("section") Section section,
+                        String startTime, String endTime,
                         @PathVariable String id) {
-    Section tempSec = sectionRepository.findOne(id);
 
-    if (tempSec != null) {
-      if (section.doesTimeConflictsRoom()) return "redirect:/error/Schedule Time Conflict";
 
-      if (tempSec.room != null && !tempSec.room.sectionList.isEmpty()) {
-        tempSec.room.sectionList.remove(tempSec);
-        roomRepository.save(tempSec.room);
-      }
+    Section tempSection = new Section();
+    tempSection.setStartAndEndTime(startTime, endTime);
 
-      tempSec.room = section.room;
-      section.room.sectionList.add(section);
-      roomRepository.save(section.room);
+    System.out.println("professor: " + section.professor);
+    System.out.println("room: " + section.room);
+    Professor prof = section.professor;
+    Course course = section.course;
+    System.out.println("course: " + course);
 
-      Professor selectedProf = professorRepository.findById(professorID);
+    tempSection.id = section.id;
+    tempSection.schedule = section.schedule;
+    tempSection.professor = section.professor;
+    tempSection.course = course;
+    tempSection.number = section.number;
+    tempSection.room = section.room;
+    tempSection.students = section.students;
 
-      if (!(tempSec.professor.sections == null)){
-        Section removeThisSec = null;
-        for (Section profSec : tempSec.professor.sections){
-          if (profSec.id.equals( tempSec.id)){
-            removeThisSec = profSec; //Cant remove from a list that its being iterated on.
-            break;
-          }
-        }
-        tempSec.professor.sections.remove(removeThisSec);
-      }
-      professorRepository.save(tempSec.professor);
-      tempSec.professor = selectedProf;
-      tempSec.professor.sections.add(tempSec);
-      professorRepository.save(tempSec.professor);
 
-      tempSec.number = section.number;
-      tempSec.schedule = section.schedule;
-      tempSec.setStartAndEndTime(startTime,endTime);
+    if (Section.conflicts(course.sections)) {
+      return "redirect:/error/Schedule Time Conflict";
+    } else {
 
-      if (section.students != null) {
-        for (Student student : section.students) {
-          if (!tempSec.students.contains(student)) {
-            student.sections.add(tempSec);
-            studentRepository.save(student);
-          }
-        }
-      }
+      Section oldSection = sectionRepository.findOne(id);
 
-      for (Student student : tempSec.students) {
-        if (!section.students.contains(student)) {
-          student.removeSection(tempSec);
-          studentRepository.save(student);
-        }
-      }
-
-      tempSec.students = section.students;
-      sectionRepository.save(tempSec);
-      return "redirect:/section/" + section.getId();
+      tempSection.semester = oldSection.semester;
+      sectionService.updateReferences(oldSection, tempSection);
+      sectionRepository.save(tempSection);
+      courseRepository.save(course);
+      return "redirect:/courses";
     }
-    return "redirect:/";
+
   }
 
 }

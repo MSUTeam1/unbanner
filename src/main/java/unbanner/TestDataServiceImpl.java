@@ -3,10 +3,6 @@ package unbanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 @Service
 public class TestDataServiceImpl implements TestDataService {
 
@@ -58,7 +54,10 @@ public class TestDataServiceImpl implements TestDataService {
     courseRepository.save(new Course("Computer Science II", 2050,
         4, "CS", "Computer Science 2",
         "Learning Object Oriented Programming in Computer Science"));
-    //courseRepository.save(new Course("Numerical Analysis", 4100, 4, "MATH", "Study alogithms to solve problems numerically", "Do Euler  method and Runge-Kutta stuff"));
+    //courseRepository.save(new Course("Numerical Analysis",
+                4100, 4, "MATH"
+                , "Study alogithms to solve problems numerically"
+                , "Do Euler  method and Runge-Kutta stuff"));
     studentRepository.save(new Student("Alice", "Smith"));
     studentRepository.save(new Student("Bob", "Smith"));
     sectionRepository.save(new Section(101, courseRepository.findByName("Computer Science I")));
@@ -128,9 +127,14 @@ public class TestDataServiceImpl implements TestDataService {
     s1.professor = steve;
     s2.professor = steve;
     s3.professor = steve;
+
     steve.sections.add(s1);
     steve.sections.add(s2);
     steve.sections.add(s3);
+
+    s1.semester = semest1;
+    s2.semester = semest2;
+    s3.semester = semest3;
 
     c1.addSection(s1);
     c1.addSection(s3);
