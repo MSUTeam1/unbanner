@@ -21,7 +21,10 @@ public class SectionServiceImpl implements SectionService {
     System.out.println(oldSection);
     System.out.println(tempSection);
 
-    System.out.println("old professor: " + oldSection.professor.getId().toHexString() + "\nnew professor: " + tempSection.professor.getId().toHexString());
+    System.out.println("old professor: "
+        + oldSection.professor.getId().toHexString()
+        + "\nnew professor: "
+        + tempSection.professor.getId().toHexString());
     if (!oldSection.professor.getId().toHexString().equals(tempSection.professor.getId().toHexString())) { //professor changed
 
       int count = 0;
@@ -46,6 +49,8 @@ public class SectionServiceImpl implements SectionService {
       roomRepository.save(oldSection.room);
     } else {
     }
+
+    //if (!oldSection.semester) TODO Check if semester changed
 
     System.out.println("old students: " + oldSection.getStudents());
     System.out.println("new students: + " + tempSection.students);

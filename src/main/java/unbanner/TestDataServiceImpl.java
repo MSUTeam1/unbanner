@@ -54,7 +54,10 @@ public class TestDataServiceImpl implements TestDataService {
     courseRepository.save(new Course("Computer Science II", 2050,
         4, "CS", "Computer Science 2",
         "Learning Object Oriented Programming in Computer Science"));
-    //courseRepository.save(new Course("Numerical Analysis", 4100, 4, "MATH", "Study alogithms to solve problems numerically", "Do Euler  method and Runge-Kutta stuff"));
+    //courseRepository.save(new Course("Numerical Analysis",
+                4100, 4, "MATH"
+                , "Study alogithms to solve problems numerically"
+                , "Do Euler  method and Runge-Kutta stuff"));
     studentRepository.save(new Student("Alice", "Smith"));
     studentRepository.save(new Student("Bob", "Smith"));
     sectionRepository.save(new Section(101, courseRepository.findByName("Computer Science I")));

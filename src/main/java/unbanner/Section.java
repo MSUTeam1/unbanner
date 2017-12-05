@@ -35,7 +35,9 @@ public class Section implements Storable {
   public Course course;
   @DBRef(lazy = true)
   public Room room;
-  @DBRef(lazy = true)
+  @DBRef
+  @Getter
+  @Setter
   public Semester semester;
   @DBRef(lazy = true)
   @Setter
@@ -256,19 +258,23 @@ public class Section implements Storable {
         continue; //Skip itself
       }
       //If the object (this) begins between any other section.
-      if (this.time.getFirst().isAfter(sec.getTime().getFirst()) && this.time.getFirst().isBefore(sec.time.getSecond())) {
+      if (this.time.getFirst().isAfter(sec.getTime().getFirst())
+          && this.time.getFirst().isBefore(sec.time.getSecond())) {
         return true;
       }
       //if this ends between any other section.
-      if (this.time.getSecond().isAfter(sec.getTime().getFirst()) && this.time.getSecond().isBefore(sec.time.getSecond())) {
+      if (this.time.getSecond().isAfter(sec.getTime().getFirst())
+          && this.time.getSecond().isBefore(sec.time.getSecond())) {
         return true;
       }
       //if this is equal to any other section
-      if (this.time.getFirst().equals(sec.getTime().getFirst()) || this.time.getSecond().equals(sec.time.getSecond())) {
+      if (this.time.getFirst().equals(sec.getTime().getFirst())
+          || this.time.getSecond().equals(sec.time.getSecond())) {
         return true;
       }
       //if this begins before another section and ends after that section
-      if (this.time.getSecond().isBefore(sec.getTime().getFirst()) && this.time.getSecond().isAfter(sec.time.getSecond())) {
+      if (this.time.getSecond().isBefore(sec.getTime().getFirst())
+          && this.time.getSecond().isAfter(sec.time.getSecond())) {
         return true;
       }
     }
@@ -286,9 +292,11 @@ public class Section implements Storable {
             ArrayList<Pair<LocalTime, LocalTime>> pairs = times.get(day);
             if (pairs != null) {
               for (Pair<LocalTime, LocalTime> time : pairs) {
-                if
-                    ((section.getTime().getFirst().compareTo(time.getFirst()) >= 0 && section.getTime().getFirst().compareTo(time.getSecond()) <= 0) ||
-                    (section.getTime().getSecond().compareTo(time.getSecond()) <= 0 && section.getTime().getSecond().compareTo(time.getFirst()) >= 0)) {
+                if ((section.getTime().getFirst().compareTo(time.getFirst()) >= 0
+                        && section.getTime().getFirst().compareTo(time.getSecond()) <= 0)
+                        ||
+                        (section.getTime().getSecond().compareTo(time.getSecond()) <= 0
+                            && section.getTime().getSecond().compareTo(time.getFirst()) >= 0)) {
                   return true;
                 }
               }

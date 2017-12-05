@@ -63,7 +63,9 @@ public class StudentController {
   */
   @RequestMapping(value = "/students/new", method = RequestMethod.POST)
   public String newStudent(@ModelAttribute("student") Student student) {
-    if (Section.conflicts(student.sections)) return "redirect:/error/Schedule Time Conflict";
+    if (Section.conflicts(student.sections)) {
+      return "redirect:/error/Schedule Time Conflict";
+    }
     Student newStudent = new Student();
     newStudent.studentNum = nineHundredService.getNext();
     newStudent.firstName = student.firstName;
@@ -71,7 +73,7 @@ public class StudentController {
     newStudent.sections = student.sections;
     newStudent = repository.save(newStudent);
     for (Section section : newStudent.sections) {
-      if(section != null) {
+      if (section != null) {
         section.addToStudents(newStudent);
         sectionRepository.save(section);
       }
@@ -88,7 +90,7 @@ public class StudentController {
   */
   @RequestMapping("/student/{id}")
   public String student(@PathVariable String id, Model model) {
-    if(repository.findOne(id) != null) {
+    if (repository.findOne(id) != null) {
       model.addAttribute("student", repository.findOne(id));
       return "student";
     } else {

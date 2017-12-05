@@ -55,7 +55,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <select class="form-control" name="semester" id="semester">
+                    <select class="form-control" name="semester" id="semester" th:field="${section.semester}">
                         <option th:each="semester : ${allSemesters}"
                                 th:value="${semester.id}"
                                 th:text="${semester.season + ' ' + semester.year}">

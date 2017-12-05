@@ -122,13 +122,16 @@ public class CourseController {
     tempSection.course = course;
     tempSection.number = section.number;
     tempSection.room = section.room;
+    tempSection.semester = section.semester;
 
 
     if (Section.conflicts(tempSection.course.sections)) {
       return "redirect:/error/Schedule Time Conflict";
     } else {
-      tempSection = sectionRepository.save(tempSection);
+      tempSection = sectionRepository.save(tempSection); //generate an ObjectID
       prof.sections.add(tempSection);
+      section.semester.sections.add(tempSection);
+      semesterRepository.save(section.semester);
       professorRepository.save(prof);
       repository.save(course);
       sectionRepository.save(tempSection);

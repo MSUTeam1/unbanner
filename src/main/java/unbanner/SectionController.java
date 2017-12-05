@@ -102,12 +102,14 @@ public class SectionController {
     tempSection.room = section.room;
     tempSection.students = section.students;
 
+
     if (Section.conflicts(course.sections)) {
       return "redirect:/error/Schedule Time Conflict";
     } else {
 
       Section oldSection = sectionRepository.findOne(id);
 
+      tempSection.semester = oldSection.semester;
       sectionService.updateReferences(oldSection, tempSection);
       sectionRepository.save(tempSection);
       courseRepository.save(course);
