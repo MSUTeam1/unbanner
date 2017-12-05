@@ -34,7 +34,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <select class="form-control" name="room" id="room">
+                    <select class="form-control" name="room" id="room" th:field="${section.room}">
                         <option th:each="room : ${allRooms}"
                                 th:value="${room.id}"
                                 th:text="${room.name}">

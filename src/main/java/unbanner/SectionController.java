@@ -85,7 +85,6 @@ public class SectionController {
                         @PathVariable String id) {
 
 
-
     Section tempSection = new Section();
     tempSection.setStartAndEndTime(startTime, endTime);
 
@@ -110,12 +109,8 @@ public class SectionController {
       Section oldSection = sectionRepository.findOne(id);
 
       sectionService.updateReferences(oldSection, tempSection);
-
-      tempSection = sectionRepository.save(tempSection); // generate an ObjectID
-      //professorRepository.save(prof);
-      courseRepository.save(course);
       sectionRepository.save(tempSection);
-
+      courseRepository.save(course);
       return "redirect:/courses";
     }
 
