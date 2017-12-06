@@ -14,7 +14,7 @@
         <div class="container">
             <table class="table">
                 <tr >
-                    <td th:text="${section.room?.name + ' ' + section.room?.building?.name}"></td>
+                    <td th:text="${section.room?.name + ' ' + section.room?.getBuilding().getName()}"></td>
                     <td th:text="${section.room?.size}"></td>
                     <td><a class="badge badge-info" th:href="@{/building/room/{id}(id=${section.room?.id})}">view</a></td>
                 </tr>

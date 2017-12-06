@@ -84,8 +84,7 @@ public class SectionController {
                         String startTime, String endTime,
                         @PathVariable String id) {
 
-      //if (section.doesTimeConflictsRoom()) return "redirect:/error/Schedule Time Conflict";
-
+    //if (section.doesTimeConflictsRoom()) return "redirect:/error/Schedule Time Conflict";
 
     Section tempSection = new Section();
     tempSection.setStartAndEndTime(startTime, endTime);

@@ -24,6 +24,8 @@ public class Room implements Storable {
   public int size;
 
   @DBRef(lazy = true)
+  @Getter
+  @Setter
   public Building building;
 
   @DBRef(lazy = true)
