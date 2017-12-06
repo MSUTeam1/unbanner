@@ -59,15 +59,6 @@ public class Building implements Storable {
   public String toString() {
 
     return String.format("Building[id=%s, description='%s']" ,id, description);
-    /*
-    String str = "Building[";
-    str = str + "name " + this.name;
-    for (Room r : this.rooms) {
-      str = str + "\n    room " + r.name;
-    }
-    str = str + "\nid " + this.id + "]";
-    return  str;
-    */
   }
 }
 

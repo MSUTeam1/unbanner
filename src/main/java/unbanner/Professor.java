@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@EqualsAndHashCode
+//@EqualsAndHashCode
 public class Professor implements Storable {
 
   @Id
@@ -27,9 +27,7 @@ public class Professor implements Storable {
   @Getter
   @Setter
   public String lastName;
-  @DBRef(lazy = true)
-  @Getter
-  @Setter
+  @DBRef(lazy = false)
   public List<Section> sections = new ArrayList<Section>();
 
   public Professor() {

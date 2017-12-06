@@ -93,7 +93,7 @@ public class SectionControllerTest {
 //    String ret = controller.section(section2, "2:00","3:00","507f191e810c19729de860ea");
   //  assertThat("redirect:/section/".equals(ret));
 
-    String ret = controller.section(Mockito.mock(Section.class), "1:00","2:00","");
+    String ret = controller.section(Mockito.mock(Section.class), "1:00","2:00", "","");
     assertThat("redirect:/section".equals(ret));
 
   }
