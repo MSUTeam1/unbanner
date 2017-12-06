@@ -27,6 +27,9 @@ public class SectionController {
   @Autowired
   ProfessorRepository professorRepository;
 
+  @Autowired
+  SemesterRepository semesterRepository;
+
   @ModelAttribute("allStudents")
   public List<Student> getStudents() {
     return studentRepository.findAll();
@@ -40,6 +43,11 @@ public class SectionController {
   @ModelAttribute("allRooms")
   public List<Room> getRooms() {
     return roomRepository.findAll();
+  }
+
+  @ModelAttribute("allSemesters") //This works (no compile errors), but our Semester Repo doesnt make sense (logical error). So it's bad overall
+  public List<Semester> getSemester() {
+    return semesterRepository.findAll();
   }
 
   //Get
