@@ -2,6 +2,7 @@ package unbanner;
 
 import java.util.List;
 
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,7 +49,6 @@ public class SectionController {
     return roomRepository.findAll();
   }
 
-
   //Get
   @RequestMapping(value = "/section/{id}")
   public String section(@PathVariable String id, Model model) {
@@ -83,6 +83,8 @@ public class SectionController {
   public String section(@ModelAttribute("section") Section section,
                         String startTime, String endTime,
                         @PathVariable String id) {
+
+      //if (section.doesTimeConflictsRoom()) return "redirect:/error/Schedule Time Conflict";
 
 
     Section tempSection = new Section();

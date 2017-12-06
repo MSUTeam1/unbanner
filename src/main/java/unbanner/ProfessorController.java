@@ -60,8 +60,12 @@ public class ProfessorController {
   // Get
   @RequestMapping("/professor/{id}")
   public String professor(@PathVariable String id, Model model) {
-    model.addAttribute("professor", repository.findOne(id));
-    return "professor";
+    Professor professor = repository.findById(id);
+    if (professor != null) {
+      model.addAttribute("professor", professor);
+      return "professor";
+    }
+    return "redirect:/";
   }
 
   @RequestMapping(value = "/professor/{id}", method = RequestMethod.DELETE)

@@ -42,24 +42,6 @@
                             <td th:text= "${room.size}"> </td>
                             <td><a class="badge badge-info" th:href ="@{/building/room/{roomId} (roomId=${room.id} ) }"> view  </a></td>
                         </tr>
-                        <!--
-                        <tr>
-                            <td><b>Room's Sections:</b></td>
-                        </tr>
-                        <tr>
-                            <th>Number</th>
-                            <th>Name</th>
-                            <th>Days</th>
-                            <th>Time</th>
-                        </tr>
-                        <tr th:each="section : ${room.sectionList}">
-                            <td th:text="${section.number}"></td>
-                            <td th:text="${section.course.name}"></td>
-                            <td th:text="${section.schedule}"></td>
-                            <td th:text="${section.getTimeStamp()}"></td>
-                            <td><a class="badge badge-info" th:href="@{/section/{id}(id=${section.id})}">view</a></td>
-                        </tr>
-                        -->
                      </table>
                 </div>
             </div>

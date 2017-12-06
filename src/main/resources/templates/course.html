@@ -9,7 +9,7 @@
 </head>
 <body>
     <div layout:fragment="content">
-        <h1>Course</h1>
+        <h1>Course  <span th:text="${course.name}"></span> </h1>
         <div class="container">
             <div class="container">
                 <div class="row">
@@ -41,12 +41,12 @@
                             <div class="container" th:each="section : ${course.sections}">
                                 <div class="row">
                                     <div class="col">Section #: <b th:text="${section.number}" /></div>
-                                    <div class="col">Room: <b th:text="${section.room.name}"/></div>
-                                    <div class="col">Professor: <b th:text="${section.professor.firstName + ' ' + section.professor.lastName}"/></div>
-                                    <!--<div class="col">Building: <b th:text="${section.room.building.name}"/></div>-->
+                                    <div class="col">Room: <b th:text="${section.room?.name}"/></div>
+                                    <div class="col">Professor: <b th:text="${section.professor?.firstName + ' ' + section.professor?.lastName}"/></div>
+                                    <!--<div class="col">Building: <b th:text="${section.room?.building?.name}"/></div>-->
                                     <div class="col">Schedule: <b th:text="${section.schedule}"/></div>
                                     <div class="col">Time: <b th:text="${section.getTimeLength()}"/></div>
-                                    <div class="col">Semester: <b th:text="${section.semester.season + ' ' + section.semester.year}"/></div>
+                                    <div class="col">Semester: <b th:text="${section.semester?.year + ' ' + section.semester.season}"/></div>
                                     <td><a class="badge badge-info" th:href="@{/section/{id}(id=${section.id})}">view</a></td>
                                 </div>
                                 <div class="row">
