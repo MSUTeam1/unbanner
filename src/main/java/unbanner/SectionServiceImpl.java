@@ -52,14 +52,13 @@ public class SectionServiceImpl implements SectionService {
     System.out.println(tempSection.room.getName());
     if (!oldSection.room.getName().equals(tempSection.room.getName())) { //room changed
       int i = 0;
-      for (Section section : oldSection.room.getSectionList()) {
-        if (section.id.toHexString().equals(tempSection.id.toHexString())) {
-          oldSection.room.sectionList.remove(i);
+      for (i = 0 ; i < oldSection.room.getSectionList().size() ; i++ ) {
+        if (oldSection.room.getSectionList().get(i).id.toHexString().equals(tempSection.id.toHexString())) {
+          oldSection.room.getSectionList().remove(i);
           roomRepository.save(oldSection.room);
           break;
         } else {
         }
-        i++;
       }
     } else {
     }

@@ -8,7 +8,7 @@
 </head>
 <body>
     <div layout:fragment="content">
-        <h1>Semester</h1>
+        <h1>Semester<span th:text="${semester.year + ' ' + semester.season}  "></span></h1>
         <div class="container">
             <div class="container">
                 <div class="row">
@@ -36,9 +36,9 @@
                         <th>Time</th>
                     </tr>
                     <tr th:each="section : ${semester.sections}">
-                        <td th:text ="${section.course.name}"></td>
+                        <td th:text ="${section.course?.name}"></td>
                         <td th:text ="${section.number}"></td>
-                        <td th:text= "${section.room.name}"> </td>
+                        <td th:text= "${section.room?.name}"> </td>
                         <td th:text= "${section.getTimeLength()}"> </td>
                         <td><a class="badge badge-info" th:href ="@{/section/{id}(id=${section.id})}"> view  </a></td>
                     </tr>

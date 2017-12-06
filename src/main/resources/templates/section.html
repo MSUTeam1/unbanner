@@ -14,9 +14,9 @@
         <div class="container">
             <table class="table">
                 <tr >
-                    <td th:text="${section.room.name}"></td>
-                    <td th:text="${section.room.size}"></td>
-                    <td><a class="badge badge-info" th:href="@{/building/room/{id}(id=${section.room.id})}">view</a></td>
+                    <td th:text="${section.room?.name + ' ' + section.room?.building?.name}"></td>
+                    <td th:text="${section.room?.size}"></td>
+                    <td><a class="badge badge-info" th:href="@{/building/room/{id}(id=${section.room?.id})}">view</a></td>
                 </tr>
             </table>
         </div>
@@ -28,6 +28,7 @@
                 <tr >
                     <td th:text="${course.department} + ' ' + ${course.number}"></td>
                     <td th:text="${course.name}"></td>
+                    <td th:text="${section.semester?.year + ' ' + section.semester?.season}"></td>
                     <td><a class="badge badge-info" th:href="@{/course/{id}(id=${course.id})}">view</a></td>
                 </tr>
             </table>
@@ -38,8 +39,8 @@
         <div class="container">
             <table class="table">
                 <tr>
-                    <td th:text="${section.professor.firstName + ' ' + section.professor.lastName}"></td>
-                    <td><a class="badge badge-info" th:href="@{/professor/{id}(id=${section.professor.id})}">view</a></td>
+                    <td th:text="${section.professor?.firstName + ' ' + section.professor?.lastName}"></td>
+                    <td><a class="badge badge-info" th:href="@{/professor/{id}(id=${section.professor?.id})}">view</a></td>
                 </tr>
             </table>
         </div>
@@ -78,7 +79,7 @@
             <br/> <label>Students</label>
             <select class="form-control" id="students" name="students" multiple="multiple" th:field="${section.students}">
                 <option th:each="student : ${allStudents}"
-                        th:selected="${section.students.contains(student)}"
+                        th:selected="${section.students?.contains(student)}"
                         th:value="${student.id}"
                         th:text="${student.firstName + ' ' + student.lastName}">Name</option>
             </select>

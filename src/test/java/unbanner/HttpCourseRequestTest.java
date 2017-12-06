@@ -96,10 +96,9 @@ public class HttpCourseRequestTest {
     course2.setSections(sections);
     course3.setSections(sections2);
 
-    courseRepo.deleteAll();
-    courseRepo.save(course1);
-    courseRepo.save(course2);
-    courseRepo.save(course3);
+    course1 = courseRepo.save(course1);
+    course2 = courseRepo.save(course2);
+    course3 = courseRepo.save(course3);
 
   }
 
@@ -174,8 +173,8 @@ public class HttpCourseRequestTest {
   @Test
   public void courseShouldRespond() throws Exception {
 
-    List<Course> courseList = courseRepo.findAll();
-    this.mockMvc.perform(get("/course/{id}", courseList.get(0).id))
+
+    this.mockMvc.perform(get("/course/{id}", course1.id))
         .andExpect(status().isOk())
         .andExpect(view().name("course"))
         .andExpect(model().attribute("course",

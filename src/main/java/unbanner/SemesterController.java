@@ -62,8 +62,12 @@ public class SemesterController {
   //get semester
   @RequestMapping(value = "/semester/{id}")
   public String semester(@PathVariable String id, Model model) {
-    model.addAttribute("semester", semesterRepository.findOne(id));
-    return "semester";
+    Semester semester = semesterRepository.findOne(id);
+    if (semester != null) {
+      model.addAttribute("semester", semester);
+      return "semester";
+    }
+    return "redirect:/";
   }
 
   //update

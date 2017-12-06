@@ -72,12 +72,11 @@ public class CourseController {
 
   @RequestMapping("/course/{id}")
   public String course(@PathVariable String id, Model model) {
-    Course course = repository.findOne(id);
-    if (course != null) {
+    if (repository.findOne(id) != null) {
       model.addAttribute("course", repository.findOne(id));
       return "course";
     } else {
-      return "redirect:/";
+      return "redirect:/error/Null Course";
     }
   }
 
