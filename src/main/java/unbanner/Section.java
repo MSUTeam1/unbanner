@@ -148,31 +148,31 @@ public class Section implements Storable {
 
   public String getTimeLength() {
     return String.format("%02d:%02d - %02d:%02d",
-        time.getFirst().getHour(),
-        time.getFirst().getMinute(),
-        time.getSecond().getHour(),
-        time.getSecond().getMinute()
+            time.getFirst().getHour(),
+            time.getFirst().getMinute(),
+            time.getSecond().getHour(),
+            time.getSecond().getMinute()
     );
   }
 
   public String startTime() {
     return String.format("%02d:%02d",
-        time.getFirst().getHour(),
-        time.getFirst().getMinute());
+            time.getFirst().getHour(),
+            time.getFirst().getMinute());
   }
 
   public String endTime() {
     return String.format("%02d:%02d",
-        time.getSecond().getHour(),
-        time.getSecond().getMinute());
+            time.getSecond().getHour(),
+            time.getSecond().getMinute());
   }
 
   public String getTimeStamp() {
     return String.format("%02d:%02d - %02d:%02d",
-        time.getFirst().getHour(),
-        time.getFirst().getMinute(),
-        time.getSecond().getHour(),
-        time.getSecond().getMinute()
+            time.getFirst().getHour(),
+            time.getFirst().getMinute(),
+            time.getSecond().getHour(),
+            time.getSecond().getMinute()
     );
   }
 
@@ -329,8 +329,8 @@ public class Section implements Storable {
             if (pairs != null) {
               for (Pair<LocalTime,LocalTime> time : pairs) {
                 if
-                    ((section.getTime().getFirst().compareTo(time.getFirst()) >= 0 && section.getTime().getFirst().compareTo(time.getSecond()) <= 0) ||
-                    (section.getTime().getSecond().compareTo(time.getSecond()) <= 0 && section.getTime().getSecond().compareTo(time.getFirst()) >= 0)) {
+                        ((section.getTime().getFirst().compareTo(time.getFirst()) >= 0 && section.getTime().getFirst().compareTo(time.getSecond()) <= 0) ||
+                        (section.getTime().getSecond().compareTo(time.getSecond()) <= 0 && section.getTime().getSecond().compareTo(time.getFirst()) >= 0)) {
                   return true;
                 }
               }
