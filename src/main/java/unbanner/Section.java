@@ -35,7 +35,7 @@ public class Section implements Storable {
   public Course course;
   @DBRef(lazy = true)
   public Room room;
-  @DBRef(lazy = true)
+  @DBRef
   @Getter
   @Setter
   public Semester semester;
@@ -45,7 +45,7 @@ public class Section implements Storable {
   public Professor professor;
 
 
-  //TODO, remove this 1 time used method
+  //This method should  follow this assignment: mySection.room = myRoom.
   public void addSectionToRoomList(Room assignedRoom) {
     assignedRoom.sectionList.add(this);
   }

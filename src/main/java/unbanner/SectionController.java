@@ -78,74 +78,45 @@ public class SectionController {
     return "redirect:/";
   }
 
-
   //Update
   @RequestMapping(value = "/section/{id}", method = RequestMethod.POST)
-  public String section(@ModelAttribute("section") Section section, String startTime, String endTime, String professorID,
+  public String section(@ModelAttribute("section") Section section,
+                        String startTime, String endTime,
                         @PathVariable String id) {
-    //Temporary solution until update is working. The problem is that section.semeset == null is true
-    section.semester = new Semester();
-    section.semester.year = 2018;
-    section.semester.season = "Spring";
 
-    Section tempSec = sectionRepository.findOne(id);
+      //if (section.doesTimeConflictsRoom()) return "redirect:/error/Schedule Time Conflict";
 
-    if (tempSec != null) {
 
-      if (tempSec.semester == null) return "redirect:/error/Section's Semester is Null";
-      if (section.doesTimeConflictsRoom()) return "redirect:/error/Schedule Time Conflict";
+    Section tempSection = new Section();
+    tempSection.setStartAndEndTime(startTime, endTime);
 
-      if (tempSec.room != null && !tempSec.room.sectionList.isEmpty()) {
-        tempSec.room.sectionList.remove(tempSec);
-        roomRepository.save(tempSec.room);
-      }
+    System.out.println("professor: " + section.professor);
+    System.out.println("room: " + section.room);
+    Professor prof = section.professor;
+    Course course = section.course;
+    System.out.println("course: " + course);
 
-      tempSec.room = section.room;
-      section.room.sectionList.add(section);
-      roomRepository.save(section.room);
+    tempSection.id = section.id;
+    tempSection.schedule = section.schedule;
+    tempSection.professor = section.professor;
+    tempSection.course = course;
+    tempSection.number = section.number;
+    tempSection.room = section.room;
+    tempSection.students = section.students;
 
-      Professor selectedProf = professorRepository.findById(professorID);
 
-      if (!(tempSec.professor.sections == null)){
-        Section removeThisSec = null;
-        for (Section profSec : tempSec.professor.sections){
-          if (profSec.id.equals( tempSec.id)){
-            removeThisSec = profSec; //Cant remove from a list that its being iterated on.
-            break;
-          }
-        }
-        tempSec.professor.sections.remove(removeThisSec);
-      }
-      professorRepository.save(tempSec.professor);
-      tempSec.professor = selectedProf;
-      tempSec.professor.sections.add(tempSec);
-      professorRepository.save(tempSec.professor);
+    if (Section.conflicts(course.sections)) {
+      return "redirect:/error/Schedule Time Conflict";
+    } else {
 
-      tempSec.number = section.number;
-      tempSec.schedule = section.schedule;
-      tempSec.setStartAndEndTime(startTime,endTime);
+      Section oldSection = sectionRepository.findOne(id);
 
-      if (section.students != null) {
-        for (Student student : section.students) {
-          if (!tempSec.students.contains(student)) {
-            student.sections.add(tempSec);
-            studentRepository.save(student);
-          }
-        }
-      }
+      tempSection.semester = oldSection.semester;
 
-      for (Student student : tempSec.students) {
-        if (!section.students.contains(student)) {
-          student.removeSection(tempSec);
-          studentRepository.save(student);
-        }
-      }
-
-      tempSec.students = section.students;
-      sectionRepository.save(tempSec);
-      return "redirect:/section/" + section.getId();
+      sectionService.updateReferences(oldSection, tempSection);
+      return "redirect:/courses";
     }
-    return "redirect:/";
+
   }
 
 }

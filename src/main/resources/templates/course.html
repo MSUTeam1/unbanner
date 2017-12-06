@@ -46,7 +46,7 @@
                                     <!--<div class="col">Building: <b th:text="${section.room?.building?.name}"/></div>-->
                                     <div class="col">Schedule: <b th:text="${section.schedule}"/></div>
                                     <div class="col">Time: <b th:text="${section.getTimeLength()}"/></div>
-                                    <div class="col">Semester: <b th:text="${section.semester?.year + ' ' + section.semester?.season}"/></div>
+                                    <div class="col">Semester: <b th:text="${section.semester?.year + ' ' + section.semester.season}"/></div>
                                     <td><a class="badge badge-info" th:href="@{/section/{id}(id=${section.id})}">view</a></td>
                                 </div>
                                 <div class="row">
