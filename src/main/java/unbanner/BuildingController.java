@@ -154,7 +154,7 @@ public class BuildingController {
       tempRoom = roomRepository.save(tempRoom);
       building.rooms.add(tempRoom);
       repository.save(building);
-      return "redirect:/buildings";
+      return "redirect:/building/" + building.id;
     }
   }
 }
