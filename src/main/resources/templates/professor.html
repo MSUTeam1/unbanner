@@ -34,12 +34,15 @@
                 <tr>
                     <th>Course # </th>
                     <th>Section #</th>
+                    <th># of Students</th>
                     <th>Name </th>
                     <th>Semester </th>
+                    <th>Info</th>
                 </tr>
                     <tr th:each="section : ${professor.sections}">
                         <td th:text="${section.course?.department + ' ' + section.course?.number}"></td>
                         <td th:text="${section.number}"></td>
+                        <td th:text="${section.students.size()}"></td>
                         <td th:text="${section.course?.name}"></td>
                         <td th:text="${section.semester?.year + ' ' + section.semester?.season}"></td>
                         <td><a class="badge badge-info" th:href="@{/section/{id}(id=${section.id})}">view</a></td>
@@ -52,7 +55,6 @@
         <div class="container">
             <form action="#" th:action="@{'/professor/{id}'(id=${professor.id})}" th:object="${professor}"
                   th:method="post">
-                <input type="hidden" th:field="*{id}"/>
                 <div class="row">
                     <div class="col">
                         <input type="text" class="form-control" th:field="*{firstName}"/>

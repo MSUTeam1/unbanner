@@ -154,5 +154,22 @@ public class HttpSectionRequestTest {
         .andExpect(view().name("create_section"))
         .andDo(print());
   }
+
+  /*
+  @Test
+  public void updateSectionShouldWork() throws Exception {
+
+    this.mockMvc.perform(post("/course/" + course.id + "/newsection"))
+    this.mockMvc.perform(post("/course/{id}", courseList.get(0).id)
+        .with(csrf().asHeader())
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .param("number", "44")
+        .param("schedule", "Weekday.M")
+        .param("credits", "1"))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/courses"))
+        .andDo(print());
+  }
+  */
   
 }

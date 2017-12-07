@@ -65,17 +65,23 @@ public class SectionController {
   @RequestMapping(value = "/section/{id}", method = RequestMethod.DELETE)
   public String section(@PathVariable String id) {
     Section section = sectionRepository.findById(id);
-    if (section != null) {
-      Course course = section.getCourse();
-      if (course == null) {
-        return "redirect:/";
-      } else {
-        ObjectId courseId = course.id;
-        sectionRepository.delete(id);
-        return "redirect:/course/" + courseId;
-      }
+
+    for(Student student : section.students){
+      student.sections.remove(section);
+      studentRepository.save(student);
     }
-    return "redirect:/";
+
+    section.professor.getSections().remove(section);
+    professorRepository.save(section.professor);
+
+    section.course.getSections().remove(section);
+    courseRepository.save(section.course);
+
+    section.room.getSectionList().remove(section);
+    roomRepository.save(section.room);
+
+    sectionRepository.delete(section);
+    return "redirect:/course/" + section.course.id;
   }
 
   //Update
@@ -84,14 +90,19 @@ public class SectionController {
                         String startTime, String endTime,
                         @PathVariable String id) {
 
-    //if (section.doesTimeConflictsRoom()) return "redirect:/error/Schedule Time Conflict";
+
 
     Section tempSection = new Section();
     tempSection.setStartAndEndTime(startTime, endTime);
 
+    /*
+    if (tempSection.doesTimeConflictsRoom()) {
+      return "redirect:/error/Schedule Time Conflict";
+    }
+    */
+
     System.out.println("professor: " + section.professor);
     System.out.println("room: " + section.room);
-    Professor prof = section.professor;
     Course course = section.course;
     System.out.println("course: " + course);
 
@@ -113,7 +124,7 @@ public class SectionController {
       tempSection.semester = oldSection.semester;
 
       sectionService.updateReferences(oldSection, tempSection);
-      return "redirect:/courses";
+      return "redirect:/section/" + oldSection.id;
     }
 
   }

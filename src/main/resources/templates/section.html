@@ -8,7 +8,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h1>Section <span th:text="${section.number}"></span></h1>
+    <h1>Section <span th:text="${section.number + ' ' + section.course.getName()}"></span></h1>
     <div class="container">
         <h6>Room:</h6>
         <div class="container">
@@ -49,12 +49,10 @@
         <h6>Students:</h6>
         <div class="container">
             <table class="table table-striped">
-                <tr>
                 <tr th:each="student : ${section.students}">
                     <td th:text="${student.firstName + ' ' + student.lastName}"></td>
                     <td th:text="${student.studentNum}"></td>
                     <td><a class="badge badge-info" th:href="@{/student/{id}(id=${student.id})}">view</a></td>
-                </tr>
                 </tr>
             </table>
         </div>
