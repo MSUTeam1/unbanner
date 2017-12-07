@@ -10,13 +10,14 @@
 <div layout:fragment="content">
     <h1>Professors</h1>
     <div class="container">
-        <table>
+        <table class="table table-striped">
             <tr>
                 <th>Name</th>
-                <th>ID</th>
+                <th># of Sections</th>
             </tr>
             <tr th:each="professor : ${professors}">
                 <td th:text="${professor.firstName + ' ' + professor.lastName}"></td>
+                <td th:text="${professor.sections.size()}"></td>
                 <td><a class="badge badge-info" th:href="@{/professor/{id}(id=${professor.id})}">view</a></td>
             </tr>
             <tr>

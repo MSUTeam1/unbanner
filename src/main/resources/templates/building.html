@@ -13,7 +13,7 @@
     <div class = "container">
         <div class = "container">
             <div class="row">
-                <div class="col"> Name: <b th:text="${building.name}" /> <br/> </div>
+                <div class="col-sm"> Name: <b th:text="${building.name}" /> <br/> </div>
                 <div class="col"> Description: <b th:text="${building.description}" /> <br/> </div>
                 <div class="col">
                     <form action="#" th:action="@{'/building/{id}'(id=${building.id})}" th:method="delete" >

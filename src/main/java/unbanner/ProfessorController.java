@@ -87,8 +87,8 @@ public class ProfessorController {
     Professor tempPro = repository.findOne(id);
     tempPro.firstName = professor.firstName;
     tempPro.lastName = professor.lastName;
-    tempPro = repository.save(tempPro);
-    return "redirect:/professor/{id}/" + tempPro.id;
+    repository.save(tempPro);
+    return "redirect:/professor/" + id;
   }
 
 }

@@ -10,7 +10,7 @@
 <div layout:fragment="content">
     <h1>Semesters</h1>
     <div class="container">
-        <table>
+        <table class="table table-striped">
             <tr>
                 <th>Season</th>
                 <th>Year</th>
@@ -19,9 +19,9 @@
             <tr th:each="semester : ${semesters}">
                 <td th:text="${semester.season}"></td>
                 <td th:text="${semester.year}"></td>
-                <td><a class="badge badge-info"
-                       th:href="@{/semester/{id}(id=${semester.id})}">view
-                </a></td>
+                <td>
+                    <a class="badge badge-info" th:href="@{/semester/{id}(id=${semester.id})}">view</a>
+                </td>
             </tr>
             <tr>
                 <a class="badge badge-primary" href="/semesters/new">Create New Semester</a>

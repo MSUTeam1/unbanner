@@ -212,7 +212,7 @@ public class HttpCourseRequestTest {
   }
 
   /*
-   * Checks the routing for a POST request to '/student/{id}'
+   * Checks the routing for a POST request to '/course/{id}'
    * Checks that the correct view has been called by the controller
    * Checks that a new student has been successfully updated
    */

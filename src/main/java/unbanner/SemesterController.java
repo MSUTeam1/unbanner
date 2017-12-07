@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class SemesterController {
 
   @Autowired
-  SemesterRepository  semesterRepository;
+  SemesterRepository semesterRepository;
 
   @Autowired
   SectionRepository sectionRepository;
@@ -24,7 +24,7 @@ public class SemesterController {
   StudentRepository studentRepository;
 
   // get all semesters
-  @RequestMapping (value = "/semesters", method = RequestMethod.GET)
+  @RequestMapping(value = "/semesters", method = RequestMethod.GET)
   public String semestersList(Model model) {
     model.addAttribute("semesters", semesterRepository.findAll());
     return "semesters";
@@ -37,7 +37,7 @@ public class SemesterController {
   }
 
   //create semester
-  @RequestMapping (value = "/semesters/new", method = RequestMethod.POST)
+  @RequestMapping(value = "/semesters/new", method = RequestMethod.POST)
   public String newSemester(@ModelAttribute("semester") Semester semester) {
     Semester newSemester = new Semester();
     newSemester.season = semester.season;
@@ -49,12 +49,11 @@ public class SemesterController {
   //delete semester
   @RequestMapping(value = "/semester/{id}", method = RequestMethod.DELETE)
   public String course(@PathVariable String id) {
-    //I didn't test your code if it's a proper delete. I just did something easy
-    //        Semester temp = semesterRepository.findOne(id);
-    //        List<Section> tempSections = sectionRepository.findBySemester(temp);
-    //       for(Section section : tempSections) {
-    //          sectionRepository.delete(section);
-    //     }
+    Semester temp = semesterRepository.findOne(id);
+    List<Section> tempSections = sectionRepository.findBySemester(temp);
+    for (Section section : tempSections) {
+      sectionRepository.delete(section);
+    }
     semesterRepository.delete(id);
     return "redirect:/semesters";
   }
