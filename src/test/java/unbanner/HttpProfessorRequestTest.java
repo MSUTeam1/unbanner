@@ -155,7 +155,7 @@ public class HttpProfessorRequestTest {
         .param("firstName", "George")
         .param("lastName", "Jones"))
         .andExpect(status().is3xxRedirection())
-        .andExpect(view().name("redirect:/professor/{id}/" + prof.id))
+        .andExpect(view().name("redirect:/professor/" + prof.id))
         .andDo(print());
 
     this.mockMvc.perform(get("/professors"))
