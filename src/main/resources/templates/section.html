@@ -3,20 +3,44 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout">
 <head>
-    <title>Student</title>
+    <title>Section</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <div layout:fragment="content">
-    <h1>Section</h1>
+    <h1>Section <span th:text="${section.number + ' ' + section.course.getName()}"></span></h1>
+    <div class="container">
+        <h6>Room:</h6>
+        <div class="container">
+            <table class="table">
+                <tr >
+                    <td th:text="${section.room?.name + ' ' + section.room?.getBuilding()?.getName()}"></td>
+                    <td th:text="${section.room?.size}"></td>
+                    <td><a class="badge badge-info" th:href="@{/building/room/{id}(id=${section.room?.id})}">view</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
     <div class="container">
         <h6>Course:</h6>
         <div class="container">
-            <table>
+            <table class="table">
                 <tr >
-                    <td th:text="${section.course.department + ' ' + section.course.number}"></td>
-                    <td th:text="${section.course.name}"></td>
-                    <td><a class="badge badge-info" th:href="@{/course/{id}(id=${section.course.id})}">view</a></td>
+                    <td th:text="${course.department} + ' ' + ${course.number}"></td>
+                    <td th:text="${course.name}"></td>
+                    <td th:text="${section.semester?.year + ' ' + section.semester?.season}"></td>
+                    <td><a class="badge badge-info" th:href="@{/course/{id}(id=${course.id})}">view</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="container">
+        <h6>Professor:</h6>
+        <div class="container">
+            <table class="table">
+                <tr>
+                    <td th:text="${section.professor?.firstName + ' ' + section.professor?.lastName}"></td>
+                    <td><a class="badge badge-info" th:href="@{/professor/{id}(id=${section.professor?.id})}">view</a></td>
                 </tr>
             </table>
         </div>
@@ -24,13 +48,11 @@
     <div class="container">
         <h6>Students:</h6>
         <div class="container">
-            <table>
-                <tr>
+            <table class="table table-striped">
                 <tr th:each="student : ${section.students}">
                     <td th:text="${student.firstName + ' ' + student.lastName}"></td>
                     <td th:text="${student.studentNum}"></td>
                     <td><a class="badge badge-info" th:href="@{/student/{id}(id=${student.id})}">view</a></td>
-                </tr>
                 </tr>
             </table>
         </div>
@@ -41,9 +63,38 @@
         <div class="row">
         <form action="#" th:action="@{'/section/{id}'(id=${section.id})}" th:object="${section}" th:method="post" >
             <input type="hidden" th:field="*{course}" />
+
+            <label>Number</label>
             <input type="number" class="form-control" th:field="*{number}" />
+
+            <label>Days</label>
             <input type="text" class="form-control" th:field="*{schedule}" />
-            <input type="time" class="form-control" id="time" name="time" th:value="${section.getTimeStamp()}"/>
+
+            <label>Time</label><br/>
+            <input type="time" id="startTime" name="startTime" min="08:00" max="20:00" th:value="${section.startTime()}" />
+            <input type="time" id="endTime" name="endTime" min="09:00" max="22:00" th:value="${section.endTime()}" />
+
+            <br/> <label>Students</label>
+            <select class="form-control" id="students" name="students" multiple="multiple" th:field="${section.students}">
+                <option th:each="student : ${allStudents}"
+                        th:selected="${section.students?.contains(student)}"
+                        th:value="${student.id}"
+                        th:text="${student.firstName + ' ' + student.lastName}">Name</option>
+            </select>
+            <label>Room</label>
+            <select class="form-control" id="room" name="room" th:field="${section.room}">
+                <option th:each="room : ${allRooms}"
+                        th:value="${room.id}"
+                        th:text="${room.name}">Name</option>
+            </select>
+            <label>Instructor</label>
+            <select class="form-control" id="professor" name="professorID" th:field="${section.professor}">
+                <option th:each="professor : ${allProfessors}"
+                        th:value="${professor.id}"
+                        th:text="${professor.firstName + ' ' + professor.lastName}">
+                </option>
+            </select>
+
             <button type="submit" class="btn btn-primary" id="updateButton">Update</button>
         </form>
         </div>

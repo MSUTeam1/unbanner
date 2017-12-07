@@ -10,15 +10,17 @@
 <div layout:fragment="content">
     <h1>Courses</h1>
     <div class="container">
-        <table>
+        <table class="table table-striped">
             <tr>
                 <th>Number</th>
                 <th>Name</th>
+                <th># Sections</th>
                 <th>Information</th>
             </tr>
             <tr th:each="course : ${courses}">
                 <td th:text="${course.department + ' ' + course.number}"></td>
                 <td th:text="${course.name}"></td>
+                <td th:text="${course.sections.size()}"></td>
                 <td><a class="badge badge-info" th:href="@{/course/{id}(id=${course.id})}">view</a></td>
             </tr>
             <tr>

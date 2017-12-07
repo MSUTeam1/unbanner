@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Professors</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Professors</h1>
+    <div class="container">
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th># of Sections</th>
+            </tr>
+            <tr th:each="professor : ${professors}">
+                <td th:text="${professor.firstName + ' ' + professor.lastName}"></td>
+                <td th:text="${professor.sections.size()}"></td>
+                <td><a class="badge badge-info" th:href="@{/professor/{id}(id=${professor.id})}">view</a></td>
+            </tr>
+            <tr>
+                <a class="badge badge-primary" href="/professors/new">Create New Professor</a>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

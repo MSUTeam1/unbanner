@@ -8,5 +8,6 @@ branches:
     only:
         - master
         - development
+        - noTestData
 after_success:
 - ./gradlew jacocoTestReport coveralls

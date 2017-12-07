@@ -17,20 +17,29 @@ public class Student implements Storable {
   @Id
   public ObjectId id;
 
-  @Getter @Setter public String firstName;
-  @Getter @Setter public String lastName;
-  @Getter @Setter public int studentNum;
+  @Getter
+  @Setter
+  public String firstName;
+  @Getter
+  @Setter
+  public String lastName;
+  @Getter
+  @Setter
+  public int studentNum;
   @DBRef(lazy = true)
-  @Getter @Setter public List<Section> sections;
+  @Getter
+  @Setter
+  public List<Section> sections = new ArrayList<Section>();
 
   public Student() {
-    this.sections = new ArrayList<Section>();
+    this.firstName = "";
+    this.lastName = "";
+    this.studentNum = 0;
   }
 
-  public Student(String firstName, String lastName, int studentNum) {
+  public Student(String firstName, String lastName) {
     this.firstName = firstName;
     this.lastName = lastName;
-    this.studentNum = studentNum;
   }
 
   @Override
@@ -41,6 +50,10 @@ public class Student implements Storable {
   @Override
   public void setId(ObjectId id) {
     this.id = id;
+  }
+
+  public void removeSection(Section section) {
+    this.sections.remove(section);
   }
 
   @Override

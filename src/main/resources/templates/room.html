@@ -9,51 +9,59 @@
 </head>
 <body>
 <div layout:fragment="content">
-
     <h1>Edit Room</h1>
-    Room:        <b th:text="${room.name}" /> <br/>
-    Size: <b th:text="${room.size}" /> <br/>
-    <table>
-    <tr>
-        <td><b>Room's Sections:</b></td>
-    </tr>
-    <tr>
-        <th>Number</th>
-        <th>Name</th>
-        <th>Days</th>
-        <th>Time</th>
-    </tr>
-    <tr th:each="section : ${room.sectionList}">
-        <td th:text="${section.number}"></td>
-        <td th:text="${section.course.name}"></td>
-        <td th:text="${section.schedule}"></td>
-        <td th:text="${section.getTimeStamp()}"></td>
-
-        <td><a th:href="@{/section/{id}(id=${section.id})}">view</a></td>
-    </tr>
-    </table>
-
-    Delete this room?
-    <form action="#" th:action="@{'/building/room/{id}'(id=${room.id})}" th:method="delete" >
-        <input type="hidden" name="_method" value="delete" />
-        <button type="submit" id="submitButton">Delete</button>
-    </form>
-
+    <div class = "container">
+        <div class = "container">
+            <div class="row">
+                <div class="col"> Room:        <b th:text="${room.name}" /> <br/> </div>
+                <div class="col"> Size: <b th:text="${room.size}" /> <br/> </div>
+                <div class="col">
+                    <form action="#" th:action="@{'/building/room/{id}'(id=${room.id})}" th:method="delete" >
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" class="btn btn-danger"  id="submitButton">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class = "container">
+            <h5> Room's Sections</h5>
+            <div class ="container">
+                <table class ="table table-striped">
+                    <tr>
+                        <th>Course #</th>
+                        <th>Section #</th>
+                        <th>Name</th>
+                        <th>Days</th>
+                        <th>Time</th>
+                        <th>Semester</th>
+                    </tr>
+                    <tr th:each="section : ${room.sectionList}">
+                        <td th:text="${section.course?.number}"></td>
+                        <td th:text="${section.number}"></td>
+                        <td th:text="${section.course?.name}"></td>
+                        <td th:text="${section.schedule}"></td>
+                        <td th:text="${section.getTimeStamp()}"></td>
+                        <td th:text="${section.semester.year + ' ' + section.semester.season}"></td>
+                        <td><a class="badge badge-info"  th:href="@{/section/{id}(id=${section.id})}">view</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     <br/>
-    <form action="#" th:action="@{'/building/room/{id}'(id=${room.id})}" th:object="${room}" th:method="post" >
-        <input type="hidden" th:field="*{id}" />
+            <form action="#" th:action="@{'/building/room/{id}'(id=${room.id})}" th:object="${room}" th:method="post" >
+                <input type="hidden" class="form-control" th:field="*{id}" />
 
-        <label th:for="*{name}">Name</label>
-        <input type="text" th:field="*{name}" />
+                <label th:for="*{name}">Name</label>
+                <input type="text" class="form-control" th:field="*{name}" />
 
-        <label th:for="*{size}">Size</label>
-        <input type="number" th:field="*{size}" />
+                <label th:for="*{size}">Size</label>
+                <input type="number" class="form-control" th:field="*{size}" />
+                
+                <button type="submit" class="btn btn-primary"  id="updateButton">Update</button>
+            </form>
 
-        <button type="submit" id="updateButton">Update</button>
-    </form>
 
-
-
+</div>
 </div>
 </body>
 </html>

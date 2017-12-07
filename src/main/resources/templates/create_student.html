@@ -13,9 +13,6 @@
         <form action="#" th:action="@{'/students/new'}" th:object="${student}" th:method="post" >
             <div class="row">
                 <div class="col">
-                    <input placeholder="900xxx" type="number" class="form-control" th:field="*{studentNum}" />
-                </div>
-                <div class="col">
                     <input placeholder="First Name" type="text" class="form-control" th:field="*{firstName}" />
                 </div>
                 <div class="col">
@@ -29,7 +26,7 @@
             </div>
             <div class="row" th:each="section,stat : ${allSections}">
                 <div class="col">
-                    <label th:text="${section.course.name + ' : ' + section.number}"></label>
+                    <label th:text="${section.course?.name + ' : ' + section.number}"></label>
                     <input type="checkbox" name="sec" th:field="*{sections[__${stat.index}__]}" th:value="${section.id}"/>
                 </div>
             </div>

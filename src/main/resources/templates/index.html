@@ -7,10 +7,18 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <p>See List of Students <a href="/students">here</a></p>
-    <p>See List of Courses <a href="/courses">here</a></p>
-	<p>See List of Buildings <a href="/buildings">here</a></p>
-
+    <div class="container">
+        <p><b th:text="${schoolName}" /></p>
+        <div th:if="${#httpServletRequest.remoteUser != null}">
+            <p th:text="'Welcome, ' + ${#httpServletRequest.remoteUser}">sample_user</p>
+        </div>
+        <p>See List of Students <a href="/students">here</a></p>
+        <p>See List of Courses <a href="/courses">here</a></p>
+        <p>See List of Buildings <a href="/buildings">here</a></p>
+        <p>See List of Professors <a href="/professors">here</a></p>
+        <p>See List of Semesters <a href="/semesters">here</a></p>
+        <p>See Help <a href="/help">here</a></p>
+    </div>
 </div>
 </body>
 

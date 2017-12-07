@@ -11,6 +11,6 @@ public interface RoomRepository extends MongoRepository<Room, String> {
 
   public Room findByName(String name);
 
-  public List<Room> findBySize(int size);
+  public List<Room> findByBuilding(Building building);
 
 }

@@ -5,6 +5,9 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -24,14 +27,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 
 @RunWith(SpringRunner.class)
+@WithMockUser
 @SpringBootTest
 @AutoConfigureMockMvc
 public class HttpCourseRequestTest {
+
+  @Autowired
+  private WebApplicationContext context;
 
   @Autowired
   private MockMvc mockMvc;
@@ -51,6 +61,11 @@ public class HttpCourseRequestTest {
 
   @Before
   public void init() {
+
+    mockMvc = MockMvcBuilders
+        .webAppContextSetup(context)
+        .apply(springSecurity())
+        .build();
 
     courseRepo.deleteAll();
 
@@ -81,10 +96,9 @@ public class HttpCourseRequestTest {
     course2.setSections(sections);
     course3.setSections(sections2);
 
-    courseRepo.deleteAll();
-    courseRepo.save(course1);
-    courseRepo.save(course2);
-    courseRepo.save(course3);
+    course1 = courseRepo.save(course1);
+    course2 = courseRepo.save(course2);
+    course3 = courseRepo.save(course3);
 
   }
 
@@ -126,6 +140,7 @@ public class HttpCourseRequestTest {
   public void coursesNewShouldCreate() throws Exception {
 
     this.mockMvc.perform(post("/courses/new")
+        .with(csrf().asHeader())
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("name", "underwater")
         .param("department", "test")
@@ -158,8 +173,8 @@ public class HttpCourseRequestTest {
   @Test
   public void courseShouldRespond() throws Exception {
 
-    List<Course> courseList = courseRepo.findAll();
-    this.mockMvc.perform(get("/course/{id}", courseList.get(0).id))
+
+    this.mockMvc.perform(get("/course/{id}", course1.id))
         .andExpect(status().isOk())
         .andExpect(view().name("course"))
         .andExpect(model().attribute("course",
@@ -184,7 +199,7 @@ public class HttpCourseRequestTest {
         .andExpect(model().attribute("courses", hasSize(3)));
 
     List<Course> courseList = courseRepo.findAll();
-    this.mockMvc.perform(delete("/course/{id}", courseList.get(0).id))
+    this.mockMvc.perform(delete("/course/{id}", courseList.get(0).id).with(csrf().asHeader()))
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/courses"))
         .andDo(print());
@@ -197,7 +212,7 @@ public class HttpCourseRequestTest {
   }
 
   /*
-   * Checks the routing for a POST request to '/student/{id}'
+   * Checks the routing for a POST request to '/course/{id}'
    * Checks that the correct view has been called by the controller
    * Checks that a new student has been successfully updated
    */
@@ -207,6 +222,7 @@ public class HttpCourseRequestTest {
     List<Course> courseList = courseRepo.findAll();
 
     this.mockMvc.perform(post("/course/{id}", courseList.get(0).id)
+        .with(csrf().asHeader())
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("name", "newName")
         .param("department", "newDept")

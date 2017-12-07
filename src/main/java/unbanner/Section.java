@@ -2,11 +2,19 @@ package unbanner;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.bson.types.ObjectId;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.util.Pair;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
@@ -19,7 +27,7 @@ public class Section implements Storable {
   public List<Weekday> schedule;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-  public LocalTime time;
+  public Pair<LocalTime, LocalTime> time;
   public int number;
   @DBRef(lazy = true)
   public List<Student> students = new ArrayList<Student>();
@@ -27,6 +35,15 @@ public class Section implements Storable {
   public Course course;
   @DBRef(lazy = true)
   public Room room;
+  @DBRef
+  @Getter
+  @Setter
+  public Semester semester;
+  @DBRef(lazy = true)
+  @Setter
+  @Getter
+  public Professor professor;
+
 
   //This method should  follow this assignment: mySection.room = myRoom.
   public void addSectionToRoomList(Room assignedRoom) {
@@ -35,7 +52,9 @@ public class Section implements Storable {
 
   public Section() {
     this.number = 0;
-    this.time = LocalTime.of(2, 0); // 2 hours
+    this.time = Pair.of(LocalTime.of(12, 0),
+        LocalTime.of(14, 0)); // 2 hours
+
     this.schedule = new ArrayList<Weekday>();
   }
 
@@ -44,7 +63,7 @@ public class Section implements Storable {
     this.number = number;
   }
 
-  public Section(int number, List<Weekday> schedule, LocalTime time) {
+  public Section(int number, List<Weekday> schedule, Pair<LocalTime, LocalTime> time) {
     this(number);
     this.schedule = schedule;
     this.time = time;
@@ -55,12 +74,19 @@ public class Section implements Storable {
     this.course = course;
   }
 
-  public void setTime(LocalTime time) {
+  public void setTime(Pair<LocalTime, LocalTime> time) {
     this.time = time;
   }
 
-  public LocalTime getTime() {
+  public Pair<LocalTime, LocalTime> getTime() {
     return time;
+  }
+
+  public LocalTime getTime(String time) throws Exception {
+    String[] atoms = time.split(":");
+    int hour = Integer.parseInt(atoms[0]);
+    int minutes = Integer.parseInt(atoms[1]);
+    return LocalTime.of(hour, minutes);
   }
 
   public void setSchedule(List<Weekday> schedule) {
@@ -92,6 +118,7 @@ public class Section implements Storable {
     }
     schedule.add(day);
   }
+
 
   public List<Weekday> getSchedule() {
     return schedule;
@@ -126,17 +153,75 @@ public class Section implements Storable {
   }
 
   public String getTimeLength() {
-    return String.format("%d hrs, %d mins",
-        time.getHour(),
-        time.getMinute()
+    return String.format("%02d:%02d - %02d:%02d",
+        time.getFirst().getHour(),
+        time.getFirst().getMinute(),
+        time.getSecond().getHour(),
+        time.getSecond().getMinute()
     );
   }
 
-  public String getTimeStamp() {
+  public String startTime() {
     return String.format("%02d:%02d",
-        time.getHour(),
-        time.getMinute()
+        time.getFirst().getHour(),
+        time.getFirst().getMinute());
+  }
+
+  public String endTime() {
+    return String.format("%02d:%02d",
+        time.getSecond().getHour(),
+        time.getSecond().getMinute());
+  }
+
+  public String getTimeStamp() {
+    return String.format("%02d:%02d - %02d:%02d",
+        time.getFirst().getHour(),
+        time.getFirst().getMinute(),
+        time.getSecond().getHour(),
+        time.getSecond().getMinute()
     );
+  }
+
+  public void setStartTime(String start) {
+    try {
+      LocalTime newTime = getTime(start);
+      assert (newTime.getHour() >= 8 && newTime.getHour() <= 20);
+      time = Pair.of(newTime, time.getSecond());
+    } catch (Exception e) {
+      System.err.println("Invalid start time: " + start);
+      e.printStackTrace();
+    }
+  }
+
+  public void setEndTime(String end) {
+    try {
+      LocalTime newTime = getTime(end);
+      assert (newTime.getHour() >= 9 && newTime.getHour() <= 22);
+      time = Pair.of(time.getFirst(), newTime);
+    } catch (Exception e) {
+      System.err.println("Invalid start time: " + end);
+      e.printStackTrace();
+    }
+  }
+
+  public void setStartAndEndTime(String start, String end) {
+    int secondsInThreeHours = 3 * 60 * 60;
+    try {
+      LocalTime startTime = getTime(start);
+      LocalTime endTime = getTime(end);
+      int startHour = startTime.getHour();
+      int endHour = endTime.getHour();
+      if (!endTime.isAfter(startTime)) {
+        throw new Exception("EndTtime must come after Start Time");
+      }
+      if (endTime.toSecondOfDay() - startTime.toSecondOfDay() >= secondsInThreeHours) {
+        throw new Exception("Invalid length of time.");
+      }
+      time = Pair.of(startTime, endTime);
+    } catch (Exception e) {
+      System.err.println("Invalid time: " + time);
+      e.printStackTrace();
+    }
   }
 
   public Room getRoom() {
@@ -147,6 +232,16 @@ public class Section implements Storable {
     this.room = room;
   }
 
+  public void printInfo() {
+    System.out.println("section id : " + this.id);
+    System.out.println("section room : " + this.room.name);
+    System.out.println("section building : " + this.room.building.name);
+    System.out.println("section course name " + this.course.name);
+    System.out.println(this.time.getFirst());
+    System.out.println(this.time.getSecond());
+    return;
+  }
+
   @Override
   public ObjectId getId() {
     return id;
@@ -155,5 +250,112 @@ public class Section implements Storable {
   @Override
   public void setId(ObjectId id) {
     this.id = id;
+  }
+
+
+  @Override
+  public boolean equals(Object o) { //http://www.geeksforgeeks.org/overriding-equals-method-in-java/
+    if (o == this) {
+      return true;
+    }
+    if (!(o instanceof Section)) {
+      return false;
+    }
+    Section section = (Section) o;
+    return section.id.equals(this.id);
+  }
+
+  //Assumes that "sec" is on the same day and time
+  private boolean checkDayHours(Section sec) {
+
+    //If the object (this) begins between any other section.
+    if (this.time.getFirst().isAfter(sec.getTime().getFirst()) && this.time.getFirst().isBefore(sec.time.getSecond())) {
+      return true;
+    }
+    //if this ends between any other section.
+    if (this.time.getSecond().isAfter(sec.getTime().getFirst()) && this.time.getSecond().isBefore(sec.time.getSecond())) {
+      return true;
+    }
+    //if this is equal to any other section
+    if (this.time.getFirst().equals(sec.getTime().getFirst()) || this.time.getSecond().equals(sec.time.getSecond())) {
+      return true;
+    }
+    //if this begins before another section and ends after that section
+    if (this.time.getSecond().isBefore(sec.getTime().getFirst()) && this.time.getSecond().isAfter(sec.time.getSecond())) {
+      return true;
+    }
+    return false;
+  }
+
+  public boolean doesTimeConflictsRoom() {  // some ".compare" and ".equals" methods would have be ideal
+    System.out.println("doesTimeConflictsRoom~~~~~~~~~~~~~~~~~~~");
+    System.out.println("doesTimeConflictsRoom~~~~~~this.room.sectionList.size(): " + this.room.sectionList.size());
+    for (Section sec : this.room.sectionList) {
+      System.out.println("Looping~~~~~~~~~~~~~~~~~~~");
+      if (sec.id.equals(this.id)) {
+        System.out.println("~~~~Skipping self");
+        continue; //Skip itself
+      }
+      System.out.println("Looping~~~~sec.semester.year " + sec.semester.year);
+      System.out.println("Looping~~~~sec.semester.season " + sec.semester.season);
+      System.out.println("Looping~~~~this.semester.year " + this.semester.year);
+      System.out.println("Looping~~~~this.semester.season " + this.semester.season);
+      System.out.println("Looping~~~~ sec.semester.year != this.semester.year  " + (sec.semester.year != this.semester.year));
+      System.out.println("Looping~~~~ sec.semester.season.equals(this.semester.season)  " + !sec.semester.season.equals(this.semester.season));
+      if (sec.semester.year != this.semester.year || !sec.semester.season.equals(this.semester.season)) {
+        System.out.println("Skipping, same semester");
+        System.out.println("room name: " + sec.room.name);
+        System.out.println("season year: " + sec.semester.season + " " + sec.semester.year);
+        continue; //Skip. Want to compare with rooms in current semester
+      }
+      boolean doesConflict = false;
+      //Compares everyday that the two sections meet. If on the same day, check meeting hours.
+      for (Weekday secDay : sec.schedule) {
+        for (Weekday thisDay : this.schedule) {
+          if (secDay.equals(thisDay)) {
+            doesConflict = checkDayHours(sec);
+            if (doesConflict) {
+              return doesConflict;
+            }
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+
+  public static boolean conflicts(List<Section> sections) {
+    HashSet<Weekday> weekdays = new HashSet();
+    HashMap<Weekday, ArrayList<Pair<LocalTime, LocalTime>>> times = new HashMap<Weekday, ArrayList<Pair<LocalTime, LocalTime>>>();
+    for (Section section : sections) {
+      if (section != null) {
+        for (Weekday day : section.getSchedule()) {
+          if (weekdays.contains(day)) {
+            ArrayList<Pair<LocalTime, LocalTime>> pairs = times.get(day);
+            if (pairs != null) {
+              for (Pair<LocalTime, LocalTime> time : pairs) {
+                if ((section.getTime().getFirst().compareTo(time.getFirst()) >= 0
+                    && section.getTime().getFirst().compareTo(time.getSecond()) <= 0)
+                    ||
+                    (section.getTime().getSecond().compareTo(time.getSecond()) <= 0
+                        && section.getTime().getSecond().compareTo(time.getFirst()) >= 0)) {
+                  return true;
+                }
+              }
+            }
+          }
+        }
+        for (Weekday day : section.getSchedule()) {
+          if (times.containsKey(day)) {
+            times.get(day).add(section.getTime());
+          } else {
+            times.put(day, new ArrayList<Pair<LocalTime, LocalTime>>(Arrays.asList(section.getTime())));
+          }
+        }
+        weekdays.addAll(section.getSchedule());
+      }
+    }
+    return false;
   }
 }
