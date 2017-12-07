@@ -254,11 +254,11 @@ public class Section implements Storable {
 
 
   @Override
-  public boolean equals(Object o){ //http://www.geeksforgeeks.org/overriding-equals-method-in-java/
-    if (o == this){
+  public boolean equals(Object o) { //http://www.geeksforgeeks.org/overriding-equals-method-in-java/
+    if (o == this) {
       return true;
     }
-    if (!(o instanceof Section)){
+    if (!(o instanceof Section)) {
       return false;
     }
     Section section = (Section) o;
@@ -266,18 +266,18 @@ public class Section implements Storable {
   }
 
   //Assumes that "sec" is on the same day and time
-  private boolean checkDayHours(Section sec){
+  private boolean checkDayHours(Section sec) {
 
     //If the object (this) begins between any other section.
-    if (this.time.getFirst().isAfter(sec.getTime().getFirst()) && this.time.getFirst().isBefore(sec.time.getSecond()) ) {
+    if (this.time.getFirst().isAfter(sec.getTime().getFirst()) && this.time.getFirst().isBefore(sec.time.getSecond())) {
       return true;
     }
     //if this ends between any other section.
-    if (this.time.getSecond().isAfter(sec.getTime().getFirst()) && this.time.getSecond().isBefore(sec.time.getSecond())){
+    if (this.time.getSecond().isAfter(sec.getTime().getFirst()) && this.time.getSecond().isBefore(sec.time.getSecond())) {
       return true;
     }
     //if this is equal to any other section
-    if (this.time.getFirst().equals(sec.getTime().getFirst()) || this.time.getSecond().equals(sec.time.getSecond())){
+    if (this.time.getFirst().equals(sec.getTime().getFirst()) || this.time.getSecond().equals(sec.time.getSecond())) {
       return true;
     }
     //if this begins before another section and ends after that section
@@ -287,22 +287,22 @@ public class Section implements Storable {
     return false;
   }
 
-  public boolean doesTimeConflictsRoom(){  // some ".compare" and ".equals" methods would have be ideal
+  public boolean doesTimeConflictsRoom() {  // some ".compare" and ".equals" methods would have be ideal
     System.out.println("doesTimeConflictsRoom~~~~~~~~~~~~~~~~~~~");
     System.out.println("doesTimeConflictsRoom~~~~~~this.room.sectionList.size(): " + this.room.sectionList.size());
-    for (Section sec : this.room.sectionList){
+    for (Section sec : this.room.sectionList) {
       System.out.println("Looping~~~~~~~~~~~~~~~~~~~");
-      if (sec.id.equals(this.id)){
+      if (sec.id.equals(this.id)) {
         System.out.println("~~~~Skipping self");
         continue; //Skip itself
       }
       System.out.println("Looping~~~~sec.semester.year " + sec.semester.year);
-      System.out.println("Looping~~~~sec.semester.season "+ sec.semester.season);
+      System.out.println("Looping~~~~sec.semester.season " + sec.semester.season);
       System.out.println("Looping~~~~this.semester.year " + this.semester.year);
-      System.out.println("Looping~~~~this.semester.season "+ this.semester.season);
-      System.out.println("Looping~~~~ sec.semester.year != this.semester.year  "+ (sec.semester.year != this.semester.year));
-      System.out.println("Looping~~~~ sec.semester.season.equals(this.semester.season)  "+ !sec.semester.season.equals(this.semester.season));
-      if (sec.semester.year != this.semester.year || !sec.semester.season.equals(this.semester.season)){
+      System.out.println("Looping~~~~this.semester.season " + this.semester.season);
+      System.out.println("Looping~~~~ sec.semester.year != this.semester.year  " + (sec.semester.year != this.semester.year));
+      System.out.println("Looping~~~~ sec.semester.season.equals(this.semester.season)  " + !sec.semester.season.equals(this.semester.season));
+      if (sec.semester.year != this.semester.year || !sec.semester.season.equals(this.semester.season)) {
         System.out.println("Skipping, same semester");
         System.out.println("room name: " + sec.room.name);
         System.out.println("season year: " + sec.semester.season + " " + sec.semester.year);
@@ -310,11 +310,11 @@ public class Section implements Storable {
       }
       boolean doesConflict = false;
       //Compares everyday that the two sections meet. If on the same day, check meeting hours.
-      for (Weekday secDay : sec.schedule){
-        for (Weekday thisDay : this.schedule){
-          if (secDay.equals(thisDay)){
+      for (Weekday secDay : sec.schedule) {
+        for (Weekday thisDay : this.schedule) {
+          if (secDay.equals(thisDay)) {
             doesConflict = checkDayHours(sec);
-            if (doesConflict ){
+            if (doesConflict) {
               return doesConflict;
             }
           }
@@ -336,10 +336,10 @@ public class Section implements Storable {
             if (pairs != null) {
               for (Pair<LocalTime, LocalTime> time : pairs) {
                 if ((section.getTime().getFirst().compareTo(time.getFirst()) >= 0
-                        && section.getTime().getFirst().compareTo(time.getSecond()) <= 0)
-                        ||
-                        (section.getTime().getSecond().compareTo(time.getSecond()) <= 0
-                            && section.getTime().getSecond().compareTo(time.getFirst()) >= 0)) {
+                    && section.getTime().getFirst().compareTo(time.getSecond()) <= 0)
+                    ||
+                    (section.getTime().getSecond().compareTo(time.getSecond()) <= 0
+                        && section.getTime().getSecond().compareTo(time.getFirst()) >= 0)) {
                   return true;
                 }
               }
